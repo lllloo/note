@@ -1,0 +1,23 @@
+services:
+  vitepress:
+    build: ./vitepress
+    container_name: vitepress
+    working_dir: /app
+    volumes:
+      - ./vitepress/docs/.vitepress/dist:/app/vitepress/docs/.vitepress/dist
+
+  nginx:
+    image: nginx:latest
+    container_name: note
+    volumes:
+      - ./vitepress/docs/.vitepress/dist:/usr/share/nginx/html:ro
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/log:/var/log/nginx
+    depends_on:
+      - vitepress
+    networks:
+      - web
+      
+networks:
+  web:
+    external: true
