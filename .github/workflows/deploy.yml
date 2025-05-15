@@ -34,7 +34,7 @@ jobs:
             # 在正確的目錄中執行 docker-compose 命令
             echo "重啟 Docker 容器..."
             docker-compose down
-            docker-compose up --build
+            docker-compose up --build -d
       
       - name: Discord 部署成功通知
         if: success()
@@ -42,7 +42,7 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           title: "✅ 部署成功"
-          description: "Nginx 服務器已成功部署到 AWS EC2"
+          description: "Note 服務器已成功部署到 AWS EC2"
           color: 0x00ff00
           
       - name: Discord 部署失敗通知
@@ -51,5 +51,5 @@ jobs:
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           title: "❌ 部署失敗"
-          description: "Nginx 服務器部署到 AWS EC2 時失敗"
+          description: "Note 服務器部署到 AWS EC2 時失敗"
           color: 0xff0000
