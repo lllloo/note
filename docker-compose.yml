@@ -2,9 +2,13 @@ services:
   vitepress:
     build: ./vitepress
     container_name: vitepress
-    working_dir: /app
     volumes:
-      - ./vitepress/docs/.vitepress/dist:/app/vitepress/docs/.vitepress/dist
+      - ./vitepress/docs/.vitepress/dist:/output
+    command: >
+      sh -c "
+        npm run docs:build &&
+        cp -r /app/docs/.vitepress/dist/* /output/
+      "
 
   nginx:
     image: nginx:latest
