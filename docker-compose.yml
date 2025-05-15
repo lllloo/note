@@ -1,27 +1,13 @@
 services:
-  vitepress:
-    build: ./vitepress
-    container_name: vitepress
-    volumes:
-      - ./vitepress/docs/.vitepress/dist:/output
-    command: >
-      sh -c "
-        npm run docs:build &&
-        cp -r /app/docs/.vitepress/dist/* /output/
-      "
-
   nginx:
-    image: nginx:latest
+    build: ./vitepress
     container_name: note
     volumes:
-      - ./vitepress/docs/.vitepress/dist:/usr/share/nginx/html:ro
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./nginx/log:/var/log/nginx
-    depends_on:
-      - vitepress
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
     networks:
       - web
-      
+
 networks:
   web:
     external: true
