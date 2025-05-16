@@ -8,13 +8,13 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Notes', link: '/Notes' },
+      { text: 'Notes', link: '/notes' },
     ],
 
     sidebar: [
       {
         text: 'Notes',
-        link: '/Notes' ,
+        link: '/notes' ,
         items: [
           {
             text: 'Git',
@@ -24,16 +24,16 @@ export default defineConfig({
             ]
           }
         ]
-      },
-      {
-        text: 'Md',
-        items: [
-          {
-            text: '指南',
-            link: '/md/md-style-guide',
-          }
-        ]
       }
+      // {
+      //   text: 'Md',
+      //   items: [
+      //     {
+      //       text: '指南',
+      //       link: '/md/md-style-guide',
+      //     }
+      //   ]
+      // }
     ],
 
     socialLinks: [
