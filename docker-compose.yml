@@ -1,6 +1,6 @@
 services:
   nginx:
-    build: ./vitepress
+    build: .
     container_name: note
     volumes:
       - ./nginx/log:/var/log/nginx
