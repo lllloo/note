@@ -4,6 +4,10 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Barney's Notes",
   description: "A Note Site",
+  lang: 'zh-TW',
+  head: [
+    ['meta', { charset: 'UTF-8' }]
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
