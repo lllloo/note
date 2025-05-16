@@ -6,7 +6,19 @@ export default defineConfig({
   description: "A Note Site",
   lang: 'zh-TW',
   head: [
-    ['meta', { charset: 'UTF-8' }]
+    ['meta', { charset: 'UTF-8' }],
+    [
+      'script',
+      { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-RJKJTQWD8H' }
+    ],
+    [
+      'script',
+      {},
+      `window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-RJKJTQWD8H');`
+    ]
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
