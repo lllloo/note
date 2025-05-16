@@ -13,6 +13,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Notes', link: '/notes' },
+      { text: 'Guide', link: '/guide' }
     ],
 
     sidebar: [
@@ -25,6 +26,12 @@ export default defineConfig({
             items: [
               { text: '設定', link: '/notes/git/setting' },
               { text: '指令', link: '/notes/git/command' },
+            ]
+          },
+          {
+            text: 'Css',
+            items: [
+              { text: '換行', link: '/notes/css/newline' },
             ]
           }
         ]
@@ -41,7 +48,17 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
-    ]
+      { icon: 'github', link: 'https://github.com/lllloo/note' }
+    ],
+
+    logo: '/logo.svg',
+
+    editLink: {
+      pattern: 'https://github.com/lllloo/note/edit/main/docs/:path',
+      text: 'Edit this page on GitHub'
+    },
+    search: {
+      provider: 'local'
+    },
   }
 })
