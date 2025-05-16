@@ -2,21 +2,36 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "note",
+  title: "Barney's Notes",
   description: "A Note Site",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Notes', link: '/Notes' },
     ],
 
     sidebar: [
       {
-        text: 'Examples',
+        text: 'Notes',
+        link: '/Notes' ,
         items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+          {
+            text: 'Git',
+            items: [
+              { text: '設定', link: '/notes/git/setting' },
+              { text: '指令', link: '/notes/git/command' },
+            ]
+          }
+        ]
+      },
+      {
+        text: 'Md',
+        items: [
+          {
+            text: '指南',
+            link: '/md/md-style-guide',
+          }
         ]
       }
     ],

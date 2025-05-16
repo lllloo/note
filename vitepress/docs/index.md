@@ -3,23 +3,23 @@
 layout: home
 
 hero:
-  name: "blog"
-  text: "A Blog Site"
-  tagline: My great project tagline
+  name: "Barney's Notes"
+  text: "沒有副標題"
+  tagline: 記錄用筆記
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
-    - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: Notes
+      link: /Notes
+    # - theme: alt
+    #   text: About
+    #   link: /about
 
-features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+# features:
+#   - title: 關於我
+#     details: 介紹我的背景、技能與經歷
+#   - title: 作品集
+#     details: 展示我完成的專案與作品
+#   - title: 聯絡方式
+#     details: 提供聯絡資訊，歡迎合作與交流
 ---
 

@@ -1,3 +1,4 @@
 node_modules/
 dist/
 nginx/log
+vitepress/docs/.vitepress/cache/
