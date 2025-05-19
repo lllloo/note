@@ -1,8 +1,8 @@
 # CSS 換行
 
-[[toc]]
-
 本文說明 CSS 中處理文字換行的各種屬性與技巧，提供常用的換行解決方案與程式碼範例。適合前端開發者參考使用。
+
+[[toc]]
 
 ## 結論
 
@@ -12,7 +12,7 @@ overflow-wrap: break-word;
 /* tailwind */
 .break-words
 ```
-- 適用於避免英文單字過長導致版面溢出。
+適用於避免英文單字過長導致版面溢出。
 
 ### 英文字太長直接斷行
 ```css
@@ -22,13 +22,13 @@ word-break: break-all;
 .break-words
 .break-all
 ```
-- 適用於強制英文單字在任何位置斷行。
+適用於強制英文單字在任何位置斷行。
 
 ### 禁止自動換行
 ```css
 white-space: nowrap;
 ```
-- 適用於單行顯示、避免自動換行。
+適用於單行顯示、避免自動換行。
 
 ## CSS 換行屬性說明 {#property-explain}
 
@@ -66,8 +66,18 @@ word-break: break-all;
 ```
 - tailwind：`whitespace-pre-wrap break-words`
 
+## 單行文字溢出顯示省略號
+```css
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+```
+- tailwind：`overflow-hidden whitespace-nowrap text-ellipsis`
+
 ## 多行截斷（tailwind 實用技巧） {#line-clamp}
-- 限制顯示行數，多餘內容以省略號顯示。
+限制顯示行數，多餘內容以省略號顯示。
 
 ```css
 overflow: hidden;
@@ -75,7 +85,7 @@ display: -webkit-box;
 -webkit-box-orient: vertical;
 -webkit-line-clamp: 1;
 ```
-- tailwind：`line-clamp-1`、`line-clamp-2` ...
+tailwind：`line-clamp-1`、`line-clamp-2` ...
 
 ## 參考
 - [MDN: overflow-wrap](https://developer.mozilla.org/zh-CN/docs/Web/CSS/overflow-wrap)

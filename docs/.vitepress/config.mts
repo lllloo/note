@@ -41,9 +41,15 @@ export default defineConfig({
             ]
           },
           {
-            text: 'Css',
+            text: 'CSS',
             items: [
               { text: '換行', link: '/notes/css/newline' },
+            ]
+          },
+          {
+            text: 'JavaScript',
+            items: [
+              { text: 'Date', link: '/notes/js/date' },
             ]
           }
         ]
