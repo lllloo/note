@@ -1,12 +1,10 @@
-# css 換行
-
----
+# CSS 換行
 
 [[toc]]
 
----
+本文說明 CSS 中處理文字換行的各種屬性與技巧，提供常用的換行解決方案與程式碼範例。適合前端開發者參考使用。
 
-## 懶人用法 {#quick-usage}
+## 結論
 
 ### 英文字太長自動換行（先換行再斷行）
 ```css
@@ -32,8 +30,6 @@ white-space: nowrap;
 ```
 - 適用於單行顯示、避免自動換行。
 
----
-
 ## CSS 換行屬性說明 {#property-explain}
 
 ### overflow-wrap / word-wrap
@@ -58,8 +54,6 @@ word-wrap: break-word;
 word-break: break-all;
 ```
 
----
-
 ## 保留空白與換行 {#whitespace}
 - `white-space: pre-wrap;` 可保留空白字元與換行符號。
 - 搭配 `overflow-wrap: break-word;` 可避免溢出。
@@ -72,8 +66,6 @@ word-break: break-all;
 ```
 - tailwind：`whitespace-pre-wrap break-words`
 
----
-
 ## 多行截斷（tailwind 實用技巧） {#line-clamp}
 - 限制顯示行數，多餘內容以省略號顯示。
 
@@ -85,9 +77,7 @@ display: -webkit-box;
 ```
 - tailwind：`line-clamp-1`、`line-clamp-2` ...
 
----
-
 ## 參考
-- [MDN: overflow-wrap](https://developer.mozilla.org/zh-CN/docs/Web/CSS/overflow-wrap){target="_blank" rel="noreferrer"}
-- [MDN: word-break](https://developer.mozilla.org/zh-CN/docs/Web/CSS/word-break){target="_blank" rel="noreferrer"}
-- [Tailwind CSS 文檔](https://tailwindcss.com/docs/word-break){target="_blank" rel="noreferrer"}
+- [MDN: overflow-wrap](https://developer.mozilla.org/zh-CN/docs/Web/CSS/overflow-wrap)
+- [MDN: word-break](https://developer.mozilla.org/zh-CN/docs/Web/CSS/word-break)
+- [Tailwind CSS 文檔](https://tailwindcss.com/docs/word-break)

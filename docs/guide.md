@@ -1,126 +1,73 @@
-# Markdown 編排規範（AI 參考用） {#markdown-style-guide}
+# Markdown 編排規範（AI 參考用）
+
+[[toc]]
 
 本文件說明如何編寫、整理 Markdown 筆記，並提供具體範例與注意事項，適用於 VitePress 文件編輯。
 
----
+## 標題與段落
+- 每份文件僅有一個一級標題（`#`），作為主標題。
+- 內容依邏輯分層，使用二級（`##`）、三級（`###`）標題區分主題。
+- 標題層級應循序遞進，避免跳階（如從 `##` 直接到 `####`）。
 
-## 標題與分段 {#heading-and-section}
-- 使用 `#` 作為主標題，`##`、`###` 作為子標題，依內容層級遞減。
-- 主題之間以 `---` 分隔，提升可讀性。
-- 標題可加自訂 anchor（如 `# 標題 {#my-anchor}`）。
+## 目錄自動生成
+- 以 `[[toc]]` 插入目錄，置於主標題下方。
 
-```markdown
-# 主標題 {#main-title}
+## 條列式內容
+- 條列內容以無序列表（`-`）或有序列表（`1.`）呈現。
+- 每項列表聚焦單一重點，簡明扼要。
+- 子項目需縮排，並保持符號一致。
+- 無序列表適用於無順序資訊，有序列表用於步驟或優先順序。
 
----
+## 強調重點
+- 以粗體（`**文字**`）強調重要詞彙或警告。
+- 以斜體（`*文字*`）標示術語、引用或輕度強調。
+- 適度使用強調，避免過度導致可讀性下降。
 
-## 子標題 {#sub-title}
-```
-- 標題層級錯誤會影響目錄與 SEO。
-
----
-
-## 目錄自動生成 {#toc}
-- 使用 `[[toc]]` 插入目錄。
-- 目錄會根據標題自動生成。
-
-```markdown
-[[toc]]
-```
-- 目錄建議放在主標題下方。
-
----
-
-## 指令區塊與語法高亮 {#code-blocks}
-- 指令區塊使用三個反引號加語言標註（如 `sh`、`js`）。
+## 指令區塊與語法高亮
+- 指令區塊以三個反引號加語言標註（如 `sh`、`js`）。
 - 支援行號、行高亮、diff、focus、警告等標註。
-- 可用 `<<< @/filepath` 匯入程式碼片段。
-- 可用 `::: code-group` 群組多個程式碼區塊。
 
-```sh
-npm install vitepress
-```
-- 安裝 VitePress 套件
-
-::: code-group
-```js [index.js]
-console.log('Hello')
-```
-```ts [index.ts]
-console.log('Hello')
-```
-:::
-
----
-
-## 指令說明與註解 {#code-comment}
-- 每個指令區塊下方，簡要說明用途、適用情境。
-- 多個選項時，使用無序清單條列。
-
-```sh
-npm run docs:build
-```
-- 建立文件靜態檔案
-
-- `npm run docs:preview`：本地預覽
-- `npm run docs:dev`：開發模式
-
----
-
-## 超連結規範 {#links}
-- 內部連結省略副檔名，自動轉為 SPA router link。
-- 外部連結加 `target="_blank" rel="noreferrer"`。
-- 標準、外部資源以 `[名稱](網址)` 格式附於段落。
-
-```markdown
-[官方文件](/guide/markdown)
-[Markdown 指南](https://vitepress.dev/guide/markdown)
+```js
+// 這是 JavaScript 範例程式碼
+function greet(name) {
+  return `Hello, ${name}!`;
+}
 ```
 
----
+## 指令說明與註解
+- 每個指令區塊下方需以簡短段落說明用途與適用情境。
+- 若指令有多個選項，應依其是否具順序性，分別使用有序或無序列表條列。
+- 建議補充範例，說明常見用法。
 
-## 表格與 Emoji {#table-emoji}
-- 支援 GitHub 風格表格與 emoji 語法。
+## 超連結規範
+- 內部連結省略副檔名，系統自動轉為 SPA router link。
+- 外部資源以 `[名稱](網址)` 格式附於段落。
+- 內部連結使用 `[]()` 格式，必要時可加 `#` 錨點。
 
-| 指令    | 說明 |
-| ------- | ---- |
-| install | 安裝 |
-| build   | 建立 |
+## 自訂提示區塊
+- 以 `::: info|tip|warning|danger|details` 建立提示區塊。
+- 可自訂標題與屬性，增強內容辨識度。
+- 範例：
 
-:100: :tada:
+  ::: tip 自訂標題
+  這是提示區塊範例。
+  :::
 
----
+## 使用引用與註解
+- 以 `>` 符號引用內容，適用於來源說明或重要提醒。
+- 範例：
+  > 這是引用內容，適合標註來源或強調重點。
 
-## 自訂提示區塊 {#custom-blocks}
-- 使用 `::: info|tip|warning|danger|details` 建立提示區塊。
-- 支援自訂標題與屬性。
-- 支援 GitHub-flavored Alerts（如 `> [!NOTE]`）。
-
-::: tip 實用技巧
-可用於強調重點、警告或補充說明。
-:::
-
-> [!NOTE]
-> 這是 GitHub 樣式提示。
-
----
-
-## Markdown 檔案引用 {#md-include}
-- 可用 `<!--@include: ./path/file.md#anchor{行範圍}-->` 引用其他 md 檔案內容。
-
-```markdown
-<!--@include: ./public/deploy.md#platform-guides{10-30}-->
-```
-- 適合重複內容共用。
+## 保持一致的格式
+- 標題、列表、段落格式需一致，維持全站統一風格。
+- 所有文件應遵循相同編排規範。
+- 段落不宜過長，建議 3-5 句為限。
+- 標題、段落、區塊間以空行分隔，提升可讀性。
+## 寫作須注意事項
+- 每段落聚焦單一主題，避免一次涵蓋過多重點。
+- 保持段落與區塊間適當空行，避免版面擁擠。
+- 引用他人內容或外部資源時，務必標明出處。
 
 ---
 
-## 其他注意事項 {#other}
-- 保持語句簡潔，內容分段明確。
-- 指令與說明分離。
-- 支援內嵌 HTML。
-- 圖片可啟用 lazy loading。
-
----
-
-AI 協助時，請依本規範與 VitePress 官方[Markdown 指南](https://vitepress.dev/guide/markdown)自動調整、補充、分段與排版。
+AI 協助時，請依本規範與 VitePress 官方 [Markdown 指南](https://vitepress.dev/guide/markdown) 自動調整、補充、分段與排版。
