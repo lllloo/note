@@ -4,6 +4,10 @@ JavaScript 中日期處理的多種方法與技巧，包含原生 Date 物件、
 
 [[toc]]
 
+## 摘要
+
+本文件彙整 JavaScript 日期處理的常用技巧，涵蓋原生 Date、Moment.js、Day.js 的基本與進階操作，並提供格式化、驗證、日期運算等實用範例，協助開發者快速查閱與應用。
+
 ## 基本操作
 
 ### 設定日期
@@ -15,6 +19,7 @@ const dateObj = new Date('2023/01/01 08:01:02');
 const momentObj = moment('2023/01/01 08:01:02', "YYYY-MM-DD HH:mm:ss");
 const dayjsObj = dayjs('2023/01/01 08:01:02', "YYYY-MM-DD HH:mm:ss");
 ```
+建立指定時間的日期物件，適用於初始化、資料轉換等情境。
 
 ### 取得年分
 
@@ -28,6 +33,7 @@ momentObj.format('YYYY')
 dayjsObj.format('YYYY')
 // '2023'
 ```
+常用於顯示年份、計算年齡等。
 
 ### 取得月份
 
@@ -42,6 +48,7 @@ momentObj.format('MM')
 dayjsObj.format('MM')
 // '01'
 ```
+原生 Date 需注意月份從 0 開始，Moment/Day.js 則為 01-12。
 
 ::: warning Date 物件提醒
 原生 Date 物件的月份是從 **0** 開始計算（0-11），而 Moment.js 與 Day.js 則回傳正常月份（01-12）。
@@ -59,6 +66,7 @@ momentObj.format('DD')
 dayjsObj.format('DD')
 // '01'
 ```
+適用於顯示日曆、日期選擇等。
 
 ### 取得星期幾
 
@@ -79,6 +87,7 @@ dayjsObj.format('d')
 ['日','一','二','三','四','五','六'][dateObj.getDay()]
 // '日'
 ```
+可用於顯示中文星期、排程等。
 
 ### 取得時
 
@@ -92,6 +101,7 @@ momentObj.format('HH')
 dayjsObj.format('HH')
 // '08'
 ```
+適用於時間顯示、時段判斷。
 
 ### 取得分
 
@@ -136,6 +146,7 @@ momentObj.format('YYYY-MM-DD')
 dayjsObj.format('YYYY-MM-DD')
 // '2023-01-01'
 ```
+常用於 API 傳遞、資料顯示。
 
 ::: info 格式化比較
 使用 Moment.js 或 Day.js 可以更方便地獲得標準格式的日期字串，不必手動處理月份的 +1 問題，且自動補零保持格式一致性。
@@ -158,6 +169,7 @@ moment(`${year}/${month}`).daysInMonth()
 dayjs(`${year}/${month}`).daysInMonth()
 // 31
 ```
+適合月底計算、日期驗證。
 
 ### moment/dayjs 轉 Date Object
 
@@ -167,6 +179,7 @@ dayjs(`${year}/${month}`).daysInMonth()
 moment().toDate();
 dayjs().toDate();
 ```
+便於與原生 API 或第三方函式整合。
 
 ## 複雜操作範例
 

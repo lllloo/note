@@ -28,6 +28,8 @@ export default defineConfig({
       { text: 'Guide', link: '/guide' }
     ],
 
+    outline: [2, 3],
+
     sidebar: [
       {
         text: 'Notes',
@@ -53,16 +55,16 @@ export default defineConfig({
             ]
           }
         ]
+      },
+      {
+        text: 'Guide',
+        items: [
+          {
+            text: '文件指南',
+            link: '/guide/markdown',
+          }
+        ]
       }
-      // {
-      //   text: 'Md',
-      //   items: [
-      //     {
-      //       text: '指南',
-      //       link: '/md/md-style-guide',
-      //     }
-      //   ]
-      // }
     ],
 
     socialLinks: [
