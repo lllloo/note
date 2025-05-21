@@ -3,13 +3,16 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Barney's Notes",
-  description: "A Note Site",
+  description: 'A Note Site',
   lang: 'zh-TW',
   head: [
     ['meta', { charset: 'UTF-8' }],
     [
       'script',
-      { async: '', src: 'https://www.googletagmanager.com/gtag/js?id=G-RJKJTQWD8H' }
+      {
+        async: '',
+        src: 'https://www.googletagmanager.com/gtag/js?id=G-RJKJTQWD8H',
+      },
     ],
     [
       'script',
@@ -17,15 +20,15 @@ export default defineConfig({
       `window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-RJKJTQWD8H');`
-    ]
+      gtag('config', 'G-RJKJTQWD8H');`,
+    ],
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Notes', link: '/notes' },
-      { text: 'Guide', link: '/guide' }
+      { text: 'Guide', link: '/guide' },
     ],
 
     outline: [2, 3],
@@ -33,53 +36,51 @@ export default defineConfig({
     sidebar: [
       {
         text: 'Notes',
-        link: '/notes' ,
+        link: '/notes',
         items: [
           {
             text: 'Git',
             items: [
               { text: '設定', link: '/notes/git/setting' },
               { text: '指令', link: '/notes/git/command' },
-            ]
+            ],
           },
           {
             text: 'CSS',
-            items: [
-              { text: '換行', link: '/notes/css/newline' },
-            ]
+            items: [{ text: '換行', link: '/notes/css/newline' }],
           },
           {
             text: 'JavaScript',
-            items: [
-              { text: 'Date', link: '/notes/js/date' },
-            ]
-          }
-        ]
+            items: [{ text: 'Date', link: '/notes/js/date' }],
+          },
+          {
+            text: 'Docker',
+            items: [{ text: '清理', link: '/notes/docker/clear' }],
+          },
+        ],
       },
       {
         text: 'Guide',
-        link: '/guide' ,
+        link: '/guide',
         items: [
           {
             text: 'Markdown',
             link: '/guide/markdown',
-          }
-        ]
-      }
+          },
+        ],
+      },
     ],
 
-    socialLinks: [
-      { icon: 'github', link: 'https://github.com/lllloo/note' }
-    ],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/lllloo/note' }],
 
     logo: '/logo.svg',
 
     editLink: {
       pattern: 'https://github.com/lllloo/note/edit/main/docs/:path',
-      text: 'Edit this page on GitHub'
+      text: 'Edit this page on GitHub',
     },
     search: {
-      provider: 'local'
+      provider: 'local',
     },
-  }
+  },
 })
