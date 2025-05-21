@@ -75,9 +75,9 @@ ls -alh
 - 外部資源以 `[名稱](網址)` 格式附於段落。
 - 內部連結使用 `[]()` 格式，必要時可加 `#` 錨點。
 
-內部連結：[CSS 新行規則](./notes/css/newline)
+<!-- 內部連結：[CSS 新行規則](./notes/css/newline)
 
-外部連結：[VitePress 官方文件](https://vitepress.dev/guide/markdown)
+外部連結：[VitePress 官方文件](https://vitepress.dev/guide/markdown) -->
 
 ## 圖片插入規範
 

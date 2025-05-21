@@ -58,9 +58,10 @@ export default defineConfig({
       },
       {
         text: 'Guide',
+        link: '/guide' ,
         items: [
           {
-            text: '文件指南',
+            text: 'Markdown',
             link: '/guide/markdown',
           }
         ]
