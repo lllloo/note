@@ -47,7 +47,10 @@ export default defineConfig({
           },
           {
             text: 'CSS',
-            items: [{ text: '換行', link: '/notes/css/newline' }],
+            items: [
+              { text: '換行', link: '/notes/css/newline' },
+              { text: '圖片', link: '/notes/css/img' }
+            ],
           },
           {
             text: 'JavaScript',
