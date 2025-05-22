@@ -78,8 +78,7 @@ docker system df
 - 檢視目前 Docker 佔用的磁碟空間與各資源用量。
 
 ::: warning 注意事項
-- 執行 `prune` 指令前，建議先用 `docker system df` 查看將被刪除的資源。
-- 若擔心誤刪，可加 `--dry-run` 模擬執行（部分指令支援）。
+執行 `prune` 指令前，建議先用 `docker system df` 查看將被刪除的資源。
 :::
 
 ## 結論

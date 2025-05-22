@@ -11,10 +11,11 @@ JavaScript 中日期處理的多種方法與技巧，包含原生 Date 物件、
 使用不同的日期處理庫建立特定日期時間的物件。
 
 ```javascript
-const dateObj = new Date('2023/01/01 08:01:02');
-const momentObj = moment('2023/01/01 08:01:02', "YYYY-MM-DD HH:mm:ss");
-const dayjsObj = dayjs('2023/01/01 08:01:02', "YYYY-MM-DD HH:mm:ss");
+const dateObj = new Date('2023/01/01 08:01:02')
+const momentObj = moment('2023/01/01 08:01:02', 'YYYY-MM-DD HH:mm:ss')
+const dayjsObj = dayjs('2023/01/01 08:01:02', 'YYYY-MM-DD HH:mm:ss')
 ```
+
 建立指定時間的日期物件，適用於初始化、資料轉換等情境。
 
 ### 取得年分
@@ -29,6 +30,7 @@ momentObj.format('YYYY')
 dayjsObj.format('YYYY')
 // '2023'
 ```
+
 常用於顯示年份、計算年齡等。
 
 ### 取得月份
@@ -44,6 +46,7 @@ momentObj.format('MM')
 dayjsObj.format('MM')
 // '01'
 ```
+
 原生 Date 需注意月份從 0 開始，Moment/Day.js 則為 01-12。
 
 ::: warning Date 物件提醒
@@ -62,6 +65,7 @@ momentObj.format('DD')
 dayjsObj.format('DD')
 // '01'
 ```
+
 適用於顯示日曆、日期選擇等。
 
 ### 取得星期幾
@@ -75,19 +79,21 @@ dateObj.getDay()
 momentObj.format('d')
 // '0'
 // return 0-6 星期天是 0
-dayjsObj.format('d')
-// '0'
-// return 0-6 星期天是 0
+dayjsObj.format('d')[
+  // '0'
+  // return 0-6 星期天是 0
 
-// 轉換為中文星期
-['日','一','二','三','四','五','六'][dateObj.getDay()]
+  // 轉換為中文星期
+  ('日', '一', '二', '三', '四', '五', '六')
+][dateObj.getDay()]
 // '日'
 ```
+
 可用於顯示中文星期、排程等。
 
 ### 取得時
 
-擷取時間的小時部分（24小時制）：
+擷取時間的小時部分（24 小時制）：
 
 ```javascript
 dateObj.getHours()
@@ -97,6 +103,7 @@ momentObj.format('HH')
 dayjsObj.format('HH')
 // '08'
 ```
+
 適用於時間顯示、時段判斷。
 
 ### 取得分
@@ -131,7 +138,7 @@ dayjsObj.format('ss')
 
 ```javascript
 // 原生 Date 物件（注意需手動處理月份 +1）
-`${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`
+;`${dateObj.getFullYear()}-${dateObj.getMonth() + 1}-${dateObj.getDate()}`
 // '2023-1-1'
 
 // Moment.js
@@ -142,6 +149,7 @@ momentObj.format('YYYY-MM-DD')
 dayjsObj.format('YYYY-MM-DD')
 // '2023-01-01'
 ```
+
 常用於 API 傳遞、資料顯示。
 
 ::: info 格式化比較
@@ -165,6 +173,7 @@ moment(`${year}/${month}`).daysInMonth()
 dayjs(`${year}/${month}`).daysInMonth()
 // 31
 ```
+
 適合月底計算、日期驗證。
 
 ### moment/dayjs 轉 Date Object
@@ -172,9 +181,10 @@ dayjs(`${year}/${month}`).daysInMonth()
 將 Moment 或 Day.js 物件轉換為原生 JavaScript Date 物件：
 
 ```javascript
-moment().toDate();
-dayjs().toDate();
+moment().toDate()
+dayjs().toDate()
 ```
+
 便於與原生 API 或第三方函式整合。
 
 ## 複雜操作範例
@@ -224,16 +234,16 @@ Day.js 需要先載入 `customParseFormat` 外掛才能使用自訂格式解析�
 將日期轉換為符合 ISO 8601 標準的字串格式，常用於 API 通訊或資料存儲。
 
 ```javascript
-const dateObj = new Date('2023/01/01 08:01:02');
-dateObj.toISOString();
+const dateObj = new Date('2023/01/01 08:01:02')
+dateObj.toISOString()
 // '2023-01-01T00:01:02.000Z'
 
 // 使用 moment
-momentObj.toISOString();
+momentObj.toISOString()
 // '2023-01-01T00:01:02.000Z'
 
 // 使用 dayjs
-dayjs('2023/01/01 08:01:02').toISOString();
+dayjs('2023/01/01 08:01:02').toISOString()
 // '2023-01-01T00:01:02.000Z'
 ```
 
@@ -245,12 +255,12 @@ dayjs('2023/01/01 08:01:02').toISOString();
 
 ```javascript
 // 使用 moment
-moment('2023-02-30').isValid()  // false (2月沒有30日)
-moment('2023-01-15').isValid()  // true
+moment('2023-02-30').isValid() // false (2月沒有30日)
+moment('2023-01-15').isValid() // true
 
 // 使用 dayjs
-dayjs('2023-02-30').isValid()  // false (2月沒有30日)
-dayjs('2023-01-15').isValid()  // true
+dayjs('2023-02-30').isValid() // false (2月沒有30日)
+dayjs('2023-01-15').isValid() // true
 ```
 
 ::: warning 注意
@@ -263,12 +273,12 @@ dayjs('2023-01-15').isValid()  // true
 
 ```javascript
 // 使用 moment
-moment().startOf('month').format('YYYY-MM-DD')  // 當月第一天
-moment().endOf('month').format('YYYY-MM-DD')    // 當月最後一天
+moment().startOf('month').format('YYYY-MM-DD') // 當月第一天
+moment().endOf('month').format('YYYY-MM-DD') // 當月最後一天
 
 // 使用 dayjs
-dayjs().startOf('month').format('YYYY-MM-DD')   // 當月第一天
-dayjs().endOf('month').format('YYYY-MM-DD')     // 當月最後一天
+dayjs().startOf('month').format('YYYY-MM-DD') // 當月第一天
+dayjs().endOf('month').format('YYYY-MM-DD') // 當月最後一天
 ```
 
 ::: tip 應用場景
