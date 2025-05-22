@@ -6,7 +6,7 @@
 
 ## 一鍵清除所有未使用資源
 
-```bash
+```sh
 docker system prune
 ```
 
@@ -22,7 +22,7 @@ docker system prune
 
 ## 加上 `-a`：更徹底
 
-```bash
+```sh
 docker system prune -a
 ```
 
@@ -34,7 +34,7 @@ docker system prune -a
 
 ## 移除已停止的容器
 
-```bash
+```sh
 docker container prune
 ```
 
@@ -42,20 +42,20 @@ docker container prune
 
 ## 移除未使用的映像檔
 
-```bash
+```sh
 docker image prune
 ```
 
 - 刪除未被任何容器使用的映像檔。
 - 加上 `-a` 可刪除所有未被任何容器使用的映像檔：
 
-  ```bash
+  ```sh
   docker image prune -a
   ```
 
 ## 移除未使用的網路
 
-```bash
+```sh
 docker network prune
 ```
 
@@ -63,7 +63,7 @@ docker network prune
 
 ## 移除未使用的資料卷
 
-```bash
+```sh
 docker volume prune
 ```
 
@@ -71,7 +71,7 @@ docker volume prune
 
 ## 小技巧：查看目前使用空間
 
-```bash
+```sh
 docker system df
 ```
 
