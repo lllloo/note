@@ -33,47 +33,51 @@ export default defineConfig({
 
     outline: [2, 3],
 
-    sidebar: [
-      {
-        text: 'Notes',
-        link: '/notes',
-        items: [
-          {
-            text: 'Git',
-            items: [
-              { text: '設定', link: '/notes/git/setting' },
-              { text: '指令', link: '/notes/git/command' },
-            ],
-          },
-          {
-            text: 'CSS',
-            items: [
-              { text: '換行', link: '/notes/css/newline' },
-              { text: '圖片', link: '/notes/css/img' },
-              { text: '捲軸', link: '/notes/css/scroller' }
-            ],
-          },
-          {
-            text: 'JavaScript',
-            items: [{ text: 'Date', link: '/notes/js/date' }],
-          },
-          {
-            text: 'Docker',
-            items: [{ text: '清理', link: '/notes/docker/clear' }],
-          },
-        ],
-      },
-      {
-        text: 'Guide',
-        link: '/guide',
-        items: [
-          {
-            text: 'Markdown',
-            link: '/guide/markdown',
-          },
-        ],
-      },
-    ],
+    sidebar: {
+      '/notes/': [
+        {
+          text: 'Notes',
+          link: '/notes',
+          items: [
+            {
+              text: 'Git',
+              items: [
+                { text: '設定', link: '/notes/git/setting' },
+                { text: '指令', link: '/notes/git/command' },
+              ],
+            },
+            {
+              text: 'CSS',
+              items: [
+                { text: '換行', link: '/notes/css/newline' },
+                { text: '圖片', link: '/notes/css/img' },
+                { text: '捲軸', link: '/notes/css/scroller' },
+              ],
+            },
+            {
+              text: 'JavaScript',
+              items: [{ text: 'Date', link: '/notes/js/date' }],
+            },
+            {
+              text: 'Docker',
+              items: [{ text: '清理', link: '/notes/docker/clear' }],
+            },
+          ],
+        },
+      ],
+      '/guide/': [
+        {
+          text: 'Guide',
+          link: '/guide',
+          items: [
+            {
+              text: 'Markdown',
+              link: '/guide/markdown',
+            },
+          ],
+        },
+      ],
+    },
 
     socialLinks: [{ icon: 'github', link: 'https://github.com/lllloo/note' }],
 
