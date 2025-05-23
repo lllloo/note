@@ -150,7 +150,7 @@ ls -alh
 - 格式範例：
 
 ```markdown
-## 參考
+## 參考資料
 
 - [參考網址 1](https://example.com)
 - [參考網址 2](https://example.com)

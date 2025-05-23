@@ -1,6 +1,6 @@
 # Date
 
-JavaScript 中日期處理的多種方法與技巧，包含原生 Date 物件、Moment.js 及 Day.js 庫的使用範例，適合用於前端與後端專案的日期操作。
+這份文件說明 JavaScript 原生 Date、Moment.js、Day.js 的常用日期操作方法，包含初始化、格式化、驗證等，適用於前端開發常見情境。
 
 [[toc]]
 
@@ -285,7 +285,7 @@ dayjs().endOf('month').format('YYYY-MM-DD') // 當月最後一天
 這個功能在開發月報表、財務統計或行事曆應用時特別有用。
 :::
 
-## 參考資源
+## 參考資料
 
 - [Date - JavaScript | MDN](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Date) - JavaScript 原生 Date 物件官方文件
 - [Moment.js](https://momentjs.com/) - 功能豐富的日期處理庫，不過現在推薦使用 Day.js
