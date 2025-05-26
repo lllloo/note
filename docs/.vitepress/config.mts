@@ -56,7 +56,10 @@ export default defineConfig({
             },
             {
               text: 'JavaScript',
-              items: [{ text: 'Date', link: '/notes/js/date' }],
+              items: [
+                { text: 'Date', link: '/notes/js/date' },
+                { text: 'package.js 更新', link: '/notes/js/update' },
+              ],
             },
             {
               text: 'Docker',

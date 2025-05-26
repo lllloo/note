@@ -6,27 +6,27 @@
 
 ## 一鍵清除所有未使用資源
 
+清除下列資源：
+
+- 停止的容器
+- 未使用的網路
+- 沒有被任何容器使用的映像檔
+- 建立時產生的中間暫存層
+
 ```sh
 docker system prune
 ```
-
-- 清除下列資源：
-  - 停止的容器
-  - 未使用的網路
-  - 沒有被任何容器使用的映像檔
-  - 建立時產生的中間暫存層
 
 ::: tip 指令說明
 適合快速釋放空間，建議定期執行。
 :::
 
-## 加上 `-a`：更徹底
+更徹底加上 `-a`
+額外刪除所有**未使用**的映像檔（包括已經建構但未被執行的）
 
 ```sh
 docker system prune -a
 ```
-
-- 額外刪除所有**未使用**的映像檔（包括已經建構但未被執行的）
 
 ::: warning 注意
 此指令會移除所有未被任何容器使用的映像檔，請確認無需保留再執行。
@@ -38,20 +38,23 @@ docker system prune -a
 docker container prune
 ```
 
-- 僅刪除所有已停止的容器。
-
 ## 移除未使用的映像檔
+
+移除未被任何容器使用的懸掛映像檔：
 
 ```sh
 docker image prune
 ```
 
-- 刪除未被任何容器使用的映像檔。
-- 加上 `-a` 可刪除所有未被任何容器使用的映像檔：
+加上 `-a` 可刪除所有未被任何容器使用的映像檔。
 
-  ```sh
-  docker image prune -a
-  ```
+```sh
+docker image prune -a
+```
+
+::: warning 注意
+`-a` 參數會移除所有未被任何容器使用的映像檔，請確認無需保留再執行。
+:::
 
 ## 移除未使用的網路
 
@@ -59,30 +62,18 @@ docker image prune
 docker network prune
 ```
 
-- 刪除未使用的自訂網路（不含預設網路）。
-
 ## 移除未使用的資料卷
 
 ```sh
 docker volume prune
 ```
 
-- 刪除未被任何容器掛載的資料卷。
-
-## 小技巧：查看目前使用空間
+## 查看目前使用空間
 
 ```sh
 docker system df
 ```
 
-- 檢視目前 Docker 佔用的磁碟空間與各資源用量。
+## 參考資料
 
-::: warning 注意事項
-執行 `prune` 指令前，建議先用 `docker system df` 查看將被刪除的資源。
-:::
-
-## 結論
-
-善用上述指令可有效釋放 Docker 佔用的磁碟空間。建議定期檢查與清理，並於操作前確認無需保留重要資源。
-
-如需自動化 Shell script 或有其他需求，歡迎提出！
+- [Docker Official Documentation - docker system prune](https://docs.docker.com/reference/cli/docker/system/prune/)
