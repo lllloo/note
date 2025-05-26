@@ -4,7 +4,7 @@
 
 [[toc]]
 
-### 使用 npm 指令
+## 使用 npm 指令
 
 - 檢查已安裝套件是否有新版本：
 
@@ -12,17 +12,17 @@
 npm outdated
 ```
 
-顯示所有過期的套件、目前版本、可更新版本與最新版本。
-
 - 更新 package.json 中定義的所有套件（依照版本範圍）：
 
 ```sh
+npm update
+# 更新套件並儲存到 package.json
 npm update --save
 ```
 
-適用於快速同步 package.json 內的依賴到允許範圍的最新版。
+> 注意：預設情況下，`npm update` 不會自動更新 package.json 內直接依賴的 semver 版本值。如果你希望一併更新 package.json 內的版本號，可以執行：`npm update --save`。
 
-### 使用 npm-check-updates (ncu)
+## 使用 npm-check-updates (ncu)
 
 - 安裝工具：
 
@@ -36,19 +36,20 @@ npm install -g npm-check-updates
 ncu
 ```
 
-- 自動更新 package.json 依賴版本：
+- 更新 package.json 依賴版本：
 
 ```sh
 ncu -u
 ```
 
+> 執行完 `ncu -u` 後，請務必再執行 `npm install`，以實際安裝更新後的套件版本。
+
 - 也可用 npx 方式臨時執行：
 
 ```sh
+# 檢查
 npx npm-check-updates
-```
-
-```sh
+# 更新
 npx npm-check-updates -u
 ```
 
