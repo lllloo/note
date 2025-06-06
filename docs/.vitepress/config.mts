@@ -60,6 +60,7 @@ export default defineConfig({
                 { text: 'Date', link: '/notes/js/date' },
                 { text: 'package.js 更新', link: '/notes/js/update' },
                 { text: 'Volta', link: '/notes/js/volta' },
+                { text: 'cookie', link: '/notes/js/cookie' },
               ],
             },
             {
