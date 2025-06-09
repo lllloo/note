@@ -93,6 +93,12 @@ export default defineConfig({
       pattern: 'https://github.com/lllloo/note/edit/main/docs/:path',
       text: 'Edit this page on GitHub',
     },
+    lastUpdated: {
+      text: 'Updated at',
+      formatOptions: {
+        dateStyle: 'short',
+      }
+    },
     search: {
       provider: 'local',
     },
