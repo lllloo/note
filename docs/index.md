@@ -4,20 +4,18 @@ layout: home
 
 hero:
   name: "Barney's Notes"
-  text: '沒有副標題'
+  text: '筆記與指南'
   tagline: 記錄用筆記
   actions:
     - theme: brand
       text: Notes
       link: /notes
-    # - theme: alt
-    #   text: About
-    #   link: /about
-# features:
-#   - title: 關於我
-#     details: 介紹我的背景、技能與經歷
-#   - title: 作品集
-#     details: 展示我完成的專案與作品
-#   - title: 聯絡方式
-#     details: 提供聯絡資訊，歡迎合作與交流
+    - theme: alt
+      text: Guide
+      link: /guide
+features:
+  - title: 筆記分類
+    details: 彙整 CSS、Docker、Git、JavaScript 等主題筆記，便於查閱與學習。
+  - title: 使用指南
+    details: 提供 Markdown 編排規範與文件撰寫說明，確保內容一致且易於維護。
 ---
