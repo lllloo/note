@@ -61,6 +61,7 @@ export default defineConfig({
                 { text: 'package.js 更新', link: '/notes/js/update' },
                 { text: 'Volta', link: '/notes/js/volta' },
                 { text: 'cookie', link: '/notes/js/cookie' },
+                { text: 'URL query string', link: '/notes/js/URLQueryString' },
               ],
             },
             {
