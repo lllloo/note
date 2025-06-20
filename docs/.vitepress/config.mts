@@ -40,18 +40,9 @@ export default defineConfig({
           link: '/notes',
           items: [
             {
-              text: 'Git',
+              text: '前端相關',
               items: [
-                { text: '設定', link: '/notes/git/setting' },
-                { text: '指令', link: '/notes/git/command' },
-              ],
-            },
-            {
-              text: 'CSS',
-              items: [
-                { text: '換行', link: '/notes/css/newline' },
-                { text: '圖片', link: '/notes/css/img' },
-                { text: '捲軸', link: '/notes/css/scroller' },
+                { text: '只能輸入數字跟小數點', link: '/notes/input-number' },
               ],
             },
             {
@@ -65,8 +56,23 @@ export default defineConfig({
               ],
             },
             {
+              text: 'CSS',
+              items: [
+                { text: '換行', link: '/notes/css/newline' },
+                { text: '圖片', link: '/notes/css/img' },
+                { text: '捲軸', link: '/notes/css/scroller' },
+              ],
+            },
+            {
               text: 'Docker',
               items: [{ text: '清理', link: '/notes/docker/clear' }],
+            },
+            {
+              text: 'Git',
+              items: [
+                { text: '設定', link: '/notes/git/setting' },
+                { text: '指令', link: '/notes/git/command' },
+              ],
             },
           ],
         },
@@ -97,7 +103,7 @@ export default defineConfig({
       text: 'Updated at',
       formatOptions: {
         dateStyle: 'short',
-      }
+      },
     },
     search: {
       provider: 'local',
