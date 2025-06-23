@@ -1,4 +1,4 @@
-# js-cookie 使用教學
+# Cookie
 
 這份文件說明如何在前端專案中使用 [js-cookie](https://github.com/js-cookie/js-cookie) 套件進行 Cookie 操作，包含安裝、基本用法、常見情境與注意事項，適合日常前端開發參考。
 
