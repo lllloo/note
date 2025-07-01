@@ -56,6 +56,12 @@ export default defineConfig({
               ],
             },
             {
+              text: 'TypeScript',
+              items: [
+                { text: 'JSDoc 型別註解', link: '/notes/typescript/jsdoc' },
+              ],
+            },
+            {
               text: 'CSS',
               items: [
                 { text: '換行', link: '/notes/css/newline' },
