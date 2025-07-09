@@ -43,6 +43,7 @@ export default defineConfig({
               text: '前端相關',
               items: [
                 { text: '只能輸入數字跟小數點', link: '/notes/input-number' },
+                { text: 'Paged.js', link: '/notes/paged-js' },
               ],
             },
             {
