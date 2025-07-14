@@ -14,21 +14,12 @@
   })
 
   const formatDecimal = (value: string) => {
-    // 只允許一個負號開頭、數字、只允許一個小數點且小數點後最多兩位
-    // 1. 移除所有非數字、非小數點、非負號
-    value = value.replace(/[^\d.-]/g, '')
-    // 2. 處理多個小數點與負號
-    value = value.replace(/(?!^)-/g, '') // 只允許一個負號且在最前面
-    value = value.replace(/(\..*)\./g, '$1') // 只允許一個小數點
-    // 3. 用 regex 擷取正確格式：可選負號，數字，可選小數點與最多兩位
-    const match = value.match(/^(-)?(\d*)(\.(\d{0,2})?)?/)
-    if (!match) return ''
-    let result = ''
-
-    if (match[1]) result += '-'
-    if (match[2]) result += match[2].replace(/^0+(?=\d)/, '') // 處理前導零
-    if (match[3]) result += match[3]
-    return result
+    return value
+      .replace(/[^\d.-]/g, '')
+      .replace(/(?!^)-/g, '')
+      .replace(/(\..*)\./g, '$1')
+      .replace(/^(-?\d*\.\d{0,2}).*$/, '$1')
+      .replace(/^(-?)0+(\d)/, '$1$2')
   }
 </script>
 ```
