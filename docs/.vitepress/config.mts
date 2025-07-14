@@ -5,6 +5,9 @@ export default defineConfig({
   title: "Barney's Notes",
   description: 'A Note Site',
   lang: 'zh-TW',
+  sitemap: {
+    hostname: 'https://bugloop.com',
+  },
   head: [
     ['meta', { charset: 'UTF-8' }],
     [
