@@ -47,6 +47,7 @@ export default defineConfig({
               items: [
                 { text: '只能輸入數字跟小數點', link: '/notes/frontend/input-number' },
                 { text: 'Paged.js', link: '/notes/frontend/paged-js' },
+                { text: '前端檔案下載', link: '/notes/frontend/file-download' },
               ],
             },
             {
