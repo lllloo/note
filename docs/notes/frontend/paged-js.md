@@ -44,6 +44,42 @@
 }
 ```
 
+## 分頁控制
+
+### 避免元素內分頁
+
+使用 `break-inside: avoid;` 可以防止元素在分頁時被切斷，確保內容的完整性。
+
+```css
+.no-page-break {
+  break-inside: avoid;
+}
+```
+
+#### 常見使用場景
+
+```css
+/* 防止表格在分頁時被切斷 */
+table {
+  break-inside: avoid;
+}
+
+/* 防止重要段落被分頁切斷 */
+.important-section {
+  break-inside: avoid;
+}
+
+/* 防止圖片與說明文字分離 */
+.figure-with-caption {
+  break-inside: avoid;
+}
+```
+
+#### 注意事項
+
+- 當元素內容超過一整頁時，`break-inside: avoid;` 將不會生效
+- 建議搭配其他分頁控制屬性使用，如 `break-before` 和 `break-after`
+
 ## 參考資料
 
 - [Paged.js 官方網站](https://www.pagedjs.org/)
