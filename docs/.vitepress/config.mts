@@ -49,6 +49,7 @@ export default defineConfig({
                 { text: 'Paged.js', link: '/notes/frontend/paged-js' },
                 { text: '前端檔案下載', link: '/notes/frontend/file-download' },
                 { text: '無法取得 Content-Disposition ?', link: '/notes/frontend/error-content-disposition' },
+                { text: 'scrollIntoView 滾動到元素', link: '/notes/frontend/scroll-into-view' },
               ],
             },
             {
