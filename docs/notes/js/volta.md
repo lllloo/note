@@ -31,6 +31,12 @@ volta list node
 volta list
 ```
 
+## 查看所有 Volta 管理的工具與版本
+
+```sh
+volta list all
+```
+
 ## package.json 設定範例
 
 當你使用 `volta pin` 指令後，Volta 會自動在專案的 `package.json` 中添加 `volta` 欄位：
