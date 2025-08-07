@@ -61,6 +61,10 @@ export default defineConfig({
                   text: '無法取得 Content-Disposition ?',
                   link: '/notes/issues/content-disposition',
                 },
+                {
+                  text: '圖片上傳後畫面會旋轉',
+                  link: '/notes/issues/image-orientation',
+                },
               ],
             },
             {
