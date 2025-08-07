@@ -45,10 +45,22 @@ export default defineConfig({
             {
               text: '前端相關',
               items: [
-                { text: '只能輸入數字跟小數點', link: '/notes/frontend/input-number' },
+                {
+                  text: '只能輸入數字跟小數點',
+                  link: '/notes/frontend/input-number',
+                },
                 { text: 'Paged.js', link: '/notes/frontend/paged-js' },
                 { text: '前端檔案下載', link: '/notes/frontend/file-download' },
-                { text: '無法取得 Content-Disposition ?', link: '/notes/frontend/error-content-disposition' },
+              ],
+            },
+            {
+              text: '疑難雜症',
+              collapsed: true,
+              items: [
+                {
+                  text: '無法取得 Content-Disposition ?',
+                  link: '/notes/issues/content-disposition',
+                },
               ],
             },
             {
