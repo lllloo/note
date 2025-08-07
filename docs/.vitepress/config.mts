@@ -65,6 +65,10 @@ export default defineConfig({
                   text: '圖片上傳後畫面會旋轉',
                   link: '/notes/issues/image-orientation',
                 },
+                {
+                  text: 'iOS image 高度異常',
+                  link: '/notes/issues/image-height',
+                },
               ],
             },
             {
