@@ -39,18 +39,18 @@ export default defineConfig({
     sidebar: {
       '/notes/': [
         {
-          text: 'Notes',
+          text: '筆記總覽',
           link: '/notes',
           items: [
             {
-              text: '前端相關',
+              text: '前端',
               items: [
                 {
-                  text: '只能輸入數字跟小數點',
+                  text: '數字/小數點輸入限制',
                   link: '/notes/frontend/input-number',
                 },
                 { text: 'Paged.js', link: '/notes/frontend/paged-js' },
-                { text: '前端檔案下載', link: '/notes/frontend/file-download' },
+                { text: '檔案下載', link: '/notes/frontend/file-download' },
               ],
             },
             {
@@ -58,15 +58,15 @@ export default defineConfig({
               collapsed: true,
               items: [
                 {
-                  text: '無法取得 Content-Disposition ?',
+                  text: 'Content-Disposition 無法取得',
                   link: '/notes/issues/content-disposition',
                 },
                 {
-                  text: '圖片上傳後畫面會旋轉',
+                  text: '圖片上傳後旋轉',
                   link: '/notes/issues/image-orientation',
                 },
                 {
-                  text: 'iOS image 高度異常',
+                  text: 'iOS 圖片高度異常',
                   link: '/notes/issues/image-height',
                 },
               ],
