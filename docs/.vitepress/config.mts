@@ -29,9 +29,10 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Notes', link: '/notes' },
-      { text: 'Guide', link: '/guide' },
+      { text: '首頁', link: '/' },
+      { text: '筆記', link: '/notes' },
+      { text: '疑難雜症', link: '/issues' },
+      { text: '指南', link: '/guide' },
     ],
 
     outline: [2, 3],
@@ -51,24 +52,6 @@ export default defineConfig({
                 },
                 { text: 'Paged.js', link: '/notes/frontend/paged-js' },
                 { text: '檔案下載', link: '/notes/frontend/file-download' },
-              ],
-            },
-            {
-              text: '疑難雜症',
-              collapsed: true,
-              items: [
-                {
-                  text: 'Content-Disposition 無法取得',
-                  link: '/notes/issues/content-disposition',
-                },
-                {
-                  text: '圖片上傳後旋轉',
-                  link: '/notes/issues/image-orientation',
-                },
-                {
-                  text: 'iOS 圖片高度異常',
-                  link: '/notes/issues/image-height',
-                },
               ],
             },
             {
@@ -105,6 +88,26 @@ export default defineConfig({
                 { text: '設定', link: '/notes/git/setting' },
                 { text: '指令', link: '/notes/git/command' },
               ],
+            },
+          ],
+        },
+      ],
+      '/issues/': [
+        {
+          text: '疑難雜症',
+          link: '/issues',
+          items: [
+            {
+              text: 'Content-Disposition 無法取得',
+              link: '/issues/content-disposition',
+            },
+            {
+              text: '圖片上傳後旋轉',
+              link: '/issues/image-orientation',
+            },
+            {
+              text: 'iOS 圖片高度異常',
+              link: '/issues/image-height',
             },
           ],
         },
