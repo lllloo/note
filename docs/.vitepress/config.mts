@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Barney's Notes",
-  description: 'A Note Site',
+  description: '前端開發、技術筆記與學習心得分享。',
   lang: 'zh-TW',
   sitemap: {
     hostname: 'https://bugloop.com',

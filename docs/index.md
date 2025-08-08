@@ -2,10 +2,12 @@
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
+title: '前端開發筆記'
+
 hero:
   name: "Barney's Notes"
-  text: '筆記與指南'
-  tagline: 記錄用筆記
+  text: '前端開發心得分享'
+  tagline: 記錄隨筆
   actions:
     - theme: brand
       text: Notes
