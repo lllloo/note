@@ -109,6 +109,10 @@ export default defineConfig({
               text: 'iOS 圖片高度異常',
               link: '/issues/image-height',
             },
+            {
+              text: 'Line 無法跳轉 Blob URL',
+              link: '/issues/line-browser-blob-url',
+            }
           ],
         },
       ],
