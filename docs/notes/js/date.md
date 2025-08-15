@@ -2,7 +2,22 @@
 
 這份文件說明 JavaScript 原生 Date、Moment.js、Day.js 的常用日期操作方法，包含初始化、格式化、驗證等，適用於前端開發常見情境。
 
+::: tip 資料儲存建議
+建議所有日期時間資料（無論是 API 傳輸、資料庫儲存、JSON 欄位等）都統一使用 `toISOString()` 格式（如：`2025-08-15T12:34:56.789Z`）。
+
+- 標準化：符合 ISO 8601 標準，易於跨系統交換。
+- 時區明確：預設為 UTC，避免本地時區混淆。
+- JSON 友好：Date 物件可以直接轉換為 JSON 字串會變成 ISO 格式。
+
+範例：
+```js
+const now = new Date()
+const isoString = now.toISOString() // "2025-08-15T12:34:56.789Z"
+```
+:::
+
 [[toc]]
+
 
 ## 基本操作
 
@@ -71,12 +86,13 @@ dateObj.getDay()
 momentObj.format('d')
 // '0'
 // 回傳 0-6，星期天是 0
-dayjsObj.format('d')
-// '0'
-// 回傳 0-6，星期天是 0
+dayjsObj.format('d')[
+  // '0'
+  // 回傳 0-6，星期天是 0
 
-// 轉換為中文星期
-['日', '一', '二', '三', '四', '五', '六'][dateObj.getDay()]
+  // 轉換為中文星期
+  ('日', '一', '二', '三', '四', '五', '六')
+][dateObj.getDay()]
 // '日'
 ```
 
