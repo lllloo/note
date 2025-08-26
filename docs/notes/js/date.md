@@ -10,14 +10,15 @@
 - JSON 友好：Date 物件可以直接轉換為 JSON 字串會變成 ISO 格式。
 
 範例：
+
 ```js
 const now = new Date()
 const isoString = now.toISOString() // "2025-08-15T12:34:56.789Z"
 ```
+
 :::
 
 [[toc]]
-
 
 ## 基本操作
 
@@ -86,13 +87,12 @@ dateObj.getDay()
 momentObj.format('d')
 // '0'
 // 回傳 0-6，星期天是 0
-dayjsObj.format('d')[
-  // '0'
-  // 回傳 0-6，星期天是 0
+dayjsObj.format('d')
+// '0'
+// 回傳 0-6，星期天是 0
 
-  // 轉換為中文星期
-  ('日', '一', '二', '三', '四', '五', '六')
-][dateObj.getDay()]
+// 轉換為中文星期
+;['日', '一', '二', '三', '四', '五', '六'][dateObj.getDay()]
 // '日'
 ```
 
