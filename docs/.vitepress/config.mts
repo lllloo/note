@@ -52,6 +52,7 @@ export default defineConfig({
                 },
                 { text: 'Paged.js', link: '/notes/frontend/paged-js' },
                 { text: '檔案下載', link: '/notes/frontend/file-download' },
+                { text: 'FullCalendar', link: '/notes/frontend/fullcalendar' }
               ],
             },
             {
