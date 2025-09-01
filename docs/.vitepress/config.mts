@@ -78,6 +78,7 @@ export default defineConfig({
               text: 'TypeScript',
               items: [
                 { text: 'JSDoc 型別註解', link: '/notes/typescript/jsdoc' },
+                { text: 'Vue 的 JSDoc 型別註解', link: '/notes/typescript/vue-jsdoc' },
               ],
             },
             {

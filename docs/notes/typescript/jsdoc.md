@@ -1,71 +1,86 @@
 # JSDoc 與 TypeScript 型別註解範例
 
-這份文件說明如何在 Vue 專案中，利用 JSDoc 加上型別註解。
+JSDoc 可用於 JavaScript/TypeScript 進行型別註解，提升編輯器提示與型別安全。
 
 [[toc]]
 
-## ref
 
-以下範例展示如何在 ref 變數上使用 JSDoc 型別註解：
+## @type
 
-```ts
-/** @type {import('vue').Ref<string>} */
-const name = ref('')
+### 範例
+
+```js
+/**
+ * @type {string}
+ */
+var s
+
+/** @type {Window} */
+var win
+
+/** @type {PromiseLike<string>} */
+var promisedString
+
+// 你可以使用 DOM 屬性指定 HTML 元素
+/** @type {HTMLElement} */
+var myElement = document.querySelector(selector)
 ```
 
-物件型別
+### 型別轉換 (Casts)
 
-```ts
-/** @type {import('vue').Ref<{id: number, name: string}>} */
-const user = ref({ id: 0, name: '' })
+TypeScript 借用自 Google Closure 的型別轉換語法，可以在任何括號運算式前加上 `@type` 標籤來進行型別轉換。
+
+```js
+var numberOrString = Math.random() < 0.5 ? 'hello' : 100
+var typeAssertedNumber = /** @type {number} */ (numberOrString)
 ```
 
-有時候你會遇到變數型別不明確，想要用 JSDoc 型別斷言搭配 ref，例如：
+你甚至可以像 TypeScript 一樣轉型為 const：
 
-```ts
-/** @type any */
-let x = ''
-// 將 x 斷言為 string 型別後傳給 ref
-const y = ref(/** @type {string} */ x)
-console.log(y.value) // y.value 型別會被推斷為 string
+```js
+let one = /** @type {const} */ (1)
 ```
 
-這種寫法常見於純 JavaScript 專案，利用 JSDoc 型別斷言讓 TypeScript 能正確推斷型別。
+## @param and @returns
 
-## computed
+### 範例
 
-以下範例展示如何在 computed 屬性上使用 JSDoc 型別註解：
-
-```ts
-import { computed } from 'vue'
-
-/** @type {import('vue').ComputedRef<number>} */
-const count = computed(() => 123)
+```js
+/**
+ * 加總兩個數字
+ * @param {number} a 第一個數字
+ * @param {number} b 第二個數字
+ * @returns {number} 相加結果
+ */
+function add(a, b) {
+  return a + b
+}
 ```
 
-物件型別
+## @typedef
 
-```ts
-/** @type {import('vue').ComputedRef<{id: number, name: string}>} */
-const user = computed(() => ({ id: 1, name: 'Alice' }))
-```
+### 範例
 
-## props
+`@typedef` 用於定義複雜型別或物件型別，方便在多處重複使用型別註解。
 
-以下範例展示如何在 defineProps 內使用 JSDoc 註解 props 型別：
+範例：
 
-```ts
-const props = defineProps({
-  list: {
-    /** @type import('vue').PropType<{id: number, name: string }[]> */
-    type: Array,
-    default: () => [],
-  },
-})
+```js
+/**
+ * @typedef {Object} User
+ * @property {string} name 使用者名稱
+ * @property {number} age 年齡
+ */
+
+/**
+ * @type {User}
+ */
+const user = {
+  name: 'Alice',
+  age: 30,
+}
 ```
 
 ## 參考資料
 
-- [TypeScript with Composition API](https://vuejs.org/guide/typescript/composition-api.html)
-- [TypeScript without TypeScript -- JSDoc superpowers](https://fettblog.eu/typescript-jsdoc-superpowers/)
-- [Boost Your JavaScript with JSDoc Typing](https://dev.to/samuel-braun/boost-your-javascript-with-jsdoc-typing-3hb3)
+- [TypeScript 官方 JSDoc 型別文件](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html)
