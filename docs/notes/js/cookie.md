@@ -59,6 +59,29 @@ myCookies.set('token', 'abc')
 myCookies.remove('token')
 ```
 
+## 最佳預設屬性（SameSite & Secure）
+
+建議設定 Cookie 時，預設加上 `SameSite` 和 `Secure` 屬性，提升安全性：
+
+```js
+Cookies.set('name', 'value', {
+  sameSite: 'Lax', // 防止 CSRF，推薦預設 Lax
+  secure: true, // 僅 HTTPS 傳送 Cookie
+})
+```
+
+可用 `withAttributes` 建立帶有安全預設的新實例：
+
+```js
+const safeCookies = Cookies.withAttributes({
+  sameSite: 'Lax',
+  secure: true,
+})
+safeCookies.set('token', 'abc')
+```
+
+**建議**：除非有特殊需求，Cookie 預設都加上 `SameSite: 'Lax'` 與 `Secure: true`，確保安全性。
+
 ## 如果有 node.js 需求可以考慮 universal-cookie
 
 雖然 js-cookie 已能滿足大多數前端需求，但若你的專案有以下情境，建議改用 [universal-cookie](https://github.com/reactivestack/cookies) ：
