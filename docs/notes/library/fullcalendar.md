@@ -154,7 +154,3 @@ calendarApi.next()
 
 - [FullCalendar 官方文件](https://fullcalendar.io/docs)
 - [Vue 3 版本官方教學](https://fullcalendar.io/docs/vue)
-
-```
-
-```

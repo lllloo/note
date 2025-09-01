@@ -50,15 +50,20 @@ export default defineConfig({
                   text: '數字/小數點輸入限制',
                   link: '/notes/frontend/input-number',
                 },
-                { text: 'Paged.js', link: '/notes/frontend/paged-js' },
-                { text: '檔案下載', link: '/notes/frontend/file-download' },
-                { text: 'FullCalendar', link: '/notes/frontend/fullcalendar' },
+                  { text: '檔案下載', link: '/notes/frontend/file-download' },
                 {
                   text: '安全使用 target="_blank"',
                   link: '/notes/frontend/target-blank-security',
                 },
               ],
             },
+              {
+                text: 'Library',
+                items: [
+                  { text: 'Paged.js', link: '/notes/library/paged-js' },
+                  { text: 'FullCalendar', link: '/notes/library/fullcalendar' },
+                ],
+              },
             {
               text: 'JavaScript',
               items: [
