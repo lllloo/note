@@ -52,7 +52,11 @@ export default defineConfig({
                 },
                 { text: 'Paged.js', link: '/notes/frontend/paged-js' },
                 { text: '檔案下載', link: '/notes/frontend/file-download' },
-                { text: 'FullCalendar', link: '/notes/frontend/fullcalendar' }
+                { text: 'FullCalendar', link: '/notes/frontend/fullcalendar' },
+                {
+                  text: '安全使用 target="_blank"',
+                  link: '/notes/frontend/target-blank-security',
+                },
               ],
             },
             {
@@ -113,7 +117,7 @@ export default defineConfig({
             {
               text: 'Line 無法跳轉 Blob URL',
               link: '/issues/line-browser-blob-url',
-            }
+            },
           ],
         },
       ],
