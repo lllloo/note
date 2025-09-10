@@ -50,20 +50,21 @@ export default defineConfig({
                   text: '數字/小數點輸入限制',
                   link: '/notes/frontend/input-number',
                 },
-                  { text: '檔案下載', link: '/notes/frontend/file-download' },
+                { text: '檔案下載', link: '/notes/frontend/file-download' },
                 {
                   text: '安全使用 target="_blank"',
                   link: '/notes/frontend/target-blank-security',
                 },
+                { text: '剪貼簿複製文字', link: '/notes/frontend/clipboard' },
               ],
             },
-              {
-                text: 'Library',
-                items: [
-                  { text: 'Paged.js', link: '/notes/library/paged-js' },
-                  { text: 'FullCalendar', link: '/notes/library/fullcalendar' },
-                ],
-              },
+            {
+              text: 'Library',
+              items: [
+                { text: 'Paged.js', link: '/notes/library/paged-js' },
+                { text: 'FullCalendar', link: '/notes/library/fullcalendar' },
+              ],
+            },
             {
               text: 'JavaScript',
               items: [
@@ -78,7 +79,10 @@ export default defineConfig({
               text: 'TypeScript',
               items: [
                 { text: 'JSDoc 型別註解', link: '/notes/typescript/jsdoc' },
-                { text: 'Vue 的 JSDoc 型別註解', link: '/notes/typescript/vue-jsdoc' },
+                {
+                  text: 'Vue 的 JSDoc 型別註解',
+                  link: '/notes/typescript/vue-jsdoc',
+                },
               ],
             },
             {
