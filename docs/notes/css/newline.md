@@ -61,6 +61,21 @@ word-wrap: break-word;
 word-break: break-all;
 ```
 
+### white-space
+
+- 控制元素內空白字元與換行的呈現方式。
+- 常用值：
+  - `normal`（預設）：連續空白合併，遇到邊界自動換行。
+  - `nowrap`：所有內容在同一行顯示，不自動換行。
+  - `pre`：保留所有空白與換行，類似 `<pre>` 標籤。
+  - `pre-wrap`：保留空白與換行，並在邊界自動換行。
+  - `pre-line`：合併多餘空白，保留換行，遇到邊界自動換行。
+
+```css
+white-space: pre-wrap;
+white-space: nowrap;
+```
+
 ## 保留空白與換行 {#whitespace}
 
 - `white-space: pre-wrap;` 可保留空白字元與換行符號。
@@ -104,6 +119,6 @@ word-break: break-all;
 
 - tailwind：`line-clamp-1`、`line-clamp-2` ...
 
-## 參考
+## 參考資料
 
 - [Tailwind CSS 文檔](https://tailwindcss.com/docs/word-break)
