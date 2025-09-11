@@ -83,6 +83,7 @@ export default defineConfig({
                   text: 'Vue 的 JSDoc 型別註解',
                   link: '/notes/typescript/vue-jsdoc',
                 },
+                { text: 'TS 工具類型', link: '/notes/typescript/utility-types' },
               ],
             },
             {
