@@ -10,6 +10,18 @@ export default defineConfig({
   },
   head: [
     ['meta', { charset: 'UTF-8' }],
+    ['link', { rel: 'icon', href: '/logo.svg' }],
+    ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }],
+    ['meta', { name: 'description', content: '前端開發、技術筆記與學習心得分享。' }],
+    ['meta', { property: 'og:title', content: "Barney's Notes" }],
+    ['meta', { property: 'og:description', content: '前端開發、技術筆記與學習心得分享。' }],
+    ['meta', { property: 'og:url', content: 'https://bugloop.com' }],
+    ['meta', { property: 'og:image', content: 'https://bugloop.com/logo.svg' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:title', content: "Barney's Notes" }],
+    ['meta', { name: 'twitter:description', content: '前端開發、技術筆記與學習心得分享。' }],
+    ['meta', { name: 'twitter:image', content: 'https://bugloop.com/logo.svg' }],
     [
       'script',
       {
