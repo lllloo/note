@@ -81,11 +81,12 @@ export default defineConfig({
             {
               text: 'JavaScript',
               items: [
-                { text: 'Date', link: '/notes/js/date' },
-                { text: 'package.js 更新', link: '/notes/js/update' },
-                { text: 'Volta', link: '/notes/js/volta' },
-                { text: 'cookie', link: '/notes/js/cookie' },
-                { text: 'URL query string', link: '/notes/js/URLQueryString' },
+                  { text: 'Date', link: '/notes/js/date' },
+                  { text: 'package.js 更新', link: '/notes/js/update' },
+                  { text: 'Volta', link: '/notes/js/volta' },
+                  { text: 'cookie', link: '/notes/js/cookie' },
+                  { text: 'URL query string', link: '/notes/js/URLQueryString' },
+                  { text: '深拷貝 structuredClone', link: '/notes/js/deep-clone' },
               ],
             },
             {
