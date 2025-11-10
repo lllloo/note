@@ -106,6 +106,7 @@ export default defineConfig({
                 { text: '換行', link: '/notes/css/newline' },
                 { text: '圖片', link: '/notes/css/img' },
                 { text: '捲軸', link: '/notes/css/scroller' },
+                { text: '最後一行移除下邊框', link: '/notes/css/remove-last-row-border' },
               ],
             },
             {
