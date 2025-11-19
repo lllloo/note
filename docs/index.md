@@ -16,6 +16,9 @@ hero:
       text: 疑難雜症
       link: /issues
     - theme: alt
+      text: 系統功能
+      link: /guide/capabilities
+    - theme: alt
       text: 使用指南
       link: /guide
 features:

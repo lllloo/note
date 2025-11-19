@@ -153,6 +153,10 @@ export default defineConfig({
           link: '/guide',
           items: [
             {
+              text: '系統功能介紹',
+              link: '/guide/capabilities',
+            },
+            {
               text: 'Markdown',
               link: '/guide/markdown',
             },
