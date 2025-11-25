@@ -12,17 +12,38 @@ export default defineConfig({
   head: [
     ['meta', { charset: 'UTF-8' }],
     ['link', { rel: 'icon', href: '/logo.svg' }],
-    ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }],
-    ['meta', { name: 'description', content: '前端開發、技術筆記與學習心得分享。' }],
+    [
+      'meta',
+      { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+    ],
+    [
+      'meta',
+      { name: 'description', content: '前端開發、技術筆記與學習心得分享。' },
+    ],
     ['meta', { property: 'og:title', content: "Barney's Notes" }],
-    ['meta', { property: 'og:description', content: '前端開發、技術筆記與學習心得分享。' }],
+    [
+      'meta',
+      {
+        property: 'og:description',
+        content: '前端開發、技術筆記與學習心得分享。',
+      },
+    ],
     ['meta', { property: 'og:url', content: 'https://bugloop.com' }],
     ['meta', { property: 'og:image', content: 'https://bugloop.com/logo.svg' }],
     ['meta', { property: 'og:type', content: 'website' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:title', content: "Barney's Notes" }],
-    ['meta', { name: 'twitter:description', content: '前端開發、技術筆記與學習心得分享。' }],
-    ['meta', { name: 'twitter:image', content: 'https://bugloop.com/logo.svg' }],
+    [
+      'meta',
+      {
+        name: 'twitter:description',
+        content: '前端開發、技術筆記與學習心得分享。',
+      },
+    ],
+    [
+      'meta',
+      { name: 'twitter:image', content: 'https://bugloop.com/logo.svg' },
+    ],
     [
       'script',
       {
@@ -81,12 +102,15 @@ export default defineConfig({
             {
               text: 'JavaScript',
               items: [
-                  { text: 'Date', link: '/notes/js/date' },
-                  { text: 'package.js 更新', link: '/notes/js/update' },
-                  { text: 'Volta', link: '/notes/js/volta' },
-                  { text: 'cookie', link: '/notes/js/cookie' },
-                  { text: 'URL query string', link: '/notes/js/URLQueryString' },
-                  { text: '深拷貝 structuredClone', link: '/notes/js/deep-clone' },
+                { text: 'Date', link: '/notes/js/date' },
+                { text: 'package.js 更新', link: '/notes/js/update' },
+                { text: 'Volta', link: '/notes/js/volta' },
+                { text: 'cookie', link: '/notes/js/cookie' },
+                { text: 'URL query string', link: '/notes/js/URLQueryString' },
+                {
+                  text: '深拷貝 structuredClone',
+                  link: '/notes/js/deep-clone',
+                },
               ],
             },
             {
@@ -97,7 +121,10 @@ export default defineConfig({
                   text: 'Vue 的 JSDoc 型別註解',
                   link: '/notes/typescript/vue-jsdoc',
                 },
-                { text: 'TS 工具類型', link: '/notes/typescript/utility-types' },
+                {
+                  text: 'TS 工具類型',
+                  link: '/notes/typescript/utility-types',
+                },
               ],
             },
             {
@@ -106,7 +133,10 @@ export default defineConfig({
                 { text: '換行', link: '/notes/css/newline' },
                 { text: '圖片', link: '/notes/css/img' },
                 { text: '捲軸', link: '/notes/css/scroller' },
-                { text: '最後一行移除下邊框', link: '/notes/css/remove-last-row-border' },
+                {
+                  text: '最後一行移除下邊框',
+                  link: '/notes/css/remove-last-row-border',
+                },
               ],
             },
             {
@@ -153,8 +183,38 @@ export default defineConfig({
           link: '/guide',
           items: [
             {
-              text: 'Markdown',
-              link: '/guide/markdown',
+              text: 'GitHub Copilot 自訂指令',
+              items: [
+                {
+                  text: 'Instructions',
+                  link: '/guide/instructions.instructions',
+                },
+                {
+                  text: 'Prompt',
+                  link: '/guide/prompt.instructions',
+                },
+              ],
+            },
+            {
+              text: '特定自訂指令',
+              items: [
+                {
+                  text: 'Markdown',
+                  link: '/guide/markdown.instructions',
+                },
+                {
+                  text: 'Docker',
+                  link: '/guide/containerization-docker-best-practices.instructions',
+                },
+                {
+                  text: 'Vue',
+                  link: '/guide/vuejs3.instructions',
+                },
+                {
+                  text: 'Typescript',
+                  link: '/guide/typescript-5-es2022.instructions',
+                },
+              ],
             },
           ],
         },
@@ -180,6 +240,6 @@ export default defineConfig({
     },
   },
   vite: {
-    plugins: [llmstxt()]
-  }
+    plugins: [llmstxt()],
+  },
 })
