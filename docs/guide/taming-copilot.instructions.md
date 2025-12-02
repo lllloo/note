@@ -1,6 +1,6 @@
 ---
 applyTo: '**'
-description: 'Prevent Copilot from wreaking havoc across your codebase, keeping it under control.'
+description: '防止 Copilot 在你的程式碼庫中造成混亂，讓它保持在可控範圍內。'
 ---
 
 ## 核心指令與層級

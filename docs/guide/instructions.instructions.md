@@ -69,7 +69,6 @@ applyTo: '適用檔案的 glob pattern（例如 **/*.ts、**/*.py）'
 // 建議的方法
 code example here
 ```
-````
 
 ### 不良範例
 
@@ -77,7 +76,6 @@ code example here
 // 避免此模式
 code example here
 ```
-
 ````
 
 ### 4. 驗證與確認（可選但建議）
@@ -128,7 +126,7 @@ code example here
 - 將機密儲存在環境變數中，切勿寫在程式碼中
 - 實作適當的認證與授權機制
 - 在生產環境啟用 HTTPS
-````
+```
 
 ### 用於結構化資訊的表格
 
@@ -158,7 +156,6 @@ function getUser(id: string): User {
   // 實作內容
 }
 ```
-````
 
 ### 不良範例 - 使用 any 類型
 
@@ -167,7 +164,6 @@ function getUser(id: any): any {
   // 失去型別安全
 }
 ```
-
 ````
 
 ### 條件式建議
@@ -178,7 +174,7 @@ function getUser(id: any): any {
 - **小型專案**：使用 Minimal API 方法
 - **大型專案**：採用 controller-based 架構，並明確分層
 - **微服務**：考慮採用領域驅動設計（DDD）
-````
+```
 
 ## 應避免的模式
 
@@ -242,7 +238,6 @@ applyTo: '**/*.ext'
 ```language
 code example
 ```
-````
 
 ### Pattern 2
 
@@ -253,8 +248,7 @@ code example
 - 建構指令：`command to verify`
 - Lint 指令：`command to lint`
 - 測試指令：`command to test`
-
-```
+````
 
 ## Maintenance
 
@@ -268,4 +262,3 @@ code example
 
 - [Custom Instructions Documentation](https://code.visualstudio.com/docs/copilot/customization/custom_instructions)
 - [Awesome Copilot Instructions](https://github.com/github/awesome-copilot/tree/main/instructions)
-```

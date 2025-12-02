@@ -18,12 +18,19 @@ GitHub 倉庫：[https://github.com/github/awesome-copilot](https://github.com/g
 - [instructions](./instructions.instructions)
 - [prompt](./prompt.instructions)
 
+### 通用自訂指令
+
+- [性能優化最佳實務](./performance-optimization.instructions)
+- [自我說明的程式碼註解指引](./self-explanatory-code-commenting.instructions)
+- [約束 Copilot 的提示](./taming-copilot.instructions)
+
 ### 特定自訂指令
 
 - [markdown](./markdown.instructions)
 - [docker](./containerization-docker-best-practices.instructions)
 - [vue](./vuejs3.instructions)
 - [typescript](./typescript-5-es2022.instructions)
+- [GitHub Actions](./github-actions-ci-cd-best-practices.instructions)
 
 ## 讓本地專案都可以一起使用
 

@@ -193,6 +193,24 @@ export default defineConfig({
                   text: 'Prompt',
                   link: '/guide/prompt.instructions',
                 },
+
+              ],
+            },
+            {
+              text: '通用自訂指令',
+              items: [
+                {
+                  text: '性能優化最佳實務',
+                  link: '/guide/performance-optimization.instructions',
+                },
+                {
+                  text: '自我說明的程式碼註解指引',
+                  link: '/guide/self-explanatory-code-commenting.instructions',
+                },
+                {
+                  text: '約束 Copilot 的提示',
+                  link: '/guide/taming-copilot.instructions',
+                }
               ],
             },
             {
@@ -213,6 +231,10 @@ export default defineConfig({
                 {
                   text: 'Typescript',
                   link: '/guide/typescript-5-es2022.instructions',
+                },
+                {
+                  text: 'GitHub Actions',
+                  link: '/guide/github-actions-ci-cd-best-practices.instructions',
                 },
               ],
             },
@@ -242,4 +264,15 @@ export default defineConfig({
   vite: {
     plugins: [llmstxt()],
   },
+  markdown: {
+    // https://github.com/vuejs/vitepress/discussions/3724
+    // 不想在任何地方的內聯程式碼中使用 Vue 插值
+    config(md) {
+      const defaultCodeInline = md.renderer.rules.code_inline!
+      md.renderer.rules.code_inline = (tokens, idx, options, env, self) => {
+        tokens[idx].attrSet('v-pre', '')
+        return defaultCodeInline(tokens, idx, options, env, self)
+      }
+    }
+  }
 })
