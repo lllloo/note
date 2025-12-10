@@ -1,88 +1,34 @@
-# Barney's Notes - 筆記管理系統
+# Barney's Notes — 筆記管理
 
-> 基於 VitePress 建構的個人筆記與學習指南網站
+> 個人技術筆記與學習資源，使用 VitePress 建構。
 
-## 📖 專案簡介
+簡短說明：本倉庫整理前端、JavaScript/TypeScript、CSS、Docker、Git 等技術筆記，供個人查閱與參考。
 
-這是一個使用 VitePress 建構的筆記管理系統，主要收集並整理各種技術筆記與學習資源。網站內容涵蓋前端開發、JavaScript、TypeScript、CSS、Docker、Git 等多個技術領域的實用筆記。
+## 快速連結
 
-## 🚀 線上瀏覽
+- 網站: `https://bugloop.com`
+- 網站（llms）: `https://bugloop.com/llms.txt`
+- 網站（llms-full）: `https://bugloop.com/llms-full.txt`
+- 原始碼：`https://github.com/lllloo/note`
 
-- **網站連結**：[https://bugloop.com](https://bugloop.com)
-- **GitHub 倉庫**：[https://github.com/lllloo/note](https://github.com/lllloo/note)
+## 主要內容
 
-## 📁 內容結構
+- `docs/`：網站內容與筆記（VitePress）
+- `docs/guide/`：主要提供給 AI 指南
+- `docs/notes/`：主題筆記（frontend, js, typescript, css, docker, git...）
+- `docs/issues/`： 常見問題與解答
 
-### 主要分類
+## 常用指令
 
-- **前端相關**：前端開發技巧與工具
-
-- **JavaScript**：JavaScript 開發筆記
-
-- **TypeScript**：TypeScript 相關技術
-
-- **CSS**：樣式設計與技巧
-
-- **Docker**：容器化技術
-
-- **Git**：版本控制
-
-## 💻 本地開發
-
-### 環境需求
-
-- Node.js (建議使用最新 LTS 版本)
-- npm
-
-### 安裝與啟動
-
-```bash
-# 克隆專案
-git clone https://github.com/lllloo/note.git
-
-# 進入專案目錄
-cd note
-
-# 安裝相依套件
-npm install
-
-# 啟動開發伺服器
+```powershell
+# 開發
 npm run docs:dev
 
-# 瀏覽器開啟 http://localhost:5175
-```
-
-### 可用指令
-
-```bash
-# 開發模式 (預設 port 5175)
-npm run docs:dev
-
-# 建構生產版本
+# 建構靜態檔
 npm run docs:build
 
 # 預覽建構結果
 npm run docs:preview
-```
-
-## 📝 文件結構
-
-```
-docs/
-├── .vitepress/          # VitePress 配置
-│   ├── config.mts       # 網站配置檔
-│   └── theme/           # 主題客製化
-├── guide/               # 使用指南
-│   └── markdown.md      # Markdown 編寫規範
-├── notes/               # 主題筆記
-│   ├── frontend/        # 前端相關
-│   ├── js/             # JavaScript
-│   ├── typescript/      # TypeScript
-│   ├── css/            # CSS
-│   ├── docker/         # Docker
-│   └── git/            # Git
-├── public/             # 靜態資源
-└── index.md            # 網站首頁
 ```
 
 ## 📧 聯絡方式
