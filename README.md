@@ -6,10 +6,10 @@
 
 ## 快速連結
 
-- 網站: `https://bugloop.com`
-- 網站（llms）: `https://bugloop.com/llms.txt`
-- 網站（llms-full）: `https://bugloop.com/llms-full.txt`
-- 原始碼：`https://github.com/lllloo/note`
+- 網站: [https://bugloop.com](https://bugloop.com)
+- 網站（llms）: [https://bugloop.com/llms.txt](https://bugloop.com/llms.txt)
+- 網站（llms-full）: [https://bugloop.com/llms-full.txt](https://bugloop.com/llms-full.txt)
+- 原始碼： [https://github.com/lllloo/note](https://github.com/lllloo/note)
 
 ## 主要內容
 
