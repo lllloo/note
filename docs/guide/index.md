@@ -20,8 +20,6 @@ GitHub 倉庫：[https://github.com/github/awesome-copilot](https://github.com/g
 
 ### 通用自訂指令
 
-- [性能優化最佳實務](./performance-optimization.instructions)
-- [自我說明的程式碼註解指引](./self-explanatory-code-commenting.instructions)
 - [約束 Copilot 的提示](./taming-copilot.instructions)
 
 ### 特定自訂指令
