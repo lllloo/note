@@ -1,5 +1,5 @@
 ---
-applyTo: '**/\*.vue, **/_.ts, \*\*/_.js, \*_/_.scss'
+applyTo: '**/*.vue, **/*.ts, **/*.js, **/*.scss'
 description: '使用 Composition API 與 TypeScript 的 Vue 3 開發標準與最佳實務'
 ---
 
@@ -10,8 +10,8 @@ description: '使用 Composition API 與 TypeScript 的 Vue 3 開發標準與最
 ## 專案背景
 
 - 以 Vue 3.x 為基礎，預設使用 Composition API
-- 使用 TypeScript 提供型別安全
-- 單檔元件（Single File Components，`.vue`），採用 `<script setup>` 語法
+- 使用 TypeScript 提供型別安全 (選擇性)
+- 單文件組件（Single File Components，`.vue`），採用 `<script setup>` 語法
 - 現代化建置工具（建議使用 Vite）
 - 使用 Pinia 作為應用程式狀態管理
 - 遵循官方 Vue 風格指引與最佳實務
