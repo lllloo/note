@@ -183,60 +183,60 @@ export default defineConfig({
           link: '/guide',
           items: [
             {
-              text: 'GitHub Copilot 自訂指令',
+              text: 'Awesome Copilot',
               items: [
                 {
-                  text: 'Instructions',
-                  link: '/guide/instructions.instructions',
+                  text: 'GitHub Copilot 自訂指令',
+                  items: [
+                    {
+                      text: 'Instructions',
+                      link: '/guide/instructions.instructions',
+                    },
+                    {
+                      text: 'Prompt',
+                      link: '/guide/prompt.instructions',
+                    },
+                  ],
                 },
                 {
-                  text: 'Prompt',
-                  link: '/guide/prompt.instructions',
+                  text: '通用自訂指令',
+                  items: [
+                    {
+                      text: '約束 Copilot 的提示',
+                      link: '/guide/taming-copilot.instructions',
+                    },
+                  ],
                 },
-
+                {
+                  text: '特定自訂指令',
+                  items: [
+                    {
+                      text: 'Markdown',
+                      link: '/guide/markdown.instructions',
+                    },
+                    {
+                      text: 'Docker',
+                      link: '/guide/containerization-docker-best-practices.instructions',
+                    },
+                    {
+                      text: 'Vue',
+                      link: '/guide/vuejs3.instructions',
+                    },
+                    {
+                      text: 'Typescript',
+                      link: '/guide/typescript-5-es2022.instructions',
+                    },
+                    {
+                      text: 'GitHub Actions',
+                      link: '/guide/github-actions-ci-cd-best-practices.instructions',
+                    },
+                  ],
+                },
               ],
             },
             {
-              text: '通用自訂指令',
-              items: [
-                {
-                  text: '性能優化最佳實務',
-                  link: '/guide/performance-optimization.instructions',
-                },
-                {
-                  text: '自我說明的程式碼註解指引',
-                  link: '/guide/self-explanatory-code-commenting.instructions',
-                },
-                {
-                  text: '約束 Copilot 的提示',
-                  link: '/guide/taming-copilot.instructions',
-                }
-              ],
-            },
-            {
-              text: '特定自訂指令',
-              items: [
-                {
-                  text: 'Markdown',
-                  link: '/guide/markdown.instructions',
-                },
-                {
-                  text: 'Docker',
-                  link: '/guide/containerization-docker-best-practices.instructions',
-                },
-                {
-                  text: 'Vue',
-                  link: '/guide/vuejs3.instructions',
-                },
-                {
-                  text: 'Typescript',
-                  link: '/guide/typescript-5-es2022.instructions',
-                },
-                {
-                  text: 'GitHub Actions',
-                  link: '/guide/github-actions-ci-cd-best-practices.instructions',
-                },
-              ],
+              text: 'Conventional Commits',
+              link: '/guide/conventional-commits',
             },
           ],
         },
@@ -273,6 +273,6 @@ export default defineConfig({
         tokens[idx].attrSet('v-pre', '')
         return defaultCodeInline(tokens, idx, options, env, self)
       }
-    }
-  }
+    },
+  },
 })
