@@ -1,6 +1,6 @@
-## TypeScript 工具型別簡介與範例
+# TypeScript 工具型別簡介與範例
 
-### Partial
+## Partial
 
 將型別 T 的所有屬性變為可選 (optional)。
 
@@ -9,7 +9,7 @@ type Person = { name: string; age: number; gender: string }
 type PartialPerson = Partial<Person> // { name?: string; age?: number; gender?: string }
 ```
 
-### Required
+## Required
 
 將型別 T 的所有屬性變為必填 (required)。
 
@@ -18,7 +18,7 @@ type Person = { name?: string; age?: number; gender?: string }
 type RequiredPerson = Required<Person> // { name: string; age: number; gender: string }
 ```
 
-### Record
+## Record
 
 建立一個以 K 為鍵、T 為值的物件型別。
 
@@ -27,7 +27,7 @@ type Score = Record<string, number>
 // { [key: string]: number }
 ```
 
-### Pick
+## Pick
 
 從型別 T 中挑選指定屬性 K，組成新型別。
 
@@ -36,7 +36,7 @@ type Person = { name: string; age: number; gender: string }
 type PersonName = Pick<Person, 'name'> // { name: string }
 ```
 
-### Omit
+## Omit
 
 從型別 T 中移除指定屬性 K，組成新型別。
 
@@ -45,7 +45,7 @@ type Person = { name: string; age: number; gender: string }
 type PersonWithoutAge = Omit<Person, 'age'> // { name: string; gender: string }
 ```
 
-### Exclude
+## Exclude
 
 從聯集型別 T 中排除 U 型別。
 
@@ -54,7 +54,7 @@ type T = 'a' | 'b' | 'c'
 type Excluded = Exclude<T, 'a'> // 'b' | 'c'
 ```
 
-### Extract
+## Extract
 
 從聯集型別 T 中提取 U 型別。
 

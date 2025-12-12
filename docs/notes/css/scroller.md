@@ -67,4 +67,5 @@
 可用於自訂捲軸顏色、寬度與圓角，提升 UI 一致性與美觀。
 
 ## 參考
+
 - [Chrome 開發者官方文件：CSS 滾動條樣式](https://developer.chrome.com/docs/css-ui/scrollbar-styling?hl=zh-tw)

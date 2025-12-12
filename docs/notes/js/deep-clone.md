@@ -25,4 +25,4 @@ const copy = structuredClone(src)
 
 ## 參考
 
-- MDN: https://developer.mozilla.org/en-US/docs/Web/API/structuredClone
+- MDN: <https://developer.mozilla.org/en-US/docs/Web/API/structuredClone>

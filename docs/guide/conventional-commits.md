@@ -6,7 +6,7 @@
 
 每個 commit message 必須遵循以下格式：
 
-```
+```text
 <type>[optional scope]: <description>
 [optional body]
 [optional footer(s)]

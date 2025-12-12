@@ -4,7 +4,6 @@ JSDoc 可用於 JavaScript/TypeScript 進行型別註解，提升編輯器提示
 
 [[toc]]
 
-
 ## @type
 
 ### 範例

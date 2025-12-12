@@ -86,7 +86,7 @@ Object.fromEntries(params) // { foo: '100', baz: '3' }
 - `qs` 與 `query-string` 會自動將 `+` 解析為空白（預設行為，模仿傳統表單編碼）。
 - 若後端或第三方 API 將 `+` 當作空白，前端用 `URLSearchParams` 組裝的查詢字串可能出現資料不一致。
 
-#### 範例
+### 範例
 
 ```js
 // 解析 a=1+2
@@ -95,13 +95,15 @@ qs.parse('a=1+2') // { a: '1 2' }
 queryString.parse('a=1+2') // { a: '1 2' }
 ```
 
-#### 解法建議
+### 解法建議
 
 - 若需與後端或第三方 API 相容，建議統一使用 `qs` 或 `query-string` 處理。
 - 若必須用 `URLSearchParams`，遇到 `+` 需手動轉換：
+
   ```js
   const val = params.get('a').replace(/\+/g, ' ')
   ```
+
 - 組裝查詢字串時，若要將空白轉為 `+`，可用 `encodeURIComponent(str).replace(/%20/g, '+')`。
 
 ::: warning 注意
