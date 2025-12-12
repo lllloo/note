@@ -96,6 +96,17 @@ dayjsObj.format('d')
 // '日'
 ```
 
+Day.js：載入台灣中文語系，取得星期縮寫
+
+```js
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-tw'; // 載入台灣中文語系
+dayjs.locale('zh-tw');       // 設定為台灣中文語系
+
+const weekDayText = dayjs().format('dd')
+// 取得當前星期的縮寫
+```
+
 ### 取得時
 
 擷取時間的小時部分（24 小時制）：
