@@ -44,6 +44,55 @@
 }
 ```
 
+## 固定文字在頁面位置
+
+本節說明如何在每頁的頁首/頁尾（margin box）或固定位置重複顯示 DOM 中的內容，例如 Logo、訂單編號或文件標題。
+
+- `position: running(name)`：將頁面中某個元素標記為可供頁首/頁尾引用的來源。
+- `element(name)`：在 margin box 中取回由 `position: running(name)` 標記的元素（整個元素內容會被複製到欄位）。
+- `string-set` + `string(name)`：擷取元素的文字內容（常用於標題或章節名）到 margin box 中的文字插入點。
+
+```css
+@page {
+  @top-left {
+    width: 100px;
+    content: element(logo);
+  }
+
+  @top-right {
+    font-size: 14px;
+    content: element(order-id);
+  }
+
+  @top-center {
+    font-size: 18px;
+    content: string(title);
+  }
+}
+
+/* 將來源元素標記為 running，並在畫面上隱藏原始位置（印刷/分頁輸出時會使用 margin box 的內容） */
+.order-logo {
+  position: running(logo);
+  display: none;
+}
+
+.order-id {
+  position: running(order-id);
+  display: none;
+}
+
+.order-title {
+  string-set: title content(text);
+  display: none;
+}
+```
+
+```html
+<img class="order-logo" src="/assets/images/logo/logo.svg" alt="公司 Logo" />
+<div class="order-id">訂單編號<br />A123456</div>
+<div class="order-title">文件標題</div>
+```
+
 ## 分頁控制
 
 ### 避免元素被分頁切斷
