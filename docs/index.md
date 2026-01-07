@@ -11,13 +11,13 @@ hero:
   actions:
     - theme: brand
       text: 筆記分類
-      link: /notes
+      link: /notes/
     - theme: alt
       text: 疑難雜症
-      link: /issues
+      link: /issues/
     - theme: alt
       text: 使用指南
-      link: /guide
+      link: /guide/
 features:
   - title: 筆記分類
     details: 彙整 CSS、Docker、Git、JavaScript 等主題筆記，便於查閱與學習。
