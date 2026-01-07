@@ -27,7 +27,7 @@ GitHub 倉庫：[https://github.com/github/awesome-copilot](https://github.com/g
 - [markdown](./instructions/markdown.instructions)
 - [docker](./instructions/containerization-docker-best-practices.instructions)
 - [vue](./instructions/vuejs3.instructions)
-- [typescript](./instructions/typescript-5-es2022.instructions)
+- [typescript](./instructionstypescript-5-es2022.instructions)
 - [GitHub Actions](./instructions/github-actions-ci-cd-best-practices.instructions)
 
 ### 讓本地專案都可以一起使用

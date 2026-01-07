@@ -52,6 +52,15 @@ jobs:
         with:
           path: docs/.vitepress/dist
 
+      - name: Discord 部署失敗通知
+        if: failure()
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          title: "❌ 打包失敗"
+          description: "Note 服務器打包失敗"
+          color: 0xff0000
+
   # Deployment job
   deploy:
     environment:
