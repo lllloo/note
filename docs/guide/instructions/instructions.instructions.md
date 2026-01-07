@@ -260,5 +260,4 @@ code example
 
 ## Additional Resources
 
-- [Custom Instructions Documentation](https://code.visualstudio.com/docs/copilot/customization/custom_instructions)
 - [Awesome Copilot Instructions](https://github.com/github/awesome-copilot/tree/main/instructions)

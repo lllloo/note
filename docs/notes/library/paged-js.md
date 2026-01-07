@@ -128,5 +128,5 @@
 
 ## 參考資料
 
-- [Paged.js 官方網站](https://www.pagedjs.org/)
+- [Paged.js 官方網站](http://www.pagedjs.org/)
 - [Paged.js GitHub](https://github.com/pagedjs/pagedjs)

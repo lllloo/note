@@ -39,6 +39,6 @@ async function copyText(text) {
 
 ## 參考資料
 
-- [MDN Clipboard API](https://developer.mozilla.org/zh-TW/docs/Web/API/Clipboard_API)
+- [MDN Clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API)
 - [Clipboard API - Google Developers](https://web.dev/async-clipboard/)
 - [Can I use Clipboard API](https://caniuse.com/?search=clipboard)
