@@ -96,4 +96,4 @@ universal-cookie 提供更彈性的 API，適合現代全端應用場景。
 
 - [js-cookie 官方文件](https://github.com/js-cookie/js-cookie)
 - [universal-cookie 官方文件](https://github.com/reactivestack/cookies)
-- [MDN Cookie](https://developer.mozilla.org/zh-TW/docs/Web/API/Document/cookie)
+- [MDN Cookie](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie)

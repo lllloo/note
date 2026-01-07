@@ -114,6 +114,6 @@ queryString.parse('a=1+2') // { a: '1 2' }
 
 ## 參考資料
 
-- [MDN - URLSearchParams](https://developer.mozilla.org/zh-TW/docs/Web/API/URLSearchParams)
+- [MDN - URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 - [qs 官方文件](https://github.com/ljharb/qs)
 - [query-string 官方文件](https://github.com/sindresorhus/query-string)

@@ -64,9 +64,9 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '首頁', link: '/' },
-      { text: '筆記', link: '/notes' },
-      { text: '疑難雜症', link: '/issues' },
-      { text: '指南', link: '/guide' },
+      { text: '筆記', link: '/notes/' },
+      { text: '疑難雜症', link: '/issues/' },
+      { text: '指南', link: '/guide/' },
     ],
 
     outline: [2, 3],
@@ -75,7 +75,7 @@ export default defineConfig({
       '/notes/': [
         {
           text: '筆記總覽',
-          link: '/notes',
+          link: '/notes/',
           items: [
             {
               text: '前端',
@@ -156,7 +156,7 @@ export default defineConfig({
       '/issues/': [
         {
           text: '疑難雜症',
-          link: '/issues',
+          link: '/issues/',
           items: [
             {
               text: 'Content-Disposition 無法取得',
@@ -180,7 +180,7 @@ export default defineConfig({
       '/guide/': [
         {
           text: 'Guide',
-          link: '/guide',
+          link: '/guide/',
           items: [
             {
               text: 'Awesome Copilot',
