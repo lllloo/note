@@ -15,20 +15,20 @@ GitHub 倉庫：[https://github.com/github/awesome-copilot](https://github.com/g
 
 #### GitHub Copilot 自訂指令
 
-- [instructions](./instructions.instructions)
-- [prompt](./prompt.instructions)
+- [instructions](./instructions/instructions.instructions)
+- [prompt](./instructions/prompt.instructions)
 
 #### 通用自訂指令
 
-- [約束 Copilot 的提示](./taming-copilot.instructions)
+- [約束 Copilot 的提示](./instructions/taming-copilot.instructions)
 
 #### 特定自訂指令
 
-- [markdown](./markdown.instructions)
-- [docker](./containerization-docker-best-practices.instructions)
-- [vue](./vuejs3.instructions)
-- [typescript](./typescript-5-es2022.instructions)
-- [GitHub Actions](./github-actions-ci-cd-best-practices.instructions)
+- [markdown](./instructions/markdown.instructions)
+- [docker](./instructions/containerization-docker-best-practices.instructions)
+- [vue](./instructions/vuejs3.instructions)
+- [typescript](./instructionstypescript-5-es2022.instructions)
+- [GitHub Actions](./instructions/github-actions-ci-cd-best-practices.instructions)
 
 ### 讓本地專案都可以一起使用
 
@@ -37,7 +37,7 @@ settings.json 範例：
 ```json
 {
   "chat.instructionsFilesLocations": {
-    "你的目錄/docs/guide/*.instructions.md": true
+    "你的目錄/docs/guide/instructions/*.instructions.md": true
   }
 }
 ```

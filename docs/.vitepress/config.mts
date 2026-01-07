@@ -190,11 +190,11 @@ export default defineConfig({
                   items: [
                     {
                       text: 'Instructions',
-                      link: '/guide/instructions.instructions',
+                      link: '/guide/instructions/instructions.instructions',
                     },
                     {
                       text: 'Prompt',
-                      link: '/guide/prompt.instructions',
+                      link: '/guide/instructions/prompt.instructions',
                     },
                   ],
                 },
@@ -203,7 +203,7 @@ export default defineConfig({
                   items: [
                     {
                       text: '約束 Copilot 的提示',
-                      link: '/guide/taming-copilot.instructions',
+                      link: '/guide/instructions/taming-copilot.instructions',
                     },
                   ],
                 },
@@ -212,23 +212,23 @@ export default defineConfig({
                   items: [
                     {
                       text: 'Markdown',
-                      link: '/guide/markdown.instructions',
+                      link: '/guide/instructions/markdown.instructions',
                     },
                     {
                       text: 'Docker',
-                      link: '/guide/containerization-docker-best-practices.instructions',
+                      link: '/guide/instructions/containerization-docker-best-practices.instructions',
                     },
                     {
                       text: 'Vue',
-                      link: '/guide/vuejs3.instructions',
+                      link: '/guide/instructions/vuejs3.instructions',
                     },
                     {
                       text: 'Typescript',
-                      link: '/guide/typescript-5-es2022.instructions',
+                      link: '/guide/instructions/typescript-5-es2022.instructions',
                     },
                     {
                       text: 'GitHub Actions',
-                      link: '/guide/github-actions-ci-cd-best-practices.instructions',
+                      link: '/guide/instructions/github-actions-ci-cd-best-practices.instructions',
                     },
                   ],
                 },

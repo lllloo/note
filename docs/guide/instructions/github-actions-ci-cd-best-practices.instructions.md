@@ -11,7 +11,7 @@ description: '使用 GitHub Actions 建立健全、安全且高效率 CI/CD 管�
 
 ## 核心概念與結構
 
-### 1. 工作流程結構 (`.github/workflows/_.yml`)
+### 1. 工作流程結構 (`.github/workflows/*.yml`)
 
 - 原則: 工作流程應該清晰、模組化且易於理解，以促進可重用性與可維護性。
 - 深入說明:
