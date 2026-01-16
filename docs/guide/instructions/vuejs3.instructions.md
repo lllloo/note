@@ -114,7 +114,7 @@ description: '使用 Composition API 與 TypeScript 的 Vue 3 開發標準與最
 
 ### 測試
 
-- 使用 Vue Test Utils 與 Jest 撰寫單元測試
+- 使用 vitest 與 Jest 撰寫單元測試
 - 測試應聚焦於行為，而非實作細節
 - 使用 `mount` 與 `shallowMount` 進行元件隔離測試
 - 需要時 mock 全域外掛（router、Pinia）
