@@ -208,15 +208,6 @@ export default defineConfig({
                   ],
                 },
                 {
-                  text: '通用自訂指令',
-                  items: [
-                    {
-                      text: '約束 Copilot 的提示',
-                      link: '/guide/instructions/taming-copilot.instructions',
-                    },
-                  ],
-                },
-                {
                   text: '特定自訂指令',
                   items: [
                     {

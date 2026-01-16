@@ -18,10 +18,6 @@ GitHub 倉庫：[https://github.com/github/awesome-copilot](https://github.com/g
 - [instructions](./instructions/instructions.instructions)
 - [prompt](./instructions/prompt.instructions)
 
-#### 通用自訂指令
-
-- [約束 Copilot 的提示](./instructions/taming-copilot.instructions)
-
 #### 特定自訂指令
 
 - [markdown](./instructions/markdown.instructions)
