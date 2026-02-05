@@ -4,7 +4,9 @@
 
 本文將深入探討其運作原理、存放位置的選擇策略（LocalStorage vs Cookie），以及實作的最佳實踐。
 
-## 1. 核心機制：雙 Token 設計
+[[toc]]
+
+## 核心機制：雙 Token 設計
 
 為什麼登入後不給一個 Token 就好，而要給兩個？
 
@@ -24,9 +26,7 @@
 - 效期：長（例如：7 天 ~ 30 天）。
 - 特點：權限極大（擁有它 = 擁有無限 Access Token），因此儲存安全性要求極高。
 
----
-
-## 2. Token 存放位置大比拼
+## Token 存放位置比較
 
 前端該把 Token 存在哪裡？這是開發者最常爭論的話題。主要選項有 Memory (變數)、LocalStorage 與 Cookie。
 
@@ -39,9 +39,7 @@
 | Cookie (非 HttpOnly) | `document.cookie`  | 高 (JS 可讀)    | 有 (需防禦) | 小 (4KB)   | 有           | 自動隨每個請求發送 |
 | HttpOnly Cookie      | Server 設定        | 無 (JS 不可讀)  | 有 (需防禦) | 小 (4KB)   | 有           | 自動隨每個請求發送 |
 
-### 深度解析：為什麼我們這樣選？
-
-#### Q1: 為什麼 Access Token 不建議放在「一般 Cookie (非 HttpOnly)」？
+### 為什麼 Access Token 不建議放在一般 Cookie？
 
 雖然它跟 LocalStorage 一樣都有 XSS 風險，但它集結了所有缺點：
 
@@ -50,16 +48,14 @@
 3. API 難用：`document.cookie` 是字串處理，不如 `localStorage` 的 Key-Value API 直覺。
 4. 優點無力：雖然它有「自動過期」功能，但 JWT 本身就有 `exp` 欄位，後端驗證過期一樣會擋，前端也能靠邏輯判斷，所以此優點無法抵消上述缺點。
 
-#### Q2: 為什麼 Access Token 不全部用「HttpOnly Cookie」就好？這樣不是最安全？
+### 為什麼不全部使用 HttpOnly Cookie？
 
 雖然 HttpOnly Cookie 防禦了 XSS，但：
 
 1. CSRF 風險：因為 Cookie 會自動發送，惡意網站可以偽造請求。你必須額外實作 CSRF Token 機制。而 LocalStorage/Memory 需要 JS 主動讀取並放入 Header，天然免疫 CSRF。
 2. 前端無法讀取：前端 JS 讀不到 Cookie 內容，就無法解析 JWT 裡的資訊（如 User ID、過期時間），導致前端難以做狀態判斷（例如：是否該顯示「管理員」按鈕）。
 
----
-
-## 3. 最佳實踐建議 (Best Practices)
+## 最佳實踐建議
 
 綜合以上分析，我們推薦以下組合：
 
@@ -81,9 +77,7 @@
 - Refresh Token：放在 HttpOnly Cookie。
   - 堅持：這是底線，Refresh Token 權限太大，絕對不能讓 JS 碰觸。
 
----
-
-## 4. 運作流程 (Workflow)
+## 運作流程
 
 1. 登入 (Login)：
    - Client 傳送帳號密碼。
@@ -99,3 +93,9 @@
    - Client 更新本地 Token，並重試 (Retry) 原本失敗的請求。
 4. 完全失效：
    - 若 Refresh Token 也過期，Server 回傳錯誤，Client 強制登出並導向登入頁。
+
+## 參考資料
+
+- [MDN - HTTP cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies)
+- [OWASP - Session Management Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html)
+- [Auth0 - Refresh Tokens](https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/)

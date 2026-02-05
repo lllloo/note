@@ -92,15 +92,15 @@ export default defineConfig({
                 { text: '剪貼簿複製文字', link: '/notes/frontend/clipboard' },
               ],
             },
-            // {
-            //   text: '驗證與安全',
-            //   items: [
-            //     {
-            //       text: 'Token 機制 (Access/Refresh)',
-            //       link: '/notes/auth/token-refresh',
-            //     },
-            //   ],
-            // },
+            {
+              text: '驗證與安全',
+              items: [
+                {
+                  text: 'Token 機制 (Access/Refresh)',
+                  link: '/notes/auth/token-refresh',
+                },
+              ],
+            },
             {
               text: 'Library',
               items: [
