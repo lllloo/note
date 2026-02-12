@@ -1,232 +1,199 @@
-# VitePress 專案全面分析與改善建議
+# Vercel Skills 使用指南 - 實作計畫
 
 ## Context
 
-這是一個使用 VitePress 建構的個人技術筆記網站,部署於 bugloop.com。專案結構清晰,內容涵蓋前端開發、AI 開發指南等技術筆記。此分析旨在找出可以改善的地方,提升專案品質與維護性。
+使用者希望撰寫一篇關於 Vercel Labs Skills 的使用指南,目標是讓 VSCode 和 Claude Code 的使用者都能學會如何安裝和管理 AI 編碼技能。這篇文章將放在專案的 AI 應用指南區塊 (`docs/ai/guides/`)。
 
-## 分析結果總結
+**為何需要這篇文章:**
+- Vercel Skills 是一個跨代理的 AI 技能生態系統,支援 Claude Code、Cursor、GitHub Copilot 等 35+ 種代理
+- 專案目前已有 Instructions 和 Prompts 的使用指南,但缺少 Skills 的完整教學
+- Skills 可提供可執行的腳本技能,與 Instructions/Prompts 形成互補
+- 幫助開發者快速安裝 Vercel 官方技能集(如 react-best-practices、web-design-guidelines 等)
 
-經過三個面向的全面探索,專案整體品質**良好**,但發現以下可改善項目:
+## 實作方案
 
----
+### 1. 建立主要文章 `docs/ai/guides/vercel-skills.md`
 
-## 一、內容與結構問題
+**文章結構** (目標 70-90 行):
 
-### 1.1 重複內容 (高優先級)
+```markdown
+# Vercel Skills 使用指南
 
-**問題**: `docs/notes/typescript/typescript.md` 與 `docs/notes/typescript/utility-types.md` 內容完全重複
+簡介段落: 說明 Vercel Skills 是 AI 編碼代理的技能生態系統 CLI 工具
 
-- `utility-types.md` 內容更完整,且已在 sidebar 中註冊
-- `typescript.md` 為遺留檔案,未在 sidebar 中引用
+[[toc]]
 
-**建議**: 刪除 `docs/notes/typescript/typescript.md`
+## 什麼是 Vercel Skills
+- Skills 核心概念與跨代理支援特性
+- 與 Instructions/Prompts 的互補關係
+- 主要使用場景
 
-### 1.2 檔案命名不一致 (高優先級)
+## 安裝 Skills CLI
+- 前置需求 (Node.js)
+- 使用 npx 執行 (無需全域安裝)
 
-**問題**: `docs/guide/copilot-instructions.md` 具有 frontmatter `applyTo: '**'`,是一個 instruction 文件,但未以 `.instructions.md` 結尾
+## 基本使用方式
 
-**建議**: 二選一
+### 安裝技能集
+- 完整技能集安裝: `npx skills add vercel-labs/agent-skills --all -a claude-code -y`
+- 互動式選擇: `npx skills add vercel-labs/agent-skills -a claude-code`
+- 指定特定技能: `npx skills add vercel-labs/agent-skills --skill react-best-practices -a claude-code -y`
 
-- 重命名為 `copilot-instructions.instructions.md` 並移到 `docs/guide/instructions/`
-- 或移除 frontmatter,作為純說明文件
+### 管理已安裝技能
+- 列出技能: `npx skills list -a claude-code`
+- 移除技能: `npx skills remove <skill-name> -a claude-code -y`
+- 檢查更新: `npx skills check -a claude-code`
 
-### 1.3 Frontmatter 格式錯誤 (高優先級)
+### 技能目錄位置
+- Claude Code 專案級: `.claude/skills/`
+- Claude Code 全域級: `~/.claude/skills/` (Windows: `~\.claude\skills\`)
+- 通用路徑: `.github/skills/`, `.agents/skills/`
 
-**問題**: `docs/guide/instructions/vuejs3.instructions.md` 的 applyTo 包含空格
+## 實戰範例
 
-```yaml
-applyTo: '**/*.vue, **/*.ts, **/*.js, **/*.scss'
+### 範例 1: 為 Claude Code 安裝 React 最佳實踐技能
+完整的指令、輸出範例、驗證步驟
+
+### 範例 2: 管理多個技能
+列出、移除、更新技能的完整流程
+
+## Vercel 官方技能集推薦
+- react-best-practices: 40+ React/Next.js 優化規則
+- web-design-guidelines: 100+ 設計與可訪問性規則
+- composition-patterns: 解決布林屬性過度增生問題
+- (3-5 個最實用的技能,每個 2-3 行說明)
+
+## 進階使用
+- 從 GitHub/GitLab 倉庫安裝
+- 從本地路徑安裝
+- 自訂技能開發基礎 (SKILL.md 結構簡介)
+
+## 與專案 Instructions/Prompts 的搭配使用
+- 三種檔案類型的比較表格
+- 推薦工作流程
+- 連結到專案現有的 Instructions/Prompts 指南
+
+## 常見問題
+- 技能無法執行怎麼辦?
+- 如何解決路徑衝突?
+- 如何更新過時技能?
+
+## 參考資源
+- Vercel Skills GitHub
+- 官方技能集連結
 ```
 
-**建議**: 移除空格
+**撰寫重點:**
+- 一律使用繁體中文,技術術語保留英文
+- 每個 CLI 指令後都附帶實際輸出範例
+- 所有範例都標註 `-a claude-code` 確保針對 Claude Code
+- 路徑說明區分 Windows 與 macOS/Linux
+- 至少提供 2 個完整的端到端實戰範例
 
-```yaml
-applyTo: '**/*.vue,**/*.ts,**/*.js,**/*.scss'
-```
+### 2. 更新 VitePress 設定檔
 
-### 1.4 空目錄與構建產物不一致 (高優先級)
-
-**問題**:
-
-- `docs/ai/claude/`, `docs/ai/copilot/`, `docs/ai/tools/` 為空目錄
-- 但 `docs/.vitepress/dist/ai/` 中卻有這些目錄的 HTML 文件
-
-**建議**:
-
-1. 清理 `docs/.vitepress/dist` 目錄並重新構建
-2. 刪除空目錄
-
-### 1.5 .gitignore 設定不精確 (中優先級)
-
-**問題**: 當前設定為 `dist/`,無法正確忽略 `docs/.vitepress/dist/`
-
-**建議**: 修改為 `docs/.vitepress/dist/`
-
-### 1.6 內容可補充 (低優先級)
-
-- `docs/notes/index.md` 僅 3 行,可增加各分類說明
-- `docs/ai/` 區塊內容較少,可補充更多 AI 工具使用經驗
-- Prompts 文件未在 sidebar 中,使用者無法透過導航存取(若需要的話)
-
----
-
-## 二、VitePress 配置優化
-
-### 2.1 缺少的關鍵配置 (中優先級)
-
-建議在 `docs/.vitepress/config.mts` 中添加:
+**檔案:** `docs/.vitepress/config.mts`
+**修改位置:** 第 253 行之後
 
 ```typescript
-export default defineConfig({
-  cleanUrls: true,  // 移除 URL 中的 .html
-  ignoreDeadLinks: false,  // 開發時檢測壞連結
-  // base: '/',  // 若部署在子路徑需設定
-})
+{
+  text: '使用指南',
+  items: [
+    { text: '符號連結建立指令', link: '/ai/guides/symbolic-link' },
+    { text: 'Vercel Skills 使用指南', link: '/ai/guides/vercel-skills' }, // 新增
+  ],
+},
 ```
 
-### 2.2 SEO 改善 (中優先級)
+### 3. 更新 AI 應用首頁
 
-**問題**:
+**檔案:** `docs/ai/index.md`
+**修改位置:** 第 13 行之後
 
-- OG image 使用 SVG (272 bytes),社群媒體分享效果不佳
-- 缺少 meta keywords、author、canonical URL
-- 缺少 `robots.txt`
+新增段落:
 
-**建議**:
+```markdown
+### Vercel Skills 使用指南
 
-1. 製作至少 1200x630 的 PNG/JPG 作為 OG image
-2. 在 config 中補充完整的 meta tags
-3. 添加 `docs/public/robots.txt`
+學習如何使用 Vercel Skills CLI 工具安裝和管理 AI 編碼技能,提升開發效率。
 
-### 2.3 主題擴充不足 (低優先級)
-
-當前 `docs/.vitepress/theme/index.js` 僅簡單匯出 DefaultTheme,未添加自訂組件或佈局。若未來需要互動式範例或特殊佈局,需要擴充。
-
----
-
-## 三、開發體驗改善
-
-### 3.1 缺少程式碼品質工具 (中優先級)
-
-**建議添加**:
-
-- `.prettierrc` - 程式碼格式化
-- `.editorconfig` - 跨編輯器一致性
-- `tsconfig.json` - TypeScript 支援(雖然 config 用 .mts,但有此檔更完整)
-- `husky + lint-staged` - Git hooks 確保提交前品質
-
-### 3.2 Markdown Lint 錯誤 (高優先級)
-
-**問題**: AGENTS.md 和 CLAUDE.md 有 MD040 錯誤(fenced code 缺少語言標記)
-
-**建議**:
-
-1. 修正現有錯誤
-2. 在 CI workflow 中添加 `npm run lint:md` 檢查步驟
-
-### 3.3 依賴套件過時 (中優先級)
-
-```text
-vitepress: 1.6.3 → 1.6.4
-vitepress-plugin-llms: 1.8.0 → 1.11.0
+- [Vercel Skills 使用指南](./guides/vercel-skills)
 ```
 
-**建議**: 執行 `npm update` 更新套件
+## Critical Files
 
----
+1. **`docs/ai/guides/vercel-skills.md`** (新建) - 主要文章內容
+2. **`docs/.vitepress/config.mts`** (修改 L253 後) - Sidebar 設定
+3. **`docs/ai/index.md`** (修改 L13 後) - 首頁連結
 
-## 四、效能與 PWA
+## 驗證步驟
 
-### 4.1 缺少 Favicon 系列 (中優先級)
+### 1. Markdown 格式檢查
+```bash
+npm run lint:md
+```
+預期: 無錯誤輸出
 
-**建議添加**:
+### 2. 開發伺服器驗證
+```bash
+npm run docs:dev
+```
 
-- `docs/public/favicon.ico`
-- `docs/public/apple-touch-icon.png`
-- 完整的 favicon 系列(16x16, 32x32, 180x180 等)
+檢查項目:
+- [ ] 訪問 `http://localhost:5175/ai/`
+- [ ] 確認 sidebar 顯示「Vercel Skills 使用指南」
+- [ ] 點擊連結,頁面正常載入
+- [ ] 檢查目錄 (TOC) 正常生成
+- [ ] 測試所有內部連結可正常跳轉
 
-### 4.2 無障礙性 (低優先級)
+### 3. 建構驗證
+```bash
+npm run docs:build
+```
 
-102 個 Markdown 檔案中,僅 1 個包含 `alt`、`aria-` 或 `role=` 屬性。若未來添加圖片,記得補充 alt 文字。
+預期:
+- 建構成功
+- `docs/.vitepress/dist/ai/guides/vercel-skills.html` 生成
+- `llms.txt` 包含新文章內容
 
-### 4.3 PWA 支援 (低優先級)
+### 4. 內容品質檢查
 
-若需要離線閱讀功能,可考慮添加:
+- [ ] 檔名符合 kebab-case: `vercel-skills.md`
+- [ ] 包含 `[[toc]]` 目錄區塊
+- [ ] 所有指令都標註 `-a claude-code`
+- [ ] 每個 CLI 指令後都有輸出範例
+- [ ] 路徑說明包含 Windows 與 macOS/Linux 雙版本
+- [ ] 內部連結使用相對路徑
+- [ ] 提供至少 2 個完整實戰範例
+- [ ] 推薦至少 3 個 Vercel 官方技能
+- [ ] 包含與 Instructions/Prompts 的比較表格
 
-- Service Worker
-- `manifest.json`
+## 實作順序
 
----
+1. 建立 `docs/ai/guides/vercel-skills.md`,撰寫完整內容
+2. 更新 `docs/.vitepress/config.mts` sidebar
+3. 更新 `docs/ai/index.md` 首頁
+4. 執行 `npm run lint:md` 檢查格式
+5. 執行 `npm run docs:dev` 驗證連結
+6. 執行 `npm run docs:build` 確認建構成功
 
-## 五、維護與文件
+## 關鍵資訊參考
 
-### 5.1 缺少的文件檔案 (中優先級)
+**Vercel Skills 主要指令:**
+- 安裝: `npx skills add <source> [options]`
+- 列出: `npx skills list -a <agent>`
+- 移除: `npx skills remove <skill> -a <agent>`
+- 檢查: `npx skills check -a <agent>`
 
-- LICENSE 檔案(README 提到有,但不存在)
-- CONTRIBUTING.md
-- CHANGELOG.md(可使用 conventional-changelog 自動生成)
+**Claude Code 技能路徑:**
+- 專案級: `.claude/skills/`
+- 全域級: `~/.claude/skills/` (Windows: `~\.claude\skills\`)
 
-### 5.2 CI/CD 增強 (低優先級)
+**官方技能集來源:**
+- GitHub: `vercel-labs/agent-skills`
+- 包含: react-best-practices, web-design-guidelines, composition-patterns 等
 
-可在 GitHub Actions 中添加:
-
-- 依賴套件快取(加速構建)
-- Lighthouse CI(效能檢查)
-- 連結檢查(避免 404)
-- 構建大小追蹤
-
----
-
-## 執行優先級
-
-### 🔴 高優先級(立即修正)
-
-1. 刪除重複檔案 `docs/notes/typescript/typescript.md`
-2. 修正 `vuejs3.instructions.md` 的 applyTo 格式
-3. 處理 `copilot-instructions.md` 的命名/位置
-4. 清理構建產物並刪除空目錄
-5. 修正 AGENTS.md 和 CLAUDE.md 的 MD040 錯誤
-
-### 🟡 中優先級(短期改善)
-
-1. 修正 `.gitignore` 路徑
-2. 更新依賴套件(vitepress 1.6.4, vitepress-plugin-llms 1.11.0)
-3. 啟用 `cleanUrls: true` 在 VitePress config
-4. 添加 `.prettierrc` 和 `.editorconfig`
-5. 製作並更新 OG image
-6. 添加完整的 favicon 系列
-7. 在 CI 中加入 `lint:md` 檢查
-8. 添加 LICENSE 和 CONTRIBUTING.md
-
-### 🟢 低優先級(長期優化)
-
-1. 補充 `docs/notes/index.md` 內容
-2. 擴充 `docs/ai/` 區塊內容
-3. 添加 `robots.txt`
-4. 實作 PWA 功能(若需要)
-5. 添加 Lighthouse CI
-6. 擴充 VitePress 主題(自訂組件)
-
----
-
-## 驗證方式
-
-修正後執行以下驗證:
-
-1. `npm run lint:md` - 確認 Markdown 無錯誤
-2. `npm run docs:build` - 確認構建成功
-3. `npm run docs:preview` - 檢查網站運作正常
-4. 檢查 sidebar 導航是否正常
-5. 檢查社群媒體分享預覽(OG image)
-
----
-
-## 總評
-
-專案整體品質**優良**,結構清晰,配置合理。主要問題集中在:
-
-- 少量內容重複與命名不一致
-- 缺少部分開發工具與最佳實踐
-- SEO 與效能優化空間
-
-這些都是易於修正的小問題,按優先級逐步處理即可顯著提升專案專業度。
+**與專案體系的整合:**
+- Instructions: 持續性指引,開啟檔案時自動生效 (`docs/guide/instructions/`)
+- Prompts: 一次性任務範本,手動呼叫 (`docs/guide/prompts/`)
+- Skills: 可執行腳本技能,主動執行 (本文介紹)
