@@ -67,6 +67,7 @@ export default defineConfig({
       { text: '筆記', link: '/notes/' },
       { text: '疑難雜症', link: '/issues/' },
       { text: '指南', link: '/guide/' },
+      { text: 'AI 應用', link: '/ai/' },
     ],
 
     outline: [2, 3],
@@ -237,6 +238,20 @@ export default defineConfig({
             {
               text: 'Conventional Commits',
               link: '/guide/conventional-commits',
+            },
+          ],
+        },
+      ],
+      '/ai/': [
+        {
+          text: 'AI 應用',
+          link: '/ai/',
+          items: [
+            {
+              text: '使用指南',
+              items: [
+                { text: '符號連結建立指令', link: '/ai/guides/symbolic-link' },
+              ],
             },
           ],
         },

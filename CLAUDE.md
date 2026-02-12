@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 專案概述
 
-使用 VitePress 建構的個人技術筆記網站,部署於 https://bugloop.com 。內容涵蓋前端開發、JavaScript/TypeScript、CSS、Docker、Git 等技術筆記,以及 AI 開發指南。
+使用 VitePress 建構的個人技術筆記網站,部署於 <https://bugloop.com> 。內容涵蓋前端開發、JavaScript/TypeScript、CSS、Docker、Git 等技術筆記,以及 AI 開發指南。
 
 ## 常用指令
 
@@ -38,10 +38,12 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 本專案區分兩種 AI 輔助檔案類型:
 
 **Instructions** (`docs/guide/instructions/*.instructions.md`):
+
 - 持續性的技術指引,GitHub Copilot 開啟符合 `applyTo` 條件的檔案時自動生效
 - YAML frontmatter 必須包含 `description` 與 `applyTo`(glob pattern)
 
 **Prompts** (`docs/guide/prompts/*.prompt.md`):
+
 - 一次性的任務指令,手動呼叫時使用
 - YAML frontmatter 必須包含 `mode`(ask/edit/agent)和 `description`
 
@@ -80,7 +82,7 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 
 ## 相關資源
 
-- 專案 GitHub: https://github.com/lllloo/note
-- 線上網站: https://bugloop.com
-- VitePress 文件: https://vitepress.dev
-- Conventional Commits: https://www.conventionalcommits.org/zh-hant/v1.0.0/
+- 專案 GitHub: <https://github.com/lllloo/note>
+- 線上網站: <https://bugloop.com>
+- VitePress 文件: <https://vitepress.dev>
+- Conventional Commits: <https://www.conventionalcommits.org/zh-hant/v1.0.0/>
