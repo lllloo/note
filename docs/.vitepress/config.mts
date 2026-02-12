@@ -65,9 +65,9 @@ export default defineConfig({
     nav: [
       { text: '首頁', link: '/' },
       { text: '筆記', link: '/notes/' },
+      { text: 'AI 應用', link: '/ai/' },
       { text: '疑難雜症', link: '/issues/' },
       { text: '指南', link: '/guide/' },
-      { text: 'AI 應用', link: '/ai/' },
     ],
 
     outline: [2, 3],
