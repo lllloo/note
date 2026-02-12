@@ -63,7 +63,7 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 
 遵循 Conventional Commits 規範(參考 `docs/guide/conventional-commits.md`):
 
-```
+```text
 <type>[optional scope]: <description>
 ```
 

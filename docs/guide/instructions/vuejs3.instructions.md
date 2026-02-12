@@ -1,5 +1,5 @@
 ---
-applyTo: '**/*.vue, **/*.ts, **/*.js, **/*.scss'
+applyTo: '**/*.vue,**/*.ts,**/*.js,**/*.scss'
 description: '使用 Composition API 與 TypeScript 的 Vue 3 開發標準與最佳實務'
 ---
 

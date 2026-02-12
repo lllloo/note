@@ -19,7 +19,7 @@ title: Copilot 使用指引
 - [README.md](README.md)：專案總覽與常用指令清單。
 - [package.json](package.json)：npm 腳本（`docs:dev`, `docs:build`, `docs:preview`, `lint:md`）與 markdownlint 設定。
 - [docs/](docs/)：網站內容總覽。
-- [docs/guide/copilot-instructions.md](docs/guide/copilot-instructions.md)：現有專案級編碼與文件規範（含語言偏好）。
+- [docs/guide/instructions/copilot-instructions.instructions.md](docs/guide/instructions/copilot-instructions.instructions.md)：現有專案級編碼與文件規範（含語言偏好）。
 - [docs/guide/prompts/](docs/guide/prompts/)：prompt 範例，採用 front-matter（例如 `mode: 'agent'`）來說明 agent 用法。
 - [docs/guide/conventional-commits.md](docs/guide/conventional-commits.md)：提交訊息慣例（若需自動化 commit 相關工作務必遵守）。
 
