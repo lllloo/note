@@ -31,7 +31,15 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 - 使用 `vitepress-plugin-llms` 插件自動生成 `llms.txt` 和 `llms-full.txt`
 - 站點語言: zh-TW
 - Markdown inline code 自動加上 `v-pre` 屬性以避免 Vue 插值
-- **Sidebar 定義在 config.mts 中**:新增或移動文章時,必須同步更新對應的 sidebar 項目,確保 `link` 路徑正確且檔案存在
+- **Sidebar 定義在 config.mts 中**:新增或移動文章時,必須同步更新對應的 sidebar 項目
+
+### 新增文章的完整流程
+
+1. 在 `docs/` 對應目錄下建立 `.md` 檔案
+2. 在 `docs/.vitepress/config.mts` 的 `sidebar` 物件中新增對應項目
+3. 確保 sidebar 的 `link` 路徑與實際檔案路徑一致(不含 `.md` 副檔名)
+4. 範例:檔案 `docs/notes/css/newline.md` 對應 sidebar link: `/notes/css/newline`
+5. 執行 `npm run docs:dev` 驗證連結正常運作
 
 ### AI 指南結構
 
@@ -41,11 +49,34 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 
 - 持續性的技術指引,GitHub Copilot 開啟符合 `applyTo` 條件的檔案時自動生效
 - YAML frontmatter 必須包含 `description` 與 `applyTo`(glob pattern)
+- 範例:
+
+```yaml
+---
+applyTo: '**/*.vue'
+description: 'Vue.js 3 Composition API 最佳實踐指引'
+---
+```
 
 **Prompts** (`docs/guide/prompts/*.prompt.md`):
 
 - 一次性的任務指令,手動呼叫時使用
 - YAML frontmatter 必須包含 `mode`(ask/edit/agent)和 `description`
+- 範例:
+
+```yaml
+---
+mode: 'edit'
+description: '將程式碼註解翻譯為繁體中文'
+---
+```
+
+### llms.txt 自動生成
+
+- 使用 `vitepress-plugin-llms` 插件自動生成 AI 可讀的網站內容索引
+- `llms.txt`: 簡化版索引(僅包含主要內容)
+- `llms-full.txt`: 完整版索引(包含所有頁面內容)
+- 在執行 `npm run docs:build` 時自動生成於 `docs/.vitepress/dist/` 目錄
 
 ## 重要慣例
 
@@ -73,12 +104,20 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 
 檔名一律使用 kebab-case:Instructions 為 `*.instructions.md`,Prompts 為 `*.prompt.md`。
 
-## 開發限制
+## 開發限制與注意事項
 
-- 不要在 `docs/` 以外的路徑新增網站內容
-- 不要變更 `package.json` 的 lint 設定或 VitePress 腳本,除非有充分理由
-- 修改 VitePress 設定檔前先確認影響範圍
+### 嚴格限制
+
+- **不要在 `docs/` 以外的路徑新增網站內容** — VitePress 只會處理 `docs/` 目錄內的檔案
+- **不要變更 `package.json` 的 lint 設定或 VitePress 腳本** — 除非有充分理由並經過討論
+- **修改 VitePress 設定檔前先確認影響範圍** — `config.mts` 的變更會影響整個網站的行為
+
+### 常見陷阱
+
 - Instructions 的 `applyTo` glob pattern 必須正確,否則不會在預期檔案中生效
+- Sidebar 的 `link` 路徑不包含 `.md` 副檔名,但必須對應實際的 `.md` 檔案
+- Markdown frontmatter 中的 YAML 語法錯誤會導致頁面無法正常顯示
+- 新增文章後若未更新 sidebar,使用者將無法從導覽列存取該頁面
 
 ## 相關資源
 
