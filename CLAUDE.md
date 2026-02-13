@@ -21,9 +21,14 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 
 - `docs/` — VitePress 網站內容根目錄,所有網站內容必須在此目錄下
   - `.vitepress/config.mts` — VitePress 設定檔(含 nav、sidebar、插件等)
-  - `guide/` — AI 開發指南(instructions 與 prompts)
-  - `notes/` — 技術筆記(frontend, js, typescript, css, docker, git 等分類)
+  - `notes/` — 技術筆記(frontend, js, typescript, css, docker, git, auth, library 等分類)
+  - `ai/` — AI 應用相關使用指南
   - `issues/` — 常見問題與解決方案
+  - `guide/` — AI 開發指南
+    - `instructions/` — GitHub Copilot 持續性技術指引(`*.instructions.md`)
+    - `prompts/` — 一次性任務指令(`*.prompt.md`)
+    - `conventional-commits.md` — Commit 訊息規範
+- `.github/copilot-instructions.md` — GitHub Copilot 全域指引(與 CLAUDE.md 內容互補)
 
 ### VitePress 設定重點
 
@@ -32,6 +37,8 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 - 站點語言: zh-TW
 - Markdown inline code 自動加上 `v-pre` 屬性以避免 Vue 插值
 - **Sidebar 定義在 config.mts 中**:新增或移動文章時,必須同步更新對應的 sidebar 項目
+- Sidebar 分為 4 個獨立群組:`/notes/`、`/ai/`、`/issues/`、`/guide/`
+- Nav 包含 5 個項目:首頁、筆記、AI 應用、疑難雜症、指南
 
 ### 新增文章的完整流程
 
