@@ -28,7 +28,6 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
     - `instructions/` — GitHub Copilot 持續性技術指引(`*.instructions.md`)
     - `prompts/` — 一次性任務指令(`*.prompt.md`)
     - `conventional-commits.md` — Commit 訊息規範
-- `.github/copilot-instructions.md` — GitHub Copilot 全域指引(與 CLAUDE.md 內容互補)
 
 ### VitePress 設定重點
 
