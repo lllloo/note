@@ -1,7 +1,5 @@
 # Barney's Notes — 筆記管理
 
-> 個人技術筆記與學習資源，使用 VitePress 建構。
-
 使用 VitePress 建構的個人技術筆記網站，部署於 [https://bugloop.com](https://bugloop.com)。內容涵蓋前端開發、JavaScript/TypeScript、CSS、Docker、Git 等技術筆記，以及 AI 開發指南。
 
 ## 快速連結
