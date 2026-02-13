@@ -251,6 +251,7 @@ export default defineConfig({
               text: '使用指南',
               items: [
                 { text: '符號連結建立指令', link: '/ai/guides/symbolic-link' },
+                { text: 'Skills 安裝指南', link: '/ai/guides/install-skills' },
               ],
             },
           ],
