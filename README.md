@@ -58,20 +58,6 @@ npm run lint:md:fix
 
 ## 主要功能
 
-### AI 指南系統
-
-本專案區分兩種 AI 輔助檔案類型:
-
-**Instructions** (`docs/guide/instructions/*.instructions.md`)
-
-- 持續性的技術指引，GitHub Copilot 開啟符合 `applyTo` 條件的檔案時自動生效
-- YAML frontmatter 必須包含 `description` 與 `applyTo` (glob pattern)
-
-**Prompts** (`docs/guide/prompts/*.prompt.md`)
-
-- 一次性的任務指令，手動呼叫時使用
-- YAML frontmatter 必須包含 `mode` (ask/edit/agent) 和 `description`
-
 ### llms.txt 自動生成
 
 - 使用 `vitepress-plugin-llms` 插件自動生成 AI 可讀的網站內容索引
