@@ -24,8 +24,8 @@ docs/                           # VitePress 網站內容根目錄
 │   ├── git/                    # Git
 │   ├── auth/                   # 驗證與安全
 │   └── library/                # 函式庫與工具
-├── ai/                         # AI 應用相關使用指南
 ├── issues/                     # 常見問題與解決方案
+├── ai/                         # AI 應用相關使用指南
 └── guide/                      # AI 開發指南
     ├── instructions/           # GitHub Copilot 持續性技術指引 (*.instructions.md)
     ├── prompts/                # 一次性任務指令 (*.prompt.md)
