@@ -1,18 +1,177 @@
-# QA 系統的 RAG 聊天回覆
+# QA 系統的聊天回覆
 
-本文介紹如何在 QA 系統中使用 RAG（Retrieval-Augmented Generation）架構，實現基於知識庫的聊天回覆功能。
+本文介紹 QA 系統中常見的聊天回覆方案，由簡單到複雜，幫助你根據場景選擇合適的做法。
 
 [[toc]]
 
-## RAG 架構概念
+## 方案總覽
 
-### 什麼是 RAG
+| 方案 | 每次查詢成本 | 實作複雜度 | 回覆彈性 | 適合規模 |
+| --------------- | ------- | ----- | ---- | ---------- |
+| 直接塞 Prompt | 高 | 最低 | 高 | < 200 條 |
+| 直接塞 + Cache | 中低 | 最低 | 高 | < 200 條 |
+| Embedding 比對 | 最低 | 低 | 低 | 不限 |
+| 分類器 + 規則 | 最低 | 中 | 最低 | 類別固定 |
+| RAG | 低 | 中 | 高 | 不限 |
+| Fine-tuning | 低 | 高 | 中 | QA 穩定不變 |
 
-RAG（Retrieval-Augmented Generation，檢索增強生成）是一種結合「資訊檢索」與「文字生成」的 AI 架構。透過先從知識庫中檢索相關文件，再將檢索結果作為上下文提供給 LLM，讓模型根據實際資料生成回覆，而非僅依賴訓練時學到的知識。
+### 如何選擇
+
+| 條件 | 建議方案 |
+| ------------------------------ | --------------- |
+| QA < 200 條，快速上線 | 直接塞 Prompt |
+| QA < 200 條，查詢頻繁 | 直接塞 + Cache |
+| 只需回傳固定答案，不需改寫 | Embedding 比對 |
+| 問題類型固定且有限 | 分類器 + 規則 |
+| QA 200–1000 條，需要語意理解 | RAG |
+| QA > 1000 條 | RAG |
+| QA 穩定不變，需統一風格 | Fine-tuning |
+
+### Token 消耗比較
+
+以 **200 條 QA**（每條約 100 tokens）、**每天 100 次查詢**為例：
+
+**直接塞 Prompt**：每次送全部 QA
+
+```text
+每次 input = 200 × 100 = 20,000 tokens
+每天 input = 20,000 × 100 = 2,000,000 tokens
+```
+
+**RAG**：每次只送 top 5 條相關 QA
+
+```text
+每次 input = 5 × 100 = 500 tokens
+每天 input = 500 × 100 = 50,000 tokens
+```
+
+RAG 的 input token 消耗約為直接塞 Prompt 的 **2.5%**。QA 越多、查詢越頻繁，差距越大。反過來說，QA 少於 50 條且查詢量低的話，直接塞 Prompt 的成本差異不大，省下的架構複雜度更值得。
+
+## 直接塞 Prompt
+
+最簡單的做法：把所有 QA 問答對放進 system prompt，讓 LLM 直接比對回覆。
+
+- **優點**：幾行程式就搞定，不需要向量資料庫等基礎設施
+- **缺點**：受 context window 限制，QA 太多塞不下；所有 QA 都送進去，token 費用高
+- **適合**：QA 數量少（< 200 條）、快速 MVP
+
+```js
+import OpenAI from 'openai'
+
+const openai = new OpenAI()
+
+// QA 清單
+const qaList = [
+  { q: '如何重設密碼？', a: '請至「設定 > 帳號安全」點擊「忘記密碼」。' },
+  { q: '退貨流程是什麼？', a: '下單後 7 天內可至「訂單列表」申請退貨。' },
+  // ...更多 QA
+]
+
+// 將 QA 清單格式化為文字
+const qaText = qaList.map((item) => `Q: ${item.q}\nA: ${item.a}`).join('\n\n')
+
+const response = await openai.chat.completions.create({
+  model: 'gpt-4o',
+  messages: [
+    {
+      role: 'system',
+      content:
+        `你是客服助理，請根據以下 QA 清單回答使用者問題。` +
+        `如果清單中沒有相關答案，請回覆「很抱歉，目前無法回答此問題」。\n\n${qaText}`,
+    },
+    { role: 'user', content: '我想退貨' },
+  ],
+})
+
+console.log(response.choices[0].message.content)
+```
+
+## 直接塞 Prompt + Prompt Caching
+
+與上面相同做法，但利用 API 的 Prompt Caching 機制降低成本。重複的 system prompt 部分會自動快取，後續請求只需支付折扣價：
+
+| 平台 | 快取折扣 |
+| --------- | -------------------- |
+| OpenAI | cached input 便宜 50% |
+| Anthropic | cached input 便宜 90% |
+
+不需要改程式碼，只要確保每次請求的 system prompt 內容相同，API 就會自動快取。Anthropic 幾乎等於打一折，非常適合 QA 清單固定的場景。
+
+## Embedding 直接比對
+
+用 embedding 計算使用者問題與 QA 問題的相似度，直接回傳最相似的答案，完全不經過 LLM。
+
+```text
+使用者問題 → embedding → 比對 QA 問題向量 → 回傳對應答案
+```
+
+- **優點**：成本最低（只需 embedding 費用）、速度最快
+- **缺點**：無法整合多條 QA 回覆、答案不能改寫或補充
+- **適合**：標準客服問答、FAQ 機器人
+
+```js
+import OpenAI from 'openai'
+
+const openai = new OpenAI()
+
+const qaList = [
+  { q: '如何重設密碼？', a: '請至「設定 > 帳號安全」點擊「忘記密碼」。' },
+  { q: '退貨流程是什麼？', a: '下單後 7 天內可至「訂單列表」申請退貨。' },
+]
+
+// 預先計算所有 QA 問題的向量（只需做一次）
+async function embedTexts(texts) {
+  const res = await openai.embeddings.create({
+    model: 'text-embedding-3-small',
+    input: texts,
+  })
+  return res.data.map((d) => d.embedding)
+}
+
+const qaEmbeddings = await embedTexts(qaList.map((item) => item.q))
+
+// 計算餘弦相似度
+function cosineSimilarity(a, b) {
+  let dot = 0, normA = 0, normB = 0
+  for (let i = 0; i < a.length; i++) {
+    dot += a[i] * b[i]
+    normA += a[i] * a[i]
+    normB += b[i] * b[i]
+  }
+  return dot / (Math.sqrt(normA) * Math.sqrt(normB))
+}
+
+// 查詢
+async function findAnswer(question) {
+  const [questionEmbedding] = await embedTexts([question])
+  const scores = qaEmbeddings.map((emb, i) => ({
+    index: i,
+    score: cosineSimilarity(questionEmbedding, emb),
+  }))
+  scores.sort((a, b) => b.score - a.score)
+  return qaList[scores[0].index].a
+}
+
+console.log(await findAnswer('我想退貨'))
+```
+
+## 分類器 + 規則回覆
+
+用分類模型把問題分到類別，直接回傳預設答案，不需要 LLM。
+
+```text
+使用者問題 → 分類模型 → 類別 A → 回傳預設答案 A
+```
+
+- **優點**：成本最低、速度最快、回覆完全可控
+- **缺點**：無法處理未知問題、需要訓練分類器、彈性最差
+- **適合**：問題類型固定且有限的場景
+
+## RAG（檢索增強生成）
+
+RAG（Retrieval-Augmented Generation）結合「資訊檢索」與「文字生成」，先從知識庫中檢索相關文件，再將檢索結果作為上下文提供給 LLM 生成回覆。
 
 ### 核心流程
-
-RAG 的運作可拆解為四個階段：
 
 ```text
 文件切割 → 向量嵌入 → 檢索 → 增強生成
@@ -32,8 +191,6 @@ RAG 的運作可拆解為四個階段：
 | 幻覺風險 | 較高，可能編造答案 | 較低，基於實際文件回覆 |
 | 可追溯性 | 無法追溯來源 | 可標示引用來源 |
 | 領域適用 | 通用知識 | 可針對特定領域客製化 |
-
-## 實作指南
 
 ### 文件預處理與切割策略
 
@@ -134,9 +291,7 @@ const result = await qaChain.invoke({ query: '如何設定 Docker Compose？' })
 console.log(result.text)
 ```
 
-## 聊天回覆的提示詞設計
-
-### System Prompt 設計原則
+### 提示詞設計
 
 好的 system prompt 能有效引導 LLM 根據檢索結果回覆，避免幻覺：
 
@@ -150,8 +305,6 @@ console.log(result.text)
 4. 使用繁體中文回覆
 5. 保持回答簡潔、結構清晰
 ```
-
-### 將檢索結果注入 Prompt
 
 使用模板將檢索到的文件片段嵌入 prompt：
 
@@ -238,6 +391,14 @@ const qaChain = ConversationalRetrievalQAChain.fromLLM(
 const response1 = await qaChain.invoke({ question: 'RAG 是什麼？' })
 const response2 = await qaChain.invoke({ question: '它和 fine-tuning 有什麼差異？' })
 ```
+
+## Fine-tuning
+
+把 QA 資料微調進模型，推論時不需要額外塞 context。
+
+- **優點**：推論時 input tokens 最少、回覆風格一致
+- **缺點**：訓練成本高、更新 QA 要重新訓練、幻覺難控制
+- **適合**：QA 穩定不常變動、需要統一語氣風格的場景
 
 ## 參考資源
 
