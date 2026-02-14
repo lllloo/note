@@ -55,36 +55,7 @@ RAG 的 input token 消耗約為直接塞 Prompt 的 **2.5%**。QA 越多、查�
 - **缺點**：受 context window 限制，QA 太多塞不下；所有 QA 都送進去，token 費用高
 - **適合**：QA 數量少（< 200 條）、快速 MVP
 
-```js
-import OpenAI from 'openai'
-
-const openai = new OpenAI()
-
-// QA 清單
-const qaList = [
-  { q: '如何重設密碼？', a: '請至「設定 > 帳號安全」點擊「忘記密碼」。' },
-  { q: '退貨流程是什麼？', a: '下單後 7 天內可至「訂單列表」申請退貨。' },
-  // ...更多 QA
-]
-
-// 將 QA 清單格式化為文字
-const qaText = qaList.map((item) => `Q: ${item.q}\nA: ${item.a}`).join('\n\n')
-
-const response = await openai.chat.completions.create({
-  model: 'gpt-4o',
-  messages: [
-    {
-      role: 'system',
-      content:
-        `你是客服助理，請根據以下 QA 清單回答使用者問題。` +
-        `如果清單中沒有相關答案，請回覆「很抱歉，目前無法回答此問題」。\n\n${qaText}`,
-    },
-    { role: 'user', content: '我想退貨' },
-  ],
-})
-
-console.log(response.choices[0].message.content)
-```
+做法是將所有 QA 問答對格式化後放進 system prompt，搭配指示語告訴 LLM「根據以下 QA 清單回答，找不到就回覆無法回答」。每次請求都會送出完整的 QA 清單。
 
 ## 直接塞 Prompt + Prompt Caching
 
@@ -109,51 +80,7 @@ console.log(response.choices[0].message.content)
 - **缺點**：無法整合多條 QA 回覆、答案不能改寫或補充
 - **適合**：標準客服問答、FAQ 機器人
 
-```js
-import OpenAI from 'openai'
-
-const openai = new OpenAI()
-
-const qaList = [
-  { q: '如何重設密碼？', a: '請至「設定 > 帳號安全」點擊「忘記密碼」。' },
-  { q: '退貨流程是什麼？', a: '下單後 7 天內可至「訂單列表」申請退貨。' },
-]
-
-// 預先計算所有 QA 問題的向量（只需做一次）
-async function embedTexts(texts) {
-  const res = await openai.embeddings.create({
-    model: 'text-embedding-3-small',
-    input: texts,
-  })
-  return res.data.map((d) => d.embedding)
-}
-
-const qaEmbeddings = await embedTexts(qaList.map((item) => item.q))
-
-// 計算餘弦相似度
-function cosineSimilarity(a, b) {
-  let dot = 0, normA = 0, normB = 0
-  for (let i = 0; i < a.length; i++) {
-    dot += a[i] * b[i]
-    normA += a[i] * a[i]
-    normB += b[i] * b[i]
-  }
-  return dot / (Math.sqrt(normA) * Math.sqrt(normB))
-}
-
-// 查詢
-async function findAnswer(question) {
-  const [questionEmbedding] = await embedTexts([question])
-  const scores = qaEmbeddings.map((emb, i) => ({
-    index: i,
-    score: cosineSimilarity(questionEmbedding, emb),
-  }))
-  scores.sort((a, b) => b.score - a.score)
-  return qaList[scores[0].index].a
-}
-
-console.log(await findAnswer('我想退貨'))
-```
+核心概念是預先計算所有 QA 問題的向量，查詢時將使用者問題也轉成向量，透過餘弦相似度找出最接近的 QA，直接回傳對應答案。
 
 ## 分類器 + 規則回覆
 
@@ -199,18 +126,6 @@ RAG（Retrieval-Augmented Generation）結合「資訊檢索」與「文字生�
 - **Chunk Size**：每個片段的大小，通常 200–1000 tokens
 - **Overlap**：相鄰片段的重疊區域，通常為 chunk size 的 10%–20%
 
-```js
-import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter'
-
-const splitter = new RecursiveCharacterTextSplitter({
-  chunkSize: 500,
-  chunkOverlap: 50,
-  separators: ['\n\n', '\n', '。', '，', ' '],
-})
-
-const chunks = await splitter.splitDocuments(documents)
-```
-
 切割策略的選擇建議：
 
 - **固定大小切割**：簡單直接，適合結構統一的文件
@@ -228,169 +143,28 @@ const chunks = await splitter.splitDocuments(documents)
 
 ### 檢索策略
 
-**相似度搜尋**是最基礎的檢索方式，透過計算查詢向量與文件向量的餘弦相似度來排序結果：
-
-```js
-const results = await vectorStore.similaritySearch(query, 5)
-```
-
-**混合搜尋（Hybrid Search）** 結合關鍵字搜尋與語意搜尋，提升檢索準確度：
-
-```js
-import { EnsembleRetriever } from 'langchain/retrievers/ensemble'
-
-// 語意檢索
-const vectorRetriever = vectorStore.asRetriever({ k: 5 })
-
-// 混合檢索（結合多個 retriever）
-const ensembleRetriever = new EnsembleRetriever({
-  retrievers: [vectorRetriever],
-  weights: [1.0],
-})
-```
-
-### 完整 RAG Chain 範例
-
-以下使用 LangChain.js 建構一個完整的 RAG QA 系統：
-
-```js
-import { ChatOpenAI, OpenAIEmbeddings } from '@langchain/openai'
-import { Chroma } from '@langchain/community/vectorstores/chroma'
-import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter'
-import { RetrievalQAChain } from 'langchain/chains'
-import { DirectoryLoader } from 'langchain/document_loaders/fs/directory'
-import { TextLoader } from 'langchain/document_loaders/fs/text'
-
-// 1. 載入文件
-const loader = new DirectoryLoader('./knowledge_base', {
-  '.md': (path) => new TextLoader(path),
-})
-const documents = await loader.load()
-
-// 2. 切割文件
-const splitter = new RecursiveCharacterTextSplitter({
-  chunkSize: 500,
-  chunkOverlap: 50,
-})
-const chunks = await splitter.splitDocuments(documents)
-
-// 3. 建立向量資料庫
-const embeddings = new OpenAIEmbeddings()
-const vectorStore = await Chroma.fromDocuments(chunks, embeddings, {
-  collectionName: 'knowledge_base',
-})
-
-// 4. 建立 RAG Chain
-const llm = new ChatOpenAI({ model: 'gpt-4o', temperature: 0 })
-const qaChain = RetrievalQAChain.fromLLM(llm, vectorStore.asRetriever({ k: 5 }), {
-  returnSourceDocuments: true,
-})
-
-// 5. 查詢
-const result = await qaChain.invoke({ query: '如何設定 Docker Compose？' })
-console.log(result.text)
-```
+- **相似度搜尋**：最基礎的檢索方式，透過計算查詢向量與文件向量的餘弦相似度來排序結果
+- **混合搜尋（Hybrid Search）**：結合關鍵字搜尋（BM25）與語意搜尋（向量），兩者互補提升檢索準確度。關鍵字搜尋擅長精確匹配，語意搜尋擅長理解同義詞與上下文
 
 ### 提示詞設計
 
-好的 system prompt 能有效引導 LLM 根據檢索結果回覆，避免幻覺：
+好的 system prompt 能有效引導 LLM 根據檢索結果回覆，避免幻覺。設計重點：
 
-```text
-你是一個專業的客服助理，負責根據提供的參考資料回答使用者問題。
+- 明確指示 LLM **僅根據提供的參考資料回答**
+- 找不到相關資訊時，要求 LLM **誠實告知**而非編造
+- 要求回答時**標示引用來源**，方便使用者查閱原始文件
 
-規則：
-1. 僅根據「參考資料」中的內容回答問題
-2. 如果參考資料中沒有相關資訊，明確告知使用者「目前知識庫中沒有相關資料」
-3. 回答時引用資料來源，方便使用者查閱原始文件
-4. 使用繁體中文回覆
-5. 保持回答簡潔、結構清晰
-```
-
-使用模板將檢索到的文件片段嵌入 prompt：
-
-```js
-import { ChatPromptTemplate } from '@langchain/core/prompts'
-
-const promptTemplate = ChatPromptTemplate.fromMessages([
-  [
-    'system',
-    `你是一個專業的 QA 助理。請根據以下參考資料回答使用者問題。
-
-參考資料：
-{context}
-
-規則：
-- 僅根據參考資料回答，不要編造資訊
-- 如果資料不足以回答，請誠實告知
-- 回答時標示引用來源`,
-  ],
-  ['human', '{question}'],
-])
-```
-
-### 處理無相關文件的回退策略
+### 回退策略
 
 當檢索不到足夠相關的文件時，應有明確的處理邏輯：
 
-```js
-async function qaWithFallback(query, vectorStore, llm, threshold = 0.5) {
-  // 檢索相關文件並取得分數
-  const docsWithScores = await vectorStore.similaritySearchWithScore(query, 5)
+- 設定相似度**門檻值（threshold）**，過濾掉低相關性的結果
+- 當沒有文件通過門檻時，回傳預設的「無法回答」訊息，而非讓 LLM 自行發揮
+- 建議使用者嘗試不同關鍵字，或引導至人工客服
 
-  // 過濾低相關性結果
-  const relevantDocs = docsWithScores
-    .filter(([, score]) => score >= threshold)
-    .map(([doc]) => doc)
+### 多輪對話
 
-  if (relevantDocs.length === 0) {
-    return {
-      answer:
-        '抱歉，目前知識庫中沒有與您問題相關的資料。建議您：\n' +
-        '1. 嘗試使用不同的關鍵字提問\n' +
-        '2. 聯繫客服人員取得進一步協助',
-      sources: [],
-    }
-  }
-
-  // 有相關文件時，正常執行 RAG
-  const context = relevantDocs.map((doc) => doc.pageContent).join('\n\n')
-  const response = await llm.invoke(
-    await promptTemplate.format({ context, question: query })
-  )
-
-  return {
-    answer: response.content,
-    sources: relevantDocs.map((doc) => doc.metadata.source),
-  }
-}
-```
-
-### 多輪對話的上下文管理
-
-在多輪對話中，需要維護歷史訊息以保持對話連貫性：
-
-```js
-import { ConversationalRetrievalQAChain } from 'langchain/chains'
-import { BufferWindowMemory } from 'langchain/memory'
-
-// 使用視窗記憶體，保留最近 5 輪對話
-const memory = new BufferWindowMemory({
-  k: 5,
-  memoryKey: 'chat_history',
-  returnMessages: true,
-  outputKey: 'answer',
-})
-
-const qaChain = ConversationalRetrievalQAChain.fromLLM(
-  llm,
-  vectorStore.asRetriever(),
-  { memory, returnSourceDocuments: true }
-)
-
-// 多輪對話
-const response1 = await qaChain.invoke({ question: 'RAG 是什麼？' })
-const response2 = await qaChain.invoke({ question: '它和 fine-tuning 有什麼差異？' })
-```
+在多輪對話中，需要維護歷史訊息以保持對話連貫性。常見做法是使用**視窗記憶體（Window Memory）**，保留最近 N 輪對話作為上下文，避免歷史訊息無限增長導致 token 超出限制。
 
 ## Fine-tuning
 
