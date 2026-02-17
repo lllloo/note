@@ -253,6 +253,7 @@ export default defineConfig({
                 { text: '符號連結建立指令', link: '/ai/guides/symbolic-link' },
                 { text: 'Skills 安裝指南', link: '/ai/guides/install-skills' },
                 { text: 'QA 系統的聊天回覆', link: '/ai/guides/rag-chat' },
+                { text: 'Guardrails 與安全防護', link: '/ai/guides/guardrails' },
               ],
             },
           ],
