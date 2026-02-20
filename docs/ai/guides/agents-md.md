@@ -28,49 +28,82 @@ claude
 
 Claude Code 會掃描專案結構、`package.json`、設定檔等，產生符合專案實際情況的 `CLAUDE.md`。
 
-## 以 CLAUDE.md 為主的策略
+## 因應方案
 
-既然 Claude Code 尚未支援 `AGENTS.md`，最務實的做法是：
+既然 Claude Code 尚未原生支援 `AGENTS.md`，社群整理出幾種實用做法：
 
-**以 `CLAUDE.md` 作為單一來源，`AGENTS.md` 透過 Symlink 指向它。**
+### 方案一：`@` 引用
+
+在 `CLAUDE.md` 加入 `@AGENTS.md`，Claude Code 啟動時會自動讀入 `AGENTS.md` 的內容。
+
+**純轉接**：把所有指令遷移到 `AGENTS.md`，`CLAUDE.md` 只留一行：
+
+```markdown
+@AGENTS.md
+```
 
 ```
-CLAUDE.md          ← 實際內容在這裡
-AGENTS.md          → 符號連結，指向 CLAUDE.md
+AGENTS.md     ← 所有指令都在這裡（其他工具直接讀取）
+CLAUDE.md     ← 只有一行 @AGENTS.md，Claude Code 讀到的內容等同 AGENTS.md
 ```
 
-這樣的好處：
+**混合模式**：共用內容放 `AGENTS.md`，Claude Code 專屬指令另外補在後面：
 
-- Claude Code 讀 `CLAUDE.md` → 正常運作
-- 支援 `AGENTS.md` 的工具（Copilot CLI、Cursor 等）→ 透過 Symlink 讀到相同內容
-- 只需維護一份檔案
+```markdown
+@AGENTS.md
 
-## 建立 Symlink
+## Claude Code 專屬設定
+...Claude Code 特有的指令...
+```
 
-### macOS / Linux
+**優點**：`AGENTS.md` 成為各工具的共用來源；混合模式可在不影響其他工具的情況下保留 Claude Code 專屬設定；未來 Claude Code 若原生支援 `AGENTS.md`，直接移除 `CLAUDE.md` 即可。此方案在 [Issue #6235](https://github.com/anthropics/claude-code/issues/6235) 獲得最多社群認同（293+ 👍）。
+
+**缺點**：仍需維護兩個檔案；`@` 引用依賴 Claude Code 的解析實作，若版本更新改變行為可能失效。
+
+### 方案二：Symlink（推薦）
+
+建立 Symlink 讓兩個檔案指向同一份內容，依照你的起點選擇方向：
+
+| 情境 | 主檔 | Symlink |
+|---|---|---|
+| 新專案，以 AGENTS.md 為主 | `AGENTS.md` | `CLAUDE.md → AGENTS.md` |
+| 既有 CLAUDE.md，不想改動 | `CLAUDE.md` | `AGENTS.md → CLAUDE.md` |
+
+#### macOS / Linux
 
 ```bash
+# 以 AGENTS.md 為主
+ln -s AGENTS.md CLAUDE.md
+
+# 以 CLAUDE.md 為主
 ln -s CLAUDE.md AGENTS.md
 ```
 
-### Windows PowerShell
+#### Windows PowerShell
 
 ```powershell
+# 以 AGENTS.md 為主
+New-Item -ItemType SymbolicLink -Path "CLAUDE.md" -Target "AGENTS.md"
+
+# 以 CLAUDE.md 為主
 New-Item -ItemType SymbolicLink -Path "AGENTS.md" -Target "CLAUDE.md"
 ```
 
-### 驗證
+#### 驗證
 
 ```bash
 # macOS / Linux
-ls -l AGENTS.md
-# 輸出範例：AGENTS.md -> CLAUDE.md
+ls -l AGENTS.md CLAUDE.md
 
 # Windows
-Get-Item "AGENTS.md" | Select-Object LinkType, Target
+Get-Item "AGENTS.md", "CLAUDE.md" | Select-Object Name, LinkType, Target
 ```
 
 > 詳細的 Symlink 操作說明可參考 [符號連結建立指令](./symbolic-link)。
+
+**優點**：只維護一個檔案，兩個工具讀到完全相同的內容。
+
+**缺點**：Windows 需要管理員權限或開發者模式；CI/CD、ZIP 壓縮或跨平台協作時 Symlink 可能失效或被展開，導致其中一個工具讀不到內容。
 
 ## GitHub Copilot 相關設定
 
@@ -91,16 +124,16 @@ VS Code 提供兩個相關設定：
 
 ## 完整設定架構
 
-以下是同時使用 Claude Code、GitHub Copilot 和 Copilot CLI 的建議配置：
+以下是同時使用 Claude Code、GitHub Copilot 和 Copilot CLI 的**推薦配置**（方案二，以 AGENTS.md 為主）：
 
 ```
 專案根目錄/
-├── CLAUDE.md     ← 主要指令檔（維護這裡）
-└── AGENTS.md     → symlink → CLAUDE.md
+├── AGENTS.md     ← 主要指令檔（維護這裡）
+└── CLAUDE.md     → 符號連結，指向 AGENTS.md
 ```
 
-- **`CLAUDE.md`**：主要維護對象，包含所有專案指令
-- **`AGENTS.md`**：Symlink，讓其他支援的工具自動套用相同指令
+- **`AGENTS.md`**：唯一維護對象，對所有支援的工具直接生效
+- **`CLAUDE.md`**：Symlink，讓 Claude Code 讀到相同內容，不需額外維護
 
 ## 未來展望
 
