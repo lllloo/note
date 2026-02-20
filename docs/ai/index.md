@@ -23,3 +23,9 @@
 學習 QA 系統中常見的聊天回覆方案，從簡單到複雜，幫助你根據場景選擇合適的做法。
 
 - [QA 系統的聊天回覆](./guides/rag-chat)
+
+### AGENTS.md 統一指令標準
+
+了解 AGENTS.md 開放標準，以 CLAUDE.md 為主要來源，透過 Symlink 讓 Claude Code、GitHub Copilot 和其他 AI 工具共用同一份指令。
+
+- [AGENTS.md 統一指令標準](./guides/agents-md)
