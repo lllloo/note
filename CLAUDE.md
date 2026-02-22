@@ -86,11 +86,6 @@ description: '將程式碼註解翻譯為繁體中文'
 - `llms-full.txt`: 完整版索引(包含所有頁面內容)
 - 在執行 `npm run docs:build` 時自動生成於 `docs/.vitepress/dist/` 目錄
 
-### 建構輸出與快取
-
-- `docs/.vitepress/dist/` — 建構輸出目錄，由 `.gitignore` 的 `dist/` 規則排除，**不要手動編輯**
-- `docs/.vitepress/cache/` — VitePress 快取目錄,亦在 `.gitignore` 中
-
 ## 重要慣例
 
 ### 語言
