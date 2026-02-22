@@ -45,7 +45,7 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 2. 在 `docs/.vitepress/config.mts` 的 `sidebar` 物件中新增對應項目
 3. 確保 sidebar 的 `link` 路徑與實際檔案路徑一致(不含 `.md` 副檔名)
 4. 範例:檔案 `docs/notes/css/newline.md` 對應 sidebar link: `/notes/css/newline`
-5. 各 section 的首頁由 `index.md` 提供(例如 `docs/notes/index.md` 對應 `/notes/`)
+5. 各群組的首頁由 `index.md` 提供（例如 `docs/notes/index.md` 對應 `/notes/`）
 6. 執行 `npm run docs:dev` 驗證連結正常運作
 
 ### AI 指南結構
@@ -69,7 +69,7 @@ description: 'Vue.js 3 Composition API 最佳實踐指引'
 
 - 一次性的任務指令,手動呼叫時使用
 - YAML frontmatter 必須包含 `mode`(ask/edit/agent)和 `description`
-- **刻意不列入 sidebar**:供使用者手動呼叫 GitHub Copilot 指令,非一般瀏覽用途
+- **刻意不列入 sidebar**：供使用者手動呼叫 GitHub Copilot 指令，非一般瀏覽用途
 - 範例:
 
 ```yaml
@@ -88,7 +88,7 @@ description: '將程式碼註解翻譯為繁體中文'
 
 ### 建構輸出與快取
 
-- `docs/.vitepress/dist/` — 建構輸出目錄,由 `.gitignore` 的 `dist/` 規則排除,**不要手動編輯**
+- `docs/.vitepress/dist/` — 建構輸出目錄，由 `.gitignore` 的 `dist/` 規則排除，**不要手動編輯**
 - `docs/.vitepress/cache/` — VitePress 快取目錄,亦在 `.gitignore` 中
 
 ## 重要慣例
