@@ -112,6 +112,8 @@ export default defineConfig({
             {
               text: 'JavaScript',
               items: [
+                { text: 'Axios 封裝', link: '/notes/js/axios' },
+                { text: 'Nuxt 4 Data Fetching', link: '/notes/js/nuxt-data-fetching' },
                 { text: 'Date', link: '/notes/js/date' },
                 { text: 'package.js 更新', link: '/notes/js/update' },
                 { text: 'Volta', link: '/notes/js/volta' },
