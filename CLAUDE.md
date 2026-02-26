@@ -23,10 +23,9 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
   - `.vitepress/config.mts` — VitePress 設定檔(含 nav、sidebar、插件等)
   - `notes/` — 技術筆記(frontend, js, typescript, css, docker, git, auth, library 等分類)
   - `ai/` — AI 應用相關使用指南
-  - `issues/` — 常見問題與解決方案
-  - `guide/` — AI 開發指南
+    - `guides/` — AI 工具使用指南
     - `instructions/` — GitHub Copilot 持續性技術指引(`*.instructions.md`)
-    - `conventional-commits.md` — Commit 訊息規範
+  - `issues/` — 常見問題與解決方案
 
 ### VitePress 設定重點
 
@@ -35,8 +34,8 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 - 站點語言: zh-TW
 - Markdown inline code 自動加上 `v-pre` 屬性以避免 Vue 插值
 - **Sidebar 定義在 config.mts 中**:新增或移動文章時,必須同步更新對應的 sidebar 項目
-- Sidebar 分為 4 個獨立群組:`/notes/`、`/ai/`、`/issues/`、`/guide/`
-- Nav 包含 5 個項目:首頁、筆記、AI 應用、疑難雜症、指南
+- Sidebar 分為 3 個獨立群組:`/notes/`、`/ai/`、`/issues/`
+- Nav 包含 4 個項目:首頁、AI 應用、筆記、疑難雜症
 
 ### 新增文章的完整流程
 
@@ -49,7 +48,7 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 
 ### AI 指南結構
 
-**Instructions** (`docs/guide/instructions/*.instructions.md`):
+**Instructions** (`docs/ai/instructions/*.instructions.md`):
 
 - 持續性的技術指引,GitHub Copilot 開啟符合 `applyTo` 條件的檔案時自動生效
 - YAML frontmatter 必須包含 `description` 與 `applyTo`(glob pattern)
@@ -88,7 +87,7 @@ description: 'Vue.js 3 Composition API 最佳實踐指引'
 
 ### Commit 訊息
 
-遵循 Conventional Commits 規範(參考 `docs/guide/conventional-commits.md`):
+遵循 Conventional Commits 規範:
 
 ```text
 <type>[optional scope]: <description>
@@ -120,4 +119,3 @@ description: 'Vue.js 3 Composition API 最佳實踐指引'
 - 專案 GitHub: <https://github.com/lllloo/note>
 - 線上網站: <https://bugloop.com>
 - VitePress 文件: <https://vitepress.dev>
-- Conventional Commits: <https://www.conventionalcommits.org/zh-hant/v1.0.0/>

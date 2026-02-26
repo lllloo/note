@@ -20,7 +20,7 @@ hero:
       link: /issues/
 features:
   - title: AI 應用
-    details: 分享 AI 工具使用經驗與開發指引，涵蓋 Copilot 自訂指令、Prompt Engineering 等實務技巧。
+    details: 分享 AI 工具使用經驗，涵蓋 Awesome Copilot、Claude Code 等工具的實務技巧。
   - title: 筆記分類
     details: 彙整 CSS、Docker、Git、JavaScript 等主題筆記，便於查閱與學習。
   - title: 疑難雜症
