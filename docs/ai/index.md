@@ -29,3 +29,23 @@
 學習 QA 系統中常見的聊天回覆方案，從簡單到複雜，幫助你根據場景選擇合適的做法。
 
 - [QA 系統的聊天回覆](./guides/rag-chat)
+
+## 開發指引
+
+### Awesome Copilot
+
+GitHub Copilot 的自訂指令與特定情境指引，提升 AI 輔助開發體驗。
+
+- [Instructions](./instructions/instructions.instructions)
+- [Prompt](./instructions/prompt.instructions)
+- [Markdown](./instructions/markdown.instructions)
+- [Docker](./instructions/containerization-docker-best-practices.instructions)
+- [Vue](./instructions/vuejs3.instructions)
+- [Typescript](./instructions/typescript-5-es2022.instructions)
+- [GitHub Actions](./instructions/github-actions-ci-cd-best-practices.instructions)
+
+### Conventional Commits
+
+遵循統一的 Commit 訊息規範，讓版本歷史更清晰易讀。
+
+- [Conventional Commits](./conventional-commits)

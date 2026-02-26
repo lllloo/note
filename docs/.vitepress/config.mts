@@ -64,10 +64,9 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: '首頁', link: '/' },
-      { text: '筆記', link: '/notes/' },
       { text: 'AI 應用', link: '/ai/' },
+      { text: '筆記', link: '/notes/' },
       { text: '疑難雜症', link: '/issues/' },
-      { text: '指南', link: '/guide/' },
     ],
 
     outline: [2, 3],
@@ -187,61 +186,6 @@ export default defineConfig({
           ],
         },
       ],
-      '/guide/': [
-        {
-          text: 'Guide',
-          link: '/guide/',
-          items: [
-            {
-              text: 'Awesome Copilot',
-              items: [
-                {
-                  text: 'GitHub Copilot 自訂指令',
-                  items: [
-                    {
-                      text: 'Instructions',
-                      link: '/guide/instructions/instructions.instructions',
-                    },
-                    {
-                      text: 'Prompt',
-                      link: '/guide/instructions/prompt.instructions',
-                    },
-                  ],
-                },
-                {
-                  text: '特定自訂指令',
-                  items: [
-                    {
-                      text: 'Markdown',
-                      link: '/guide/instructions/markdown.instructions',
-                    },
-                    {
-                      text: 'Docker',
-                      link: '/guide/instructions/containerization-docker-best-practices.instructions',
-                    },
-                    {
-                      text: 'Vue',
-                      link: '/guide/instructions/vuejs3.instructions',
-                    },
-                    {
-                      text: 'Typescript',
-                      link: '/guide/instructions/typescript-5-es2022.instructions',
-                    },
-                    {
-                      text: 'GitHub Actions',
-                      link: '/guide/instructions/github-actions-ci-cd-best-practices.instructions',
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              text: 'Conventional Commits',
-              link: '/guide/conventional-commits',
-            },
-          ],
-        },
-      ],
       '/ai/': [
         {
           text: 'AI 應用',
@@ -254,6 +198,58 @@ export default defineConfig({
                 { text: 'AGENTS.md 統一指令標準', link: '/ai/guides/agents-md' },
                 { text: 'Skills 安裝指南', link: '/ai/guides/install-skills' },
                 { text: 'QA 系統的聊天回覆', link: '/ai/guides/rag-chat' },
+              ],
+            },
+            {
+              text: '開發指引',
+              items: [
+                {
+                  text: 'Awesome Copilot',
+                  items: [
+                    {
+                      text: 'GitHub Copilot 自訂指令',
+                      items: [
+                        {
+                          text: 'Instructions',
+                          link: '/ai/instructions/instructions.instructions',
+                        },
+                        {
+                          text: 'Prompt',
+                          link: '/ai/instructions/prompt.instructions',
+                        },
+                      ],
+                    },
+                    {
+                      text: '特定自訂指令',
+                      items: [
+                        {
+                          text: 'Markdown',
+                          link: '/ai/instructions/markdown.instructions',
+                        },
+                        {
+                          text: 'Docker',
+                          link: '/ai/instructions/containerization-docker-best-practices.instructions',
+                        },
+                        {
+                          text: 'Vue',
+                          link: '/ai/instructions/vuejs3.instructions',
+                        },
+                        {
+                          text: 'Typescript',
+                          link: '/ai/instructions/typescript-5-es2022.instructions',
+                        },
+                        {
+                          text: 'GitHub Actions',
+                          link: '/ai/instructions/github-actions-ci-cd-best-practices.instructions',
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  text: 'Conventional Commits',
+                  link: '/ai/conventional-commits',
+                },
               ],
             },
           ],
