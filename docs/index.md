@@ -2,11 +2,11 @@
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
 
-title: '前端開發筆記'
+title: '技術筆記與 AI 應用'
 
 hero:
   name: "Barney's Notes"
-  text: '前端開發心得分享'
+  text: '技術筆記與 AI 開發分享'
   tagline: 記錄隨筆
   actions:
     - theme: brand
