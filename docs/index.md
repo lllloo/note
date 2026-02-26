@@ -6,7 +6,7 @@ title: '技術筆記與 AI 應用'
 
 hero:
   name: "Barney's Notes"
-  text: '技術與 AI 分享'
+  text: '開發心得與 AI 分享'
   tagline: 記錄隨筆
   actions:
     - theme: brand
