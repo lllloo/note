@@ -26,7 +26,6 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
   - `issues/` — 常見問題與解決方案
   - `guide/` — AI 開發指南
     - `instructions/` — GitHub Copilot 持續性技術指引(`*.instructions.md`)
-    - `prompts/` — 一次性任務指令(`*.prompt.md`)
     - `conventional-commits.md` — Commit 訊息規範
 
 ### VitePress 設定重點
@@ -50,8 +49,6 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 
 ### AI 指南結構
 
-本專案區分兩種 AI 輔助檔案類型:
-
 **Instructions** (`docs/guide/instructions/*.instructions.md`):
 
 - 持續性的技術指引,GitHub Copilot 開啟符合 `applyTo` 條件的檔案時自動生效
@@ -62,20 +59,6 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 ---
 applyTo: '**/*.vue'
 description: 'Vue.js 3 Composition API 最佳實踐指引'
----
-```
-
-**Prompts** (`docs/guide/prompts/*.prompt.md`):
-
-- 一次性的任務指令,手動呼叫時使用
-- YAML frontmatter 必須包含 `mode`(ask/edit/agent)和 `description`
-- **刻意不列入 sidebar**：供使用者手動呼叫 GitHub Copilot 指令，非一般瀏覽用途
-- 範例:
-
-```yaml
----
-mode: 'edit'
-description: '將程式碼註解翻譯為繁體中文'
 ---
 ```
 
@@ -110,7 +93,7 @@ description: '將程式碼註解翻譯為繁體中文'
 
 ### AI 檔案命名
 
-檔名一律使用 kebab-case:Instructions 為 `*.instructions.md`,Prompts 為 `*.prompt.md`。
+檔名一律使用 kebab-case，Instructions 為 `*.instructions.md`。
 
 ## 開發限制與注意事項
 
