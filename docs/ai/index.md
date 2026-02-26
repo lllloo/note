@@ -34,18 +34,6 @@
 
 ### Awesome Copilot
 
-GitHub Copilot 的自訂指令與特定情境指引，提升 AI 輔助開發體驗。
+GitHub 官方維護的精選資源集，收錄高品質的 Copilot 自訂指令與 Prompt 檔案。
 
-- [Instructions](./instructions/instructions.instructions)
-- [Prompt](./instructions/prompt.instructions)
-- [Markdown](./instructions/markdown.instructions)
-- [Docker](./instructions/containerization-docker-best-practices.instructions)
-- [Vue](./instructions/vuejs3.instructions)
-- [Typescript](./instructions/typescript-5-es2022.instructions)
-- [GitHub Actions](./instructions/github-actions-ci-cd-best-practices.instructions)
-
-### Conventional Commits
-
-遵循統一的 Commit 訊息規範，讓版本歷史更清晰易讀。
-
-- [Conventional Commits](./conventional-commits)
+- [Awesome Copilot](./awesome-copilot)
