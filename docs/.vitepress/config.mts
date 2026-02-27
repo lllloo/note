@@ -156,7 +156,12 @@ export default defineConfig({
             },
             {
               text: 'Docker',
-              items: [{ text: '清理', link: '/notes/docker/clear' }],
+              items: [
+                { text: '清理', link: '/notes/docker/clear' },
+                { text: 'Docker Compose', link: '/notes/docker/compose' },
+                { text: 'Nuxt 4 Dockerfile', link: '/notes/docker/nuxt4' },
+                { text: 'Docker 不需要 PM2 ?', link: '/notes/docker/pm2' },
+              ],
             },
             {
               text: 'Git',

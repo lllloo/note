@@ -10,7 +10,7 @@
 
 - [數字/小數點輸入限制](./frontend/input-number) - 實現數字輸入欄位的格式限制
 - [檔案下載](./frontend/file-download) - 處理檔案下載功能的實作方式
-- [安全使用 target="_blank"](./frontend/target-blank-security) - 避免新視窗開啟的安全性風險
+- [安全使用 target="_blank"](./auth/target-blank-security) - 避免新視窗開啟的安全性風險
 - [剪貼簿複製文字](./frontend/clipboard) - 實現複製文字至剪貼簿功能
 
 ## 驗證與安全
@@ -65,6 +65,8 @@ CSS 樣式技巧、排版處理與常見佈局解決方案。
 Docker 容器化技術的使用筆記與維護技巧。
 
 - [清理](./docker/clear) - Docker 資源清理與空間管理
+- [Docker Compose](./docker/compose) - Docker Compose 使用方式整理
+- [Nuxt 4 Dockerfile](./docker/nuxt4) - Nuxt 4 的開發與部署容器化寫法
 
 ## Git
 
