@@ -85,19 +85,19 @@ export default defineConfig({
                   link: '/notes/frontend/input-number',
                 },
                 { text: '檔案下載', link: '/notes/frontend/file-download' },
-                {
-                  text: '安全使用 target="_blank"',
-                  link: '/notes/frontend/target-blank-security',
-                },
                 { text: '剪貼簿複製文字', link: '/notes/frontend/clipboard' },
               ],
             },
             {
-              text: '驗證與安全',
+              text: '安全',
               items: [
                 {
                   text: 'Token 機制 (Access/Refresh)',
                   link: '/notes/auth/token-refresh',
+                },
+                {
+                  text: '安全使用 target="_blank"',
+                  link: '/notes/auth/target-blank-security',
                 },
               ],
             },
