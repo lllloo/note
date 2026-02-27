@@ -172,6 +172,15 @@ export default defineConfig({
                 { text: '指令', link: '/notes/git/command' },
               ],
             },
+            {
+              text: 'GitHub Actions',
+              items: [
+                {
+                  text: '寄送 Discord 通知',
+                  link: '/notes/github-actions/discord-notify',
+                },
+              ],
+            },
           ],
         },
       ],

@@ -77,3 +77,9 @@ Docker 容器化技術的使用筆記與維護技巧。
 
 - [設定](./git/setting) - Git 環境設定與個人化配置
 - [指令](./git/command) - 常用 Git 指令整理
+
+## GitHub Actions
+
+GitHub Actions 自動化工作流程相關筆記。
+
+- [寄送 Discord 通知](./github-actions/discord-notify) - 在 CI/CD 流程中發送 Discord 通知訊息
