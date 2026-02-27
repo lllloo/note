@@ -113,14 +113,19 @@ export default defineConfig({
               items: [
                 { text: 'Date', link: '/notes/js/date' },
                 { text: '數字計算與格式化', link: '/notes/js/number' },
-                { text: 'package.js 更新', link: '/notes/js/update' },
-                { text: 'Volta', link: '/notes/js/volta' },
                 { text: 'cookie', link: '/notes/js/cookie' },
                 { text: 'URL query string', link: '/notes/js/URLQueryString' },
                 {
                   text: '深拷貝 structuredClone',
                   link: '/notes/js/deep-clone',
                 },
+              ],
+            },
+            {
+              text: 'npm',
+              items: [
+                { text: '套件更新與檢查', link: '/notes/npm/update' },
+                { text: 'Volta', link: '/notes/npm/volta' },
               ],
             },
             {
