@@ -16,11 +16,16 @@ npm outdated
 
 ```sh
 npm update
-# 更新套件並儲存到 package.json
-npm update --save
 ```
 
-> 注意：預設情況下，`npm update` 不會自動更新 package.json 內直接依賴的 semver 版本值。如果你希望一併更新 package.json 內的版本號，可以執行：`npm update --save`。
+> 注意：`npm update` 會在 `package.json` 既有的 semver 版本範圍內更新套件，並更新 lockfile，但**不會**調整 `package.json` 內的版本範圍字串。
+
+- 若你想「提高」`package.json` 內依賴的版本範圍，建議改用下列方式：
+
+```sh
+# 單一套件升級到最新版本（會更新 package.json 與 lockfile）
+npm install <package-name>@latest
+```
 
 ## 使用 npm-check-updates (ncu)
 
