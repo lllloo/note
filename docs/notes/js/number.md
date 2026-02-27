@@ -72,6 +72,22 @@ round(1.005, 0)  // 1
 原生 `(1.005).toFixed(2)` 因浮點數精度問題會回傳 `'1.00'`，而 `round(1.005)` 使用 big.js 計算，能正確回傳 `1.01`。
 :::
 
+::: info 其他捨入模式
+`big.js` 預設使用四捨五入（`ROUND_HALF_UP`，`Big.RM = 1`）。若有其他需求，可在使用前修改全域設定：
+
+| `Big.RM` | 模式 | 說明 |
+| --- | --- | --- |
+| `0` | `ROUND_DOWN` | 無條件捨去 |
+| `1` | `ROUND_HALF_UP` | 四捨五入（預設） |
+| `2` | `ROUND_HALF_EVEN` | 銀行家捨入（四捨六入五取偶） |
+| `3` | `ROUND_UP` | 無條件進位 |
+
+```js
+Big.RM = 2 // 改為銀行家捨入
+```
+
+:::
+
 ## 數字格式化
 
 ### 千分位逗號
@@ -86,8 +102,8 @@ const toThousands = (value) => {
   if (typeof value === 'string' && value.trim() === '') return ''
 
   const n = Number(value)
-  if (Number.isNaN(n)) return typeof value === 'string' ? value : ''
-  if (!Number.isFinite(n)) return ''
+  if (Number.isNaN(n)) return typeof value === 'string' ? value : '' // 無法轉換的字串（如 'abc'）原樣回傳，保留使用者輸入；非字串則回傳 ''
+  if (!Number.isFinite(n)) return '' // Infinity / -Infinity 無法格式化，回傳 ''
 
   // 使用 'en' 固定千分位為逗號（,），避免不同語系出現不同分隔符號
   return new Intl.NumberFormat('en').format(n)
