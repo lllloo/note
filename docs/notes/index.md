@@ -31,6 +31,7 @@
 JavaScript 核心觀念、API 使用與開發工具相關筆記。
 
 - [Date](./js/date) - 日期時間處理技巧
+- [數字計算與格式化](./js/number) - 使用 big.js 進行精確計算與格式化
 - [package.js 更新](./js/update) - 套件版本更新與管理
 - [Volta](./js/volta) - Node.js 版本管理工具
 - [cookie](./js/cookie) - Cookie 操作方法
