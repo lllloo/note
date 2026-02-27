@@ -21,7 +21,7 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 
 - `docs/` — VitePress 網站內容根目錄,所有網站內容必須在此目錄下
   - `.vitepress/config.mts` — VitePress 設定檔(含 nav、sidebar、插件等)
-  - `notes/` — 技術筆記(frontend, js, typescript, css, docker, git, auth, library 等分類)
+  - `notes/` — 技術筆記(frontend, js, typescript, css, docker, git, auth, library, npm 等分類)
   - `ai/` — AI 應用相關使用指南
     - `guides/` — AI 工具使用指南
     - `instructions/` — GitHub Copilot 持續性技術指引(`*.instructions.md`)
@@ -43,8 +43,9 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 2. 在 `docs/.vitepress/config.mts` 的 `sidebar` 物件中新增對應項目
 3. 確保 sidebar 的 `link` 路徑與實際檔案路徑一致(不含 `.md` 副檔名)
 4. 範例:檔案 `docs/notes/css/newline.md` 對應 sidebar link: `/notes/css/newline`
-5. 各群組的首頁由 `index.md` 提供（例如 `docs/notes/index.md` 對應 `/notes/`）
-6. 執行 `npm run docs:dev` 驗證連結正常運作
+5. 在對應群組的 `index.md` 新增文章連結（例如 `docs/notes/index.md`）
+6. 各群組的首頁由 `index.md` 提供（例如 `docs/notes/index.md` 對應 `/notes/`）
+7. 執行 `npm run docs:dev` 驗證連結正常運作
 
 ### AI 指南結構
 

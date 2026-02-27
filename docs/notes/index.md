@@ -67,6 +67,7 @@ Docker 容器化技術的使用筆記與維護技巧。
 - [清理](./docker/clear) - Docker 資源清理與空間管理
 - [Docker Compose](./docker/compose) - Docker Compose 使用方式整理
 - [Nuxt 4 Dockerfile](./docker/nuxt4) - Nuxt 4 的開發與部署容器化寫法
+- [Docker 不需要 PM2](./docker/pm2) - 容器環境中以 Docker 原生機制取代 PM2
 
 ## Git
 

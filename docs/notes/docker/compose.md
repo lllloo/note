@@ -96,7 +96,7 @@ volumes:
 | --- | --- | --- | --- |
 | Bind Mount | 本機指定路徑 | 是 | 開發時同步原始碼 |
 | Named Volume | Docker 管理 | 是 | 資料庫、持久資料 |
-| Anonymous Volume | Docker 管理 | 容器刪除後消失 | 佔位用途 |
+| Anonymous Volume | Docker 管理 | 需以 `-v` 或後續清理移除 | 佔位用途 |
 
 ## depends_on 與 healthcheck
 
