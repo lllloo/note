@@ -159,8 +159,10 @@ export default defineConfig({
               items: [
                 { text: '清理', link: '/notes/docker/clear' },
                 { text: 'Docker Compose', link: '/notes/docker/compose' },
+                { text: '網路隔離：只暴露 Nginx', link: '/notes/docker/network' },
                 { text: 'Nuxt 4 Dockerfile', link: '/notes/docker/nuxt4' },
                 { text: 'Docker 不需要 PM2 ?', link: '/notes/docker/pm2' },
+                { text: 'Laradock 常用指令', link: '/notes/docker/laradock' },
               ],
             },
             {

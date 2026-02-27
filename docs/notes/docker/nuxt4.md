@@ -62,7 +62,7 @@ COPY --chown=node:node . .
 
 EXPOSE 3000 9229
 
-CMD ["nuxt", "dev", "--host"]
+CMD ["nuxt", "dev", "--host", "0.0.0.0"]
 ```
 
 > - `uid=1000,gid=1000`：cache mount 指定 node 使用者的 uid/gid，確保權限正確
@@ -168,7 +168,8 @@ COPY --chown=node:node healthcheck.js .
 
 EXPOSE 3000
 
-HEALTHCHECK --interval=30s CMD node healthcheck.js
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD node healthcheck.js
 
 CMD ["node", ".output/server/index.mjs"]
 ```
