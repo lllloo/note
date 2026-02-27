@@ -18,7 +18,7 @@ npm outdated
 npm update
 ```
 
-> 注意：一般情況下，`npm update` 會在既有 semver 版本範圍內更新已安裝的套件版本，並更新 lockfile；但不一定會調整 `package.json` 內的版本範圍字串。
+> 注意：`npm update` 會在 `package.json` 既有的 semver 版本範圍內更新套件，並更新 lockfile，但**不會**調整 `package.json` 內的版本範圍字串。
 
 - 若你想「提高」`package.json` 內依賴的版本範圍，建議改用下列方式：
 
