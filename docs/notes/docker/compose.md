@@ -9,7 +9,7 @@ Docker Compose 是用來定義與執行多容器應用程式的工具，透過 `
 ```yaml
 services:       # 定義容器服務
   app:
-    image: node:22-slim
+    image: node:24-slim
     ports:
       - '3000:3000'
 
@@ -25,7 +25,7 @@ networks:       # 定義自訂網路（可選，預設會自動建立）
 ```yaml
 services:
   app:
-    image: node:22-slim          # 使用現有 image
+    image: node:24-slim          # 使用現有 image
     build:                       # 或從 Dockerfile 建構
       context: .
       dockerfile: Dockerfile.dev

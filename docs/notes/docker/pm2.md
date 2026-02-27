@@ -98,7 +98,10 @@ environment:
 ```yaml
 services:
   app:
-    mem_limit: 512m
+    deploy:
+      resources:
+        limits:
+          memory: 512M
     restart: on-failure
 ```
 
@@ -117,7 +120,7 @@ CMD ["node", "--max-old-space-size=450", ".output/server/index.mjs"]
 | crash 後重啟 | `restart: unless-stopped` |
 | 健康監控 | `HEALTHCHECK` + `healthcheck.js` |
 | 多核心 cluster | 多容器副本 / `NITRO_PRESET=node_cluster` |
-| 記憶體上限重啟 | `mem_limit` + `restart: on-failure` |
+| 記憶體上限重啟 | `deploy.resources.limits.memory` + `restart: on-failure` |
 | 日誌管理 | `docker compose logs` / 集中式日誌服務 |
 
 ## 參考資料

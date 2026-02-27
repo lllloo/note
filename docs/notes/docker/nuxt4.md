@@ -37,7 +37,7 @@ BretFisher 將 `node_modules` 與 source code **分層放置**，解決 bind mou
 ### Dockerfile.dev
 
 ```dockerfile
-FROM node:22-slim
+FROM node:24-slim
 
 # USER 要在 WORKDIR 之前，確保目錄以正確權限建立
 # node:slim 內建 node 使用者，不需手動建立
@@ -143,7 +143,7 @@ request.end()
 
 ```dockerfile
 # Stage 1: 建構應用程式
-FROM node:22-slim AS build
+FROM node:24-slim AS build
 
 WORKDIR /app
 
@@ -156,7 +156,7 @@ COPY . .
 RUN npx nuxt build
 
 # Stage 2: 執行環境
-FROM node:22-slim AS runner
+FROM node:24-slim AS runner
 
 # USER 要在 WORKDIR 之前，確保目錄以正確權限建立
 USER node
