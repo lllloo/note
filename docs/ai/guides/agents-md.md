@@ -7,7 +7,7 @@
 ## 各工具支援現況
 
 | 工具 | 支援 AGENTS.md | 說明 |
-|---|---|---|
+| --- | --- | --- |
 | Claude Code | ❌ | 僅讀 `CLAUDE.md`，社群 Feature Request [#6235](https://github.com/anthropics/claude-code/issues/6235) 中 |
 | GitHub Copilot | ✅ | GA，預設開啟（`chat.useAgentsMdFile: true`） |
 | GitHub Copilot CLI | ✅ | 原生支援 |
@@ -22,7 +22,7 @@
 claude
 ```
 
-```
+```text
 /init
 ```
 
@@ -42,7 +42,7 @@ Claude Code 會掃描專案結構、`package.json`、設定檔等，產生符合
 @AGENTS.md
 ```
 
-```
+```text
 AGENTS.md     ← 所有指令都在這裡（其他工具直接讀取）
 CLAUDE.md     ← 只有一行 @AGENTS.md，Claude Code 讀到的內容等同 AGENTS.md
 ```
@@ -65,7 +65,7 @@ CLAUDE.md     ← 只有一行 @AGENTS.md，Claude Code 讀到的內容等同 AG
 建立 Symlink 讓兩個檔案指向同一份內容，依照你的起點選擇方向：
 
 | 情境 | 主檔 | Symlink |
-|---|---|---|
+| --- | --- | --- |
 | 新專案，以 AGENTS.md 為主 | `AGENTS.md` | `CLAUDE.md → AGENTS.md` |
 | 既有 CLAUDE.md，不想改動 | `CLAUDE.md` | `AGENTS.md → CLAUDE.md` |
 
@@ -121,12 +121,11 @@ VS Code 提供兩個相關設定：
 }
 ```
 
-
 ## 完整設定架構
 
 以下是同時使用 Claude Code、GitHub Copilot 和 Copilot CLI 的**推薦配置**（方案二，以 AGENTS.md 為主）：
 
-```
+```text
 專案根目錄/
 ├── AGENTS.md     ← 主要指令檔（維護這裡）
 └── CLAUDE.md     → 符號連結，指向 AGENTS.md

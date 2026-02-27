@@ -112,6 +112,7 @@ export default defineConfig({
               text: 'JavaScript',
               items: [
                 { text: 'Date', link: '/notes/js/date' },
+                { text: '數字計算與格式化', link: '/notes/js/number' },
                 { text: 'package.js 更新', link: '/notes/js/update' },
                 { text: 'Volta', link: '/notes/js/volta' },
                 { text: 'cookie', link: '/notes/js/cookie' },
