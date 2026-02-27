@@ -57,7 +57,10 @@ async function downloadFile(url, filename) {
     const link = document.createElement('a')
     link.href = downloadUrl
     link.download = filename
+    // 可選：為了相容舊版瀏覽器，先插入 DOM 再觸發下載
+    document.body.appendChild(link)
     link.click()
+    document.body.removeChild(link)
     URL.revokeObjectURL(downloadUrl)
   } catch (error) {
     console.error('下載失敗:', error)

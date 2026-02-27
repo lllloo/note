@@ -221,14 +221,14 @@ dayjs().add(-1, 'day').isBefore(dayjs(date), 'day')
 // 使用 moment
 import moment from 'moment'
 // 檢查現在時間是否晚於上午 9 點
-moment('09:00', 'HH:mm').isAfter(moment(), 'minute')
+moment().isAfter(moment('09:00', 'HH:mm'), 'minute')
 
 // 使用 dayjs
 import dayjs from 'dayjs'
 import customParseFormat from 'dayjs/plugin/customParseFormat'
 dayjs.extend(customParseFormat)
 // 檢查現在時間是否晚於上午 9 點
-dayjs('09:00', 'HH:mm').isAfter(dayjs(), 'minute')
+dayjs().isAfter(dayjs('09:00', 'HH:mm'), 'minute')
 ```
 
 ::: info 外掛使用說明

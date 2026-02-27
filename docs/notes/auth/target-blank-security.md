@@ -47,6 +47,12 @@
 
 ## 安全的解決方案
 
+::: tip 現代瀏覽器已預設保護
+Chrome 88+、Firefox 79+、Safari 12.1+ 等現代瀏覽器已將 `target="_blank"` 的預設行為改為自動套用 `rel="noopener"`，不再讓新頁面存取 `window.opener`。
+
+仍建議明確寫出 `rel="noopener"`，以確保在舊版瀏覽器的相容性，並讓程式碼意圖更清楚。
+:::
+
 ### 方案一：使用 rel="noopener"
 
 這是最主要的解決方案，可以阻斷新頁面對原始頁面的存取：
