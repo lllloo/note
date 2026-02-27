@@ -21,7 +21,26 @@ git config --list
   co = checkout
   st = status
   br = branch
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -20
 ```
+
+也可透過指令逐一設定：
+
+```sh
+git config --global alias.co checkout
+git config --global alias.st status
+git config --global alias.br branch
+git config --global alias.lg "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit -20"
+```
+
+`git lg` 效果說明：
+
+- 彩色 graph 樹狀分支圖
+- 短 commit hash（紅色）
+- branch/tag 標籤（黃色）
+- 相對時間（綠色）
+- 作者名稱（藍色）
+- 預設顯示最近 20 筆，可加參數調整，如 `git lg -50`
 
 ## 換行符號自動轉換設定
 
