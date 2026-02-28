@@ -166,12 +166,15 @@ CMD ["pm2-runtime", "ecosystem.config.js"]
 
 ### Graceful Shutdown
 
-`pm2-runtime` 收到停止信號時會轉發 SIGINT 給應用，預設等 1600ms 後送 SIGKILL。應用需自行處理：
+在 Docker 中，`docker stop` 會先對容器內的 PID 1 發送 SIGTERM；當以 `pm2-runtime` 作為 PID 1 執行時，`pm2-runtime` 會在收到停止信號後轉發 SIGINT 給應用，預設等 1600ms 後送 SIGKILL。因此應用程式至少需要處理 SIGINT，若未來可能直接由 Docker 啟動（不經 `pm2-runtime`），建議同時處理 SIGINT / SIGTERM：
 
 ```js
-process.on('SIGINT', () => {
+function gracefulShutdown() {
   server.close(() => process.exit(0))
-})
+}
+
+process.on('SIGINT', gracefulShutdown)
+process.on('SIGTERM', gracefulShutdown)
 ```
 
 ### 日誌輸出格式
