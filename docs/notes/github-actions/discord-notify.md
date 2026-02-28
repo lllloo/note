@@ -37,9 +37,9 @@
 | `avatar_url` | Discord Bot 頭像 URL | — |
 | `nodetail` | 隱藏詳細資訊（`true`/`false`） | `false` |
 
-## 依成功或失敗分別通知
+## 依結果自動通知
 
-搭配 `if` 條件，可以在成功與失敗時發送不同的通知訊息：
+搭配 `if: always()` 與 `status: ${{ job.status }}`，可以用一個 step 自動依結果發送對應的通知訊息，顏色與狀態文字會自動設定：
 
 ```yaml
 jobs:
@@ -49,23 +49,29 @@ jobs:
       - name: Deploy
         run: echo "部署中..."
 
-      - name: Discord 成功通知
-        if: success()
+      - name: Discord 通知
+        if: always()
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: '✅ 部署成功'
-          description: '服務已成功部署'
-          color: 0x00ff00
+          status: ${{ job.status }}
+```
 
-      - name: Discord 失敗通知
-        if: failure()
+> `if: always()` 確保無論成功、失敗或取消都會執行通知 step。
+
+### 自訂通知訊息
+
+如果想根據結果顯示不同的標題與說明，可以搭配 expressions：
+
+```yaml
+      - name: Discord 通知
+        if: always()
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: '❌ 部署失敗'
-          description: '服務部署失敗，請至 GitHub Actions 查看詳情'
-          color: 0xff0000
+          status: ${{ job.status }}
+          title: ${{ job.status == 'success' && '✅ 部署成功' || '❌ 部署失敗' }}
+          description: ${{ job.status == 'success' && '服務已成功部署' || '服務部署失敗' }}
 ```
 
 ## 完整範例：部署工作流程
@@ -97,14 +103,12 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Discord 建置失敗通知
-        if: failure()
+      - name: Discord 建置通知
+        if: always()
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: '❌ 建置失敗'
-          description: '專案建置失敗'
-          color: 0xff0000
+          status: ${{ job.status }}
 
   deploy:
     needs: build
@@ -114,23 +118,12 @@ jobs:
       - name: Deploy
         run: echo "部署中..."
 
-      - name: Discord 部署成功通知
-        if: success()
+      - name: Discord 部署通知
+        if: always()
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: '✅ 部署成功'
-          description: '服務已成功部署'
-          color: 0x00ff00
-
-      - name: Discord 部署失敗通知
-        if: failure()
-        uses: sarisia/actions-status-discord@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: '❌ 部署失敗'
-          description: '服務部署失敗'
-          color: 0xff0000
+          status: ${{ job.status }}
 ```
 
 ## 常見色碼
