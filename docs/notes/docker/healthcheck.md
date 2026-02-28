@@ -14,6 +14,31 @@ Docker 的 `HEALTHCHECK` 指令可以讓 Docker 定期檢查容器內的服務�
 
 沒有健康檢查時，Docker 看到容器 Process 跑起來就認定「正常」，`depends_on` 也就直接放行依賴服務進來，導致連線失敗或啟動錯誤。
 
+## 不用 HEALTHCHECK 會怎樣？
+
+`HEALTHCHECK` 是選用的，不設定也能正常運行，但 Docker 對容器狀態的判斷會變得很粗糙：
+
+| 情境 | 有 HEALTHCHECK | 沒有 HEALTHCHECK |
+| :--- | :--- | :--- |
+| 容器狀態 | `healthy` / `unhealthy` / `starting` | 只有 `running` 或 `exited` |
+| 程序 crash（exit） | 偵測到，搭配 `restart` 重啟 | 同樣偵測到，搭配 `restart` 重啟 |
+| 程序卡住（未 exit） | 標記 `unhealthy`，可自動處理 | **無法偵測**，容器仍顯示 running |
+| `depends_on` 啟動順序 | 可用 `service_healthy` 等服務就緒 | 只能用 `service_started`，不保證就緒 |
+| Swarm 滾動更新 | 等新容器 healthy 才移除舊容器 | 啟動即視為就緒，可能造成短暫中斷 |
+
+### 什麼時候可以不用
+
+- 開發環境或一次性任務容器
+- 服務很單純，crash 就會直接 exit，搭配 `restart` 政策已夠用
+- 外部已有監控機制（如 Kubernetes liveness / readiness probe 取代 Dockerfile HEALTHCHECK）
+
+### 什麼時候一定要用
+
+- 服務可能卡住但不 crash（event loop 卡死、deadlock、記憶體洩漏）
+- 有 `depends_on` 需要等依賴服務真正就緒
+- 使用 Docker Swarm 做滾動更新，需要確認新容器就緒才切流量
+- 搭配 `autoheal` 等工具自動重啟異常容器
+
 ## Dockerfile 語法
 
 ```dockerfile
