@@ -52,14 +52,6 @@ jobs:
         with:
           path: docs/.vitepress/dist
 
-      - name: Discord 部署失敗通知
-        if: failure()
-        uses: sarisia/actions-status-discord@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: "❌ 打包失敗"
-          description: "Note 服務器打包失敗"
-          color: 0xff0000
 
   # Deployment job
   deploy:
@@ -67,27 +59,29 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     needs: build
+    if: always()
     runs-on: ubuntu-latest
     name: Deploy
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
+        if: needs.build.result == 'success'
         uses: actions/deploy-pages@v4
 
-      - name: Discord 部署成功通知
-        if: success()
+      - name: Discord 打包失敗通知
+        if: always() && needs.build.result != 'success'
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: "✅ 部署成功"
-          description: "Note 服務器已成功部署"
-          color: 0x00ff00
+          status: failure
+          title: '❌ 打包失敗'
+          description: 'Note 服務器打包失敗'
 
-      - name: Discord 部署失敗通知
-        if: failure()
+      - name: Discord 部署通知
+        if: always() && needs.build.result == 'success'
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          title: "❌ 部署失敗"
-          description: "Note 服務器部署失敗"
-          color: 0xff0000
+          status: ${{ job.status }}
+          title: ${{ job.status == 'success' && '✅ 部署成功' || '❌ 部署失敗' }}
+          description: ${{ job.status == 'success' && 'Note 服務器已成功部署' || 'Note 服務器部署失敗' }}
