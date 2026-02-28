@@ -163,6 +163,7 @@ export default defineConfig({
                 { text: 'Nuxt 4 Dockerfile', link: '/notes/docker/nuxt4' },
                 { text: 'Docker 不需要 PM2 ?', link: '/notes/docker/pm2' },
                 { text: 'Laradock 常用指令', link: '/notes/docker/laradock' },
+                { text: 'HEALTHCHECK 健康檢查', link: '/notes/docker/healthcheck' },
               ],
             },
             {
