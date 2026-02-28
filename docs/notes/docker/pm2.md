@@ -133,7 +133,7 @@ PM2 官方針對容器環境提供 `pm2-runtime`，用來解決（或至少大�
 ### 基本用法
 
 ```dockerfile
-FROM node:22-slim
+FROM node:24-slim
 WORKDIR /app
 
 COPY package*.json ./
