@@ -119,7 +119,7 @@ CMD ["node", "--max-old-space-size=450", ".output/server/index.mjs"]
 
 ## 做法二：使用 pm2-runtime
 
-PM2 官方針對容器環境提供 `pm2-runtime`，解決直接用 `pm2 start` 的所有問題。
+PM2 官方針對容器環境提供 `pm2-runtime`，用來解決（或至少大幅改善）直接在容器內用 `pm2 start` 時會遇到的主要問題。
 
 ### 與一般 PM2 的差異
 
