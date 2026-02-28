@@ -209,10 +209,10 @@ CMD ["pm2-runtime", "--json", "ecosystem.config.js"]
 
 | 情境 | 純 Docker | pm2-runtime |
 | --- | --- | --- |
-| crash → 服務恢復 | ~700ms | ~500ms |
-| 含 healthcheck 確認 | ~1200ms | 無 healthcheck |
+| crash → 服務恢復 | 需重啟整個容器 | 僅重啟程序（相對較快） |
+| 健康狀態確認 | 依 HEALTHCHECK 週期 | 無 healthcheck |
 
-pm2-runtime 在容器內重啟程序，不需重建容器，速度略快。但 Docker 的 HEALTHCHECK 能偵測更多異常（event loop 卡死等非 crash 情境）。
+pm2-runtime 在容器內重啟程序，不需重建容器，速度略快。但 Docker 的 HEALTHCHECK 能偵測更多異常（event loop 卡死等非 crash 情境）。實際重啟時間依應用大小、環境與 healthcheck 設定而異。
 
 ### 信號處理
 
