@@ -24,7 +24,6 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
   - `notes/` — 技術筆記(frontend, js, typescript, css, docker, git, auth, library, npm 等分類)
   - `ai/` — AI 應用相關使用指南
     - `guides/` — AI 工具使用指南
-    - `instructions/` — GitHub Copilot 持續性技術指引(`*.instructions.md`)
   - `issues/` — 常見問題與解決方案
 
 ### VitePress 設定重點
@@ -46,21 +45,6 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 5. 在對應群組的 `index.md` 新增文章連結（例如 `docs/notes/index.md`）
 6. 各群組的首頁由 `index.md` 提供（例如 `docs/notes/index.md` 對應 `/notes/`）
 7. 執行 `npm run docs:dev` 驗證連結正常運作
-
-### AI 指南結構
-
-**Instructions** (`docs/ai/instructions/*.instructions.md`):
-
-- 持續性的技術指引,GitHub Copilot 開啟符合 `applyTo` 條件的檔案時自動生效
-- YAML frontmatter 必須包含 `description` 與 `applyTo`(glob pattern)
-- 範例:
-
-```yaml
----
-applyTo: '**/*.vue'
-description: 'Vue.js 3 Composition API 最佳實踐指引'
----
-```
 
 ### llms.txt 自動生成
 
@@ -98,7 +82,7 @@ description: 'Vue.js 3 Composition API 最佳實踐指引'
 
 ### AI 檔案命名
 
-檔名一律使用 kebab-case，Instructions 為 `*.instructions.md`。
+檔名一律使用 kebab-case。
 
 ## 開發限制與注意事項
 
@@ -110,7 +94,6 @@ description: 'Vue.js 3 Composition API 最佳實踐指引'
 
 ### 常見陷阱
 
-- Instructions 的 `applyTo` glob pattern 必須正確,否則不會在預期檔案中生效
 - Sidebar 的 `link` 路徑不包含 `.md` 副檔名,但必須對應實際的 `.md` 檔案
 - Markdown frontmatter 中的 YAML 語法錯誤會導致頁面無法正常顯示
 - 新增文章後若未更新 sidebar,使用者將無法從導覽列存取該頁面

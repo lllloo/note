@@ -30,7 +30,7 @@
 
 - [QA 系統的聊天回覆](./guides/rag-chat)
 
-## 開發指引
+## 資源
 
 ### Awesome Copilot
 
