@@ -13,14 +13,36 @@
 
 ## 基本用法
 
+最簡單的方式是搭配 `if: always()` 與 `status: ${{ job.status }}`，讓 action 自動依結果設定顏色與狀態文字：
+
 ```yaml
-- name: Discord 通知
-  uses: sarisia/actions-status-discord@v1
-  with:
-    webhook: ${{ secrets.DISCORD_WEBHOOK }}
-    title: '✅ 部署成功'
-    description: '服務已成功部署'
-    color: 0x00ff00
+steps:
+  - name: Build
+    run: npm run build
+
+  - name: Discord 通知
+    if: always()
+    uses: sarisia/actions-status-discord@v1
+    with:
+      webhook: ${{ secrets.DISCORD_WEBHOOK }}
+      status: ${{ job.status }}
+```
+
+> `if: always()` 確保無論成功、失敗或取消都會執行通知 step。
+
+### 自訂通知訊息
+
+透過 expressions 可以根據結果顯示不同的標題與說明：
+
+```yaml
+  - name: Discord 通知
+    if: always()
+    uses: sarisia/actions-status-discord@v1
+    with:
+      webhook: ${{ secrets.DISCORD_WEBHOOK }}
+      status: ${{ job.status }}
+      title: ${{ job.status == 'success' && '✅ 部署成功' || '❌ 部署失敗' }}
+      description: ${{ job.status == 'success' && '服務已成功部署' || '服務部署失敗' }}
 ```
 
 ### 常用參數
@@ -28,55 +50,18 @@
 | 參數 | 說明 | 預設值 |
 | --- | --- | --- |
 | `webhook` | Discord Webhook URL（必填） | — |
+| `status` | 顯示狀態，自動設定顏色（Success / Failure 等） | 自動偵測 |
 | `title` | 通知標題 | job 名稱 |
 | `description` | 通知內容說明 | — |
-| `color` | 訊息左側色條顏色（十六進位色碼） | — |
-| `status` | 顯示狀態（Success / Failure 等） | 自動偵測 |
+| `color` | 訊息左側色條顏色（十六進位色碼） | 依 status 自動設定 |
 | `url` | 標題連結 URL | 當前 workflow run URL |
 | `username` | Discord Bot 名稱 | GitHub Actions |
 | `avatar_url` | Discord Bot 頭像 URL | — |
 | `nodetail` | 隱藏詳細資訊（`true`/`false`） | `false` |
 
-## 依結果自動通知
+## 完整範例：多 Job 部署流程
 
-搭配 `if: always()` 與 `status: ${{ job.status }}`，可以用一個 step 自動依結果發送對應的通知訊息，顏色與狀態文字會自動設定：
-
-```yaml
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy
-        run: echo "部署中..."
-
-      - name: Discord 通知
-        if: always()
-        uses: sarisia/actions-status-discord@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ job.status }}
-```
-
-> `if: always()` 確保無論成功、失敗或取消都會執行通知 step。
-
-### 自訂通知訊息
-
-如果想根據結果顯示不同的標題與說明，可以搭配 expressions：
-
-```yaml
-      - name: Discord 通知
-        if: always()
-        uses: sarisia/actions-status-discord@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ job.status }}
-          title: ${{ job.status == 'success' && '✅ 部署成功' || '❌ 部署失敗' }}
-          description: ${{ job.status == 'success' && '服務已成功部署' || '服務部署失敗' }}
-```
-
-## 完整範例：部署工作流程
-
-以下為含有建置、部署與 Discord 通知的完整 workflow 範例：
+當 workflow 有多個 job 時，可以只在最後發送一個通知。透過在 deploy job 加上 `if: always()` 搭配 `needs.build.result` 判斷，即使 build 失敗也能收到通知：
 
 ```yaml
 name: Deploy
@@ -103,34 +88,37 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Discord 建置通知
-        if: always()
-        uses: sarisia/actions-status-discord@v1
-        with:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          status: ${{ job.status }}
-
   deploy:
     needs: build
+    if: always()
     runs-on: ubuntu-latest
     steps:
       # 以下為示意，請替換為實際部署步驟
       - name: Deploy
+        if: needs.build.result == 'success'
         run: echo "部署中..."
 
+      - name: Discord 打包失敗通知
+        if: always() && needs.build.result != 'success'
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: failure
+          title: '❌ 打包失敗'
+          description: '專案打包失敗'
+
       - name: Discord 部署通知
-        if: always()
+        if: always() && needs.build.result == 'success'
         uses: sarisia/actions-status-discord@v1
         with:
           webhook: ${{ secrets.DISCORD_WEBHOOK }}
           status: ${{ job.status }}
+          title: ${{ job.status == 'success' && '✅ 部署成功' || '❌ 部署失敗' }}
+          description: ${{ job.status == 'success' && '服務已成功部署' || '服務部署失敗' }}
 ```
 
-## 常見色碼
+重點說明：
 
-| 顏色 | 十六進位 |
-| --- | --- |
-| 綠色（成功） | `0x00ff00` |
-| 紅色（失敗） | `0xff0000` |
-| 黃色（警告） | `0xffff00` |
-| 藍色（資訊） | `0x0000ff` |
+- **deploy job 的 `if: always()`**：讓 build 失敗時 deploy job 仍會啟動，通知 step 才有機會執行
+- **Deploy step 的 `if: needs.build.result == 'success'`**：build 失敗時跳過實際部署
+- **兩個通知 step 的 `if` 條件互斥**：每次只會觸發其中一個，確保只收到一則通知
