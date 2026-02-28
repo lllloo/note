@@ -1,17 +1,17 @@
-# JSDoc 與 TypeScript 型別註解範例
+# JSDoc 型別註解
 
-JSDoc 可用於 JavaScript/TypeScript 進行型別註解，提升編輯器提示與型別安全。
+JSDoc 可用於 JavaScript/TypeScript 進行型別註解，提升編輯器提示與型別安全。適用於不想寫 `.ts` 但仍需要型別檢查的 JS 專案，或在 `.ts` 中補充額外型別說明。
+
+> Vue 專案的 JSDoc 用法請參閱 [Vue 的 JSDoc 型別註解](./vue-jsdoc)。
 
 [[toc]]
 
 ## @type
 
-### 範例
+為變數標註型別，支援原始型別、DOM 型別與泛型。
 
 ```js
-/**
- * @type {string}
- */
+/** @type {string} */
 var s
 
 /** @type {Window} */
@@ -20,29 +20,28 @@ var win
 /** @type {PromiseLike<string>} */
 var promisedString
 
-// 你可以使用 DOM 屬性指定 HTML 元素
 /** @type {HTMLElement} */
 var myElement = document.querySelector(selector)
 ```
 
-### 型別轉換 (Casts)
+### 型別轉換（Casts）
 
-TypeScript 借用自 Google Closure 的型別轉換語法，可以在任何括號運算式前加上 `@type` 標籤來進行型別轉換。
+在任何括號運算式前加上 `@type` 標籤來進行型別轉換：
 
 ```js
 var numberOrString = Math.random() < 0.5 ? 'hello' : 100
 var typeAssertedNumber = /** @type {number} */ (numberOrString)
 ```
 
-你甚至可以像 TypeScript 一樣轉型為 const：
+轉型為 const：
 
 ```js
 let one = /** @type {const} */ (1)
 ```
 
-## @param and @returns
+## @param 與 @returns
 
-### 範例
+為函式參數和回傳值加上型別說明。
 
 ```js
 /**
@@ -56,30 +55,104 @@ function add(a, b) {
 }
 ```
 
+### 可選參數與預設值
+
+```js
+/**
+ * @param {string} name
+ * @param {number} [age] 可選參數
+ * @param {string} [role='user'] 帶預設值的可選參數
+ */
+function createUser(name, age, role = 'user') {}
+```
+
+### 解構參數
+
+```js
+/**
+ * @param {{ name: string, age: number }} options
+ */
+function greet({ name, age }) {
+  console.log(`${name}, ${age}`)
+}
+```
+
 ## @typedef
 
-### 範例
-
-`@typedef` 用於定義複雜型別或物件型別，方便在多處重複使用型別註解。
-
-範例：
+定義可重複使用的物件型別。
 
 ```js
 /**
  * @typedef {Object} User
  * @property {string} name 使用者名稱
  * @property {number} age 年齡
+ * @property {string} [email] 可選屬性
  */
 
+/** @type {User} */
+const user = { name: 'Alice', age: 30 }
+```
+
+## @template
+
+定義泛型參數，適用於通用函式。
+
+```js
 /**
- * @type {User}
+ * 回傳陣列的第一個元素
+ * @template T
+ * @param {T[]} arr
+ * @returns {T | undefined}
  */
-const user = {
-  name: 'Alice',
-  age: 30,
+function first(arr) {
+  return arr[0]
 }
+```
+
+## @callback
+
+定義函式型別，適合描述 callback 簽名。
+
+```js
+/**
+ * @callback Comparator
+ * @param {number} a
+ * @param {number} b
+ * @returns {number}
+ */
+
+/** @type {Comparator} */
+const ascending = (a, b) => a - b
+```
+
+## @enum
+
+定義列舉值。
+
+```js
+/** @enum {number} */
+const Direction = {
+  Up: 0,
+  Down: 1,
+  Left: 2,
+  Right: 3,
+}
+```
+
+## import 型別
+
+在 JSDoc 中直接引入其他模組的型別，不需要實際 import。
+
+```js
+/** @type {import('./types').User} */
+const user = getUser()
+
+/** @param {import('express').Request} req */
+function handler(req) {}
 ```
 
 ## 參考資料
 
 - [TypeScript 官方 JSDoc 型別文件](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html)
+- [TypeScript without TypeScript — JSDoc superpowers](https://fettblog.eu/typescript-jsdoc-superpowers/)
+- [Boost Your JavaScript with JSDoc Typing](https://dev.to/samuel-braun/boost-your-javascript-with-jsdoc-typing-3hb3)

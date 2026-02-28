@@ -1,71 +1,114 @@
-# JSDoc 與 TypeScript 型別註解範例
+# Vue 的 JSDoc 型別註解
 
-這份文件說明如何在 Vue 專案中，利用 JSDoc 加上型別註解。
+在 Vue 3 Composition API 中使用 JSDoc 為 `ref`、`computed`、`props`、`emit` 等加上型別註解，不需要寫 TypeScript 也能獲得完整的型別提示。
+
+> 通用 JSDoc 語法請參閱 [JSDoc 型別註解](./jsdoc)。
 
 [[toc]]
 
 ## ref
-
-以下範例展示如何在 ref 變數上使用 JSDoc 型別註解：
 
 ```ts
 /** @type {import('vue').Ref<string>} */
 const name = ref('')
 ```
 
-物件型別
+物件型別：
 
 ```ts
 /** @type {import('vue').Ref<{id: number, name: string}>} */
 const user = ref({ id: 0, name: '' })
 ```
 
-有時候你會遇到變數型別不明確，想要用 JSDoc 型別斷言搭配 ref，例如：
+搭配型別斷言，常見於純 JS 專案中需要強制指定型別的情境：
 
 ```ts
 /** @type any */
 let x = ''
-// 將 x 斷言為 string 型別後傳給 ref
 const y = ref(/** @type {string} */ x)
-console.log(y.value) // y.value 型別會被推斷為 string
+// y.value 型別會被推斷為 string
 ```
 
-這種寫法常見於純 JavaScript 專案，利用 JSDoc 型別斷言讓 TypeScript 能正確推斷型別。
+## reactive
+
+```ts
+/**
+ * @type {import('vue').UnwrapNestedRefs<{count: number, items: string[]}>}
+ */
+const state = reactive({ count: 0, items: [] })
+```
+
+多數情況下 `reactive` 型別可由初始值自動推斷，需要 JSDoc 的場景通常是初始值無法精確表達型別時（如空陣列）。
 
 ## computed
 
-以下範例展示如何在 computed 屬性上使用 JSDoc 型別註解：
-
 ```ts
-import { computed } from 'vue'
-
 /** @type {import('vue').ComputedRef<number>} */
 const count = computed(() => 123)
 ```
 
-物件型別
+物件型別：
 
 ```ts
 /** @type {import('vue').ComputedRef<{id: number, name: string}>} */
 const user = computed(() => ({ id: 1, name: 'Alice' }))
 ```
 
-## props
+## defineProps
 
-以下範例展示如何在 defineProps 內使用 JSDoc 註解 props 型別：
+使用 `PropType` 標註複雜的 props 型別：
 
 ```ts
 const props = defineProps({
   list: {
-    /** @type {import('vue').PropType<{id: number, name: string }[]>} */
+    /** @type {import('vue').PropType<{id: number, name: string}[]>} */
     type: Array,
     default: () => [],
   },
+  status: {
+    /** @type {import('vue').PropType<'active' | 'inactive'>} */
+    type: String,
+    default: 'active',
+  },
 })
+```
+
+## defineEmits
+
+```ts
+/** @type {(e: 'update', value: string) => void} */
+const emit = defineEmits(['update'])
+```
+
+多個事件：
+
+```ts
+/**
+ * @type {{
+ *   (e: 'update', value: string): void
+ *   (e: 'delete', id: number): void
+ * }}
+ */
+const emit = defineEmits(['update', 'delete'])
+```
+
+## provide / inject
+
+```ts
+import { provide, inject } from 'vue'
+
+/** @type {import('vue').InjectionKey<string>} */
+const ThemeKey = Symbol('theme')
+
+// 提供端
+provide(ThemeKey, 'dark')
+
+// 注入端
+const theme = inject(ThemeKey)
+// theme 型別為 string | undefined
 ```
 
 ## 參考資料
 
 - [TypeScript with Composition API](https://vuejs.org/guide/typescript/composition-api.html)
-- [TypeScript without TypeScript -- JSDoc superpowers](https://fettblog.eu/typescript-jsdoc-superpowers/)
-- [Boost Your JavaScript with JSDoc Typing](https://dev.to/samuel-braun/boost-your-javascript-with-jsdoc-typing-3hb3)
+- [TypeScript 官方 JSDoc 型別文件](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html)

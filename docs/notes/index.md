@@ -10,14 +10,14 @@
 
 - [數字/小數點輸入限制](./frontend/input-number) - 實現數字輸入欄位的格式限制
 - [檔案下載](./frontend/file-download) - 處理檔案下載功能的實作方式
-- [安全使用 target="_blank"](./auth/target-blank-security) - 避免新視窗開啟的安全性風險
+- [安全使用 target="_blank"](./security/target-blank-security) - 避免新視窗開啟的安全性風險
 - [剪貼簿複製文字](./frontend/clipboard) - 實現複製文字至剪貼簿功能
 
 ## 驗證與安全
 
 身份驗證與安全性相關的技術筆記,包含 Token 機制、權限管理等主題。
 
-- [Token 機制 (Access/Refresh)](./auth/token-refresh) - 實作 Access Token 與 Refresh Token 的刷新機制
+- [Token 機制 (Access/Refresh)](./security/token-refresh) - 實作 Access Token 與 Refresh Token 的刷新機制
 
 ## Library
 

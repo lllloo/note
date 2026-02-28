@@ -93,11 +93,11 @@ export default defineConfig({
               items: [
                 {
                   text: 'Token 機制 (Access/Refresh)',
-                  link: '/notes/auth/token-refresh',
+                  link: '/notes/security/token-refresh',
                 },
                 {
                   text: '安全使用 target="_blank"',
-                  link: '/notes/auth/target-blank-security',
+                  link: '/notes/security/target-blank-security',
                 },
               ],
             },
