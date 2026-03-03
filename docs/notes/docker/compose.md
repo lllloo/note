@@ -44,8 +44,7 @@ services:
       - backend
     restart: unless-stopped      # 容器異常時自動重啟
     depends_on:
-      db:
-        condition: service_healthy
+      - db
 ```
 
 ## volumes 類型
@@ -97,35 +96,6 @@ volumes:
 | Bind Mount | 本機指定路徑 | 是 | 開發時同步原始碼 |
 | Named Volume | Docker 管理 | 是 | 資料庫、持久資料 |
 | Anonymous Volume | Docker 管理 | 需以 `-v` 或後續清理移除 | 佔位用途 |
-
-## depends_on 與 healthcheck
-
-`depends_on` 預設只等依賴容器**啟動**，不等服務真正就緒。搭配 `condition: service_healthy` 才能確保依賴服務真正可用。
-
-```yaml
-services:
-  app:
-    depends_on:
-      db:
-        condition: service_healthy   # 等 db healthcheck 通過才啟動
-
-  db:
-    image: postgres:16
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres']
-      interval: 5s       # 每 5 秒檢查一次
-      timeout: 5s        # 單次檢查超時時間
-      retries: 5         # 失敗幾次後標記為 unhealthy
-      start_period: 10s  # 容器啟動後的緩衝時間（此期間失敗不計入 retries）
-```
-
-### condition 類型
-
-| condition | 說明 |
-| --- | --- |
-| `service_started` | 預設，只等容器啟動 |
-| `service_healthy` | 等 healthcheck 回報 healthy |
-| `service_completed_successfully` | 等容器正常結束（exit 0），適合 migration 等一次性任務 |
 
 ## 常用指令
 

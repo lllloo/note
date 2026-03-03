@@ -38,88 +38,9 @@ services:
 | `unless-stopped` | 除非手動 stop，否則永遠重啟 |
 | `on-failure` | 只在非正常結束時重啟（exit code 非 0） |
 
-### 健康監控
-
-`restart` 只處理容器 crash（exit）。若 Node.js 內部卡住（event loop 卡死、記憶體洩漏）但沒有 exit，需要 `HEALTHCHECK` 偵測：
-
-```dockerfile
-HEALTHCHECK --interval=30s --timeout=3s --retries=3 \
-    CMD node healthcheck.js
-```
-
-`healthcheck.js` 用原生 `http` 模組打健康檢查端點（slim image 不一定有 curl）：
-
-```js
-const http = require('http')
-
-const options = {
-  timeout: 2000,
-  host: 'localhost',
-  port: process.env.PORT || 3000,
-  path: '/api/healthz',
-}
-
-const request = http.request(options, (res) => {
-  process.exitCode = res.statusCode === 200 ? 0 : 1
-  process.exit()
-})
-
-request.on('error', () => process.exit(1))
-request.end()
-```
-
-> `HEALTHCHECK` 只負責回報狀態。在 Docker Swarm / Kubernetes 中，unhealthy 容器會被自動替換；單純 `docker compose` 環境需搭配 `autoheal` 等工具才能自動重啟 unhealthy 容器。
-
-### 多核心利用
-
-PM2 cluster 模式讓單台機器跑多個 worker 利用多核心，在 Docker 中有兩種替代方案：
-
-**多容器副本（推薦）：**
-
-```bash
-docker compose up --scale app=4
-```
-
-```yaml
-# Docker Swarm / Kubernetes
-services:
-  app:
-    deploy:
-      replicas: 4
-```
-
-> `deploy.replicas` 只在 Docker Swarm 或 Kubernetes 生效，一般 `docker compose` 請用 `--scale`。
-
-**Nitro 內建 cluster preset（Nuxt 4 適用）：**
-
-```yaml
-environment:
-  - NITRO_PRESET=node_cluster
-```
-
-### 記憶體限制
-
-```yaml
-services:
-  app:
-    deploy:
-      resources:
-        limits:
-          memory: 512M
-    restart: on-failure
-```
-
-搭配 `--max-old-space-size` 讓 Node.js 有機會觸發 GC 而非被 Docker 強制 OOM kill：
-
-```dockerfile
-CMD ["node", "--max-old-space-size=450", ".output/server/index.mjs"]
-```
-
-> 設略低於 Docker 的記憶體上限，例如 Docker 限制 512M 則 V8 設 450M。
-
 ## 做法二：使用 pm2-runtime
 
-PM2 官方針對容器環境提供 `pm2-runtime`，用來解決（或至少大幅改善）直接在容器內用 `pm2 start` 時會遇到的主要問題。
+PM2 官方針對容器環境提供 `pm2-runtime`，用來解決直接在容器內用 `pm2 start` 時會遇到的主要問題。
 
 ### 與一般 PM2 的差異
 
@@ -145,7 +66,7 @@ CMD ["pm2-runtime", "app.js"]
 
 ### 搭配 ecosystem 設定
 
-建立 `ecosystem.config.js` 啟用 cluster 模式與記憶體限制：
+建立 `ecosystem.config.js` 啟用 cluster 模式：
 
 ```js
 module.exports = {
@@ -155,26 +76,12 @@ module.exports = {
     instances: 2,           // cluster 數量
     exec_mode: 'cluster',   // 啟用 cluster 模式
     max_memory_restart: '500M',
-    kill_timeout: 3000,     // graceful shutdown 等待時間（ms）
   }]
 }
 ```
 
 ```dockerfile
 CMD ["pm2-runtime", "ecosystem.config.js"]
-```
-
-### Graceful Shutdown
-
-在 Docker 中，`docker stop` 會先對容器內的 PID 1 發送 SIGTERM；當以 `pm2-runtime` 作為 PID 1 執行時，`pm2-runtime` 會在收到停止信號後轉發 SIGINT 給應用，預設等 1600ms 後送 SIGKILL。因此應用程式至少需要處理 SIGINT，若未來可能直接由 Docker 啟動（不經 `pm2-runtime`），建議同時處理 SIGINT / SIGTERM：
-
-```js
-function gracefulShutdown() {
-  server.close(() => process.exit(0))
-}
-
-process.on('SIGINT', gracefulShutdown)
-process.on('SIGTERM', gracefulShutdown)
 ```
 
 ### 日誌輸出格式
@@ -191,40 +98,7 @@ CMD ["pm2-runtime", "--json", "ecosystem.config.js"]
 | `--format` | `key=value` | 結構化日誌 |
 | `--raw` | 原始輸出 | 開發除錯 |
 
-## 比較與選擇
-
-### 功能對照表
-
-| PM2 功能 | 純 Docker | pm2-runtime |
-| --- | --- | --- |
-| crash 重啟 | `restart: unless-stopped` | 容器內自動重啟 |
-| 健康監控 | `HEALTHCHECK` + healthcheck.js | 無（僅程序存活檢查） |
-| 多核心 cluster | 多容器副本 / Nitro preset | `exec_mode: 'cluster'` |
-| 記憶體限制 | Docker `resources.limits.memory` | `max_memory_restart` |
-| 日誌管理 | `docker compose logs` / 集中式日誌 | stdout + 格式化選項 |
-| Graceful shutdown | Node.js 直接處理 SIGTERM | `kill_timeout` + 信號轉發 |
-| Zero-downtime | 滾動更新（Swarm / K8s） | `pm2 reload` |
-
-### 重啟速度
-
-| 情境 | 純 Docker | pm2-runtime |
-| --- | --- | --- |
-| crash → 服務恢復 | 需重啟整個容器 | 僅重啟程序（相對較快） |
-| 健康狀態確認 | 依 HEALTHCHECK 週期 | 無 healthcheck |
-
-pm2-runtime 在容器內重啟程序，不需重建容器，速度略快。但 Docker 的 HEALTHCHECK 能偵測更多異常（event loop 卡死等非 crash 情境）。實際重啟時間依應用大小、環境與 healthcheck 設定而異。
-
-### 信號處理
-
-| 項目 | 純 Docker（`node`） | pm2-runtime |
-| --- | --- | --- |
-| PID 1 | Node.js 直接作為 PID 1 | pm2-runtime 作為 PID 1 |
-| SIGTERM | Node.js 直接收到 | PM2 轉發給子程序 |
-| shutdown 控制 | 應用程式自行處理 | `kill_timeout` 統一控制 |
-
-> Docker 官方建議用 `CMD ["node", "app.js"]`，讓 Node.js 作為 PID 1 直接接收信號，架構最簡潔。
-
-### 怎麼選
+## 怎麼選
 
 **選純 Docker：**
 
@@ -236,13 +110,8 @@ pm2-runtime 在容器內重啟程序，不需重建容器，速度略快。但 D
 
 - 單機 Docker，無編排工具
 - 需要容器內 cluster 模式利用多核心
-- 需要毫秒級 crash recovery
 - 從傳統 PM2 部署遷移至 Docker，降低過渡風險
 
 ## 參考資料
 
 - [PM2 Docker Integration - PM2 官方文件](https://pm2.keymetrics.io/docs/usage/docker-pm2-nodejs/)
-- [From PM2 to Docker: Cluster Mode - Maxim Orlov](https://maximorlov.com/from-pm2-to-docker-cluster-mode/)
-- [To PM2, or Not to PM2: Embracing Docker for Node.js - Medium](https://medium.com/@saderi/to-pm2-or-not-to-pm2-embracing-docker-for-node-js-b4a8adce141c)
-- [Top 4 Tactics To Keep Node.js Rockin' in Docker - Docker Blog](https://www.docker.com/blog/keep-nodejs-rockin-in-docker/)
-- [PM2 and Docker - Choosing the Right Process Manager - Leapcell](https://leapcell.io/blog/pm2-and-docker-choosing-the-right-process-manager-for-node-js-in-production)

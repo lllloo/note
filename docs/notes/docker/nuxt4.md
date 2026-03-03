@@ -1,15 +1,12 @@
 # Nuxt 4 Dockerfile
 
-這篇筆記整理 Nuxt 4 在 Docker 的常見容器化寫法，分成「開發環境」與「部署環境」兩種情境：
-
-- 開發環境：以 `Dockerfile.dev` 搭配 BretFisher 的雙層目錄策略，將 `node_modules` 與原始碼分離
-- 部署環境：使用多階段建置，只保留 Nuxt build 產物（`.output`），並以非 root 使用者執行
+這篇筆記整理 Nuxt 4 在 Docker 的容器化寫法，開發與部署共用同一份 `Dockerfile`，透過多階段建置區分情境。
 
 [[toc]]
 
 ## node:slim vs node:alpine
 
-BretFisher 建議使用 `node:slim` 而非 `node:alpine`：
+建議使用 `node:slim` 而非 `node:alpine`：
 
 - Alpine 使用 musl libc，並非 Node.js 官方支援的 libc
 - 含原生模組的套件（如 `sharp`、`bcrypt`）在 Alpine 上可能編譯失敗或行為異常
@@ -17,57 +14,61 @@ BretFisher 建議使用 `node:slim` 而非 `node:alpine`：
 
 > 若確定專案沒有原生模組依賴，使用 `node:alpine` 也可以，映像更小。
 
-## 開發環境
-
-### 目錄結構策略
-
-BretFisher 將 `node_modules` 與 source code **分層放置**，解決 bind mount 的跨平台衝突問題：
-
-```text
-/opt/node_app/
-├── node_modules/   ← npm ci 安裝於此（上層，不會被 bind mount 覆蓋）
-├── package.json
-├── package-lock.json
-└── app/            ← source code bind mount 至此（只掛子目錄）
-    └── （你的 .vue、nuxt.config.ts 等）
-```
-
-這比「匿名 volume 覆蓋」更乾淨：bind mount 只掛 `app/` 子目錄，自然不會碰到上層的 `node_modules`。
-
-### Dockerfile.dev
+## Dockerfile
 
 ```dockerfile
-FROM node:24-slim
+# Stage 1: 安裝依賴
+FROM node:24-slim AS base
 
-# USER 要在 WORKDIR 之前，確保目錄以正確權限建立
-# node:slim 內建 node 使用者，不需手動建立
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm ci
+
+# Stage 2: 開發環境
+FROM base AS dev
+
+EXPOSE 3000
+
+CMD ["npx", "nuxt", "dev", "--host", "0.0.0.0"]
+
+# Stage 3: 建構應用程式
+FROM base AS build
+
+COPY . .
+
+RUN npx nuxt build
+
+# Stage 4: 執行環境（部署使用此 stage）
+FROM node:24-slim AS prod
+
 USER node
 
-# node_modules 安裝在此，與 source code 分離
 WORKDIR /opt/node_app
 
-COPY --chown=node:node package*.json ./
+COPY --from=build --chown=node:node /app/.output ./.output
 
-# node 使用者的 npm cache 在 /home/node/.npm
-RUN --mount=type=cache,uid=1000,gid=1000,target=/home/node/.npm \
-    npm ci
+EXPOSE 3000
 
-# 讓 node_modules/.bin 的指令可直接使用
-ENV PATH=/opt/node_app/node_modules/.bin:$PATH
-
-# source code 放子目錄
-WORKDIR /opt/node_app/app
-
-COPY --chown=node:node . .
-
-EXPOSE 3000 9229
-
-CMD ["nuxt", "dev", "--host", "0.0.0.0"]
+CMD ["node", ".output/server/index.mjs"]
 ```
 
-> - `uid=1000,gid=1000`：cache mount 指定 node 使用者的 uid/gid，確保權限正確
-> - `ENV PATH`：`node_modules` 不在 `app/` 下，需手動加入 PATH 才能執行 `nuxt` 等指令
-> - `EXPOSE 9229`：Node.js inspector debug port，搭配 VSCode remote debug 使用
+### 各 Stage 說明
+
+| Stage   | 用途                                                     |
+| ------- | -------------------------------------------------------- |
+| `base`  | 安裝依賴，供後續 stage 繼承                              |
+| `dev`   | 繼承 `base`，source code 由 volume 掛入，開發環境使用    |
+| `build` | 繼承 `base`，複製 source code 並執行 `nuxt build`        |
+| `prod`  | 最終映像，只複製 `.output`，不含原始碼與 devDependencies |
+
+> - `base` 只安裝依賴不複製 source code，`package.json` 未變動時不重新執行 `npm ci`
+> - `dev` stage 不 `COPY . .`，source code 完全由 compose volume 掛入，避免建構時複製無用的檔案
+> - `prod` stage 使用 `USER node`：`node:slim` 內建 `node` 使用者，`USER node` 放在 `WORKDIR` 之前，確保目錄由 `node` 使用者建立，具備正確權限
+> - `CMD ["node", ".output/server/index.mjs"]`：直接用 `node` 執行，確保 `docker stop` 的 SIGTERM 能正確傳給 Node.js 做 graceful shutdown（`npm start` 不轉發 signal）
+
+## 開發環境
 
 ### compose.dev.yml
 
@@ -76,122 +77,21 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      target: dev
     volumes:
-      - .:/opt/node_app/app
-      - ./package.json:/opt/node_app/package.json
-      - ./package-lock.json:/opt/node_app/package-lock.json
-      - node_modules:/opt/node_app/app/node_modules
+      - .:/app
+      - /app/node_modules
     ports:
       - '3000:3000'
-      - '9229:9229'
     environment:
       - NODE_ENV=development
-
-volumes:
-  node_modules:
 ```
 
-#### Volume 掛載說明
+`build.target: dev` 只建構到 `dev` stage，搭配 volume 掛載讓原始碼異動即時反映（熱更新）。
 
-| volume | 用途 |
-| --- | --- |
-| `.:/opt/node_app/app` | source code bind mount，檔案異動即時反映（熱更新） |
-| `./package.json:/opt/node_app/package.json` | 上層的 package.json 同步更新 |
-| `./package-lock.json:/opt/node_app/package-lock.json` | 上層的 lock file 同步更新 |
-| `node_modules:/opt/node_app/app/node_modules` | named volume 佔位，防止本機的 `node_modules` 被掛入 app/ |
-
-`node_modules` named volume 的用途是佔住 `/opt/node_app/app/node_modules`，避免 `.:/opt/node_app/app` 的 bind mount 把本機的 `node_modules` 帶進來。容器實際使用的是安裝在 `/opt/node_app/node_modules/` 的那份（上層目錄，完全不受 bind mount 影響）。
-
-同時這樣做也能避免 Node.js 的模組解析順序誤用到 `app/node_modules`：把它「佔住」之後，確保容器環境不會混入本機依賴，解析時會穩定使用上層的 `/opt/node_app/node_modules/`。
+`/app/node_modules` 匿名 volume 用於佔位，避免 `.:/app` 的 bind mount 把本機的 `node_modules` 帶進來，確保使用容器內 `npm ci` 安裝的版本。
 
 ## 部署環境
-
-### healthcheck.js
-
-BretFisher 建議用獨立的 `healthcheck.js`，而非在 Dockerfile 內寫 inline shell：
-
-- slim image 不一定有 `curl`，用 Node.js 原生 `http` 模組更可靠
-- 邏輯獨立，方便維護與測試
-
-```js
-const http = require('http')
-
-const options = {
-  timeout: 2000,
-  host: 'localhost',
-  port: process.env.PORT || 3000,
-  path: '/api/healthz',
-}
-
-const request = http.request(options, (res) => {
-  process.exitCode = res.statusCode === 200 ? 0 : 1
-  process.exit()
-})
-
-request.on('error', () => process.exit(1))
-request.end()
-```
-
-> Nuxt 4 需自行實作 `/api/healthz` 路由（server route），回傳 HTTP 200 即可。
-
-### Dockerfile（多階段構建）
-
-::: tip 提醒
-本文 Dockerfile 使用 `RUN --mount=type=cache ...`（BuildKit 功能）加速安裝依賴。若你在 CI 或舊環境遇到語法不支援，請先啟用 Docker BuildKit。
-:::
-
-```dockerfile
-# Stage 1: 建構應用程式
-FROM node:24-slim AS build
-
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN --mount=type=cache,target=/root/.npm npm ci
-
-COPY . .
-
-RUN npx nuxt build
-
-# Stage 2: 執行環境
-FROM node:24-slim AS runner
-
-# USER 要在 WORKDIR 之前，確保目錄以正確權限建立
-USER node
-
-WORKDIR /opt/node_app
-
-COPY --from=build --chown=node:node /app/.output ./.output
-COPY --chown=node:node healthcheck.js .
-
-EXPOSE 3000
-
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD node healthcheck.js
-
-CMD ["node", ".output/server/index.mjs"]
-```
-
-#### 各 Stage 說明
-
-| Stage | 用途 |
-| --- | --- |
-| `build` | 安裝所有套件並執行 `nuxt build` |
-| `runner` | 最終映像，只複製 `.output`，不含原始碼與 devDependencies |
-
-> - `USER node`：使用 image 內建的非 root 使用者，不需手動建立，且放在 `WORKDIR` 之前讓目錄以正確權限建立
-> - `--mount=type=cache,target=/root/.npm`：BuildKit cache mount，npm 下載的套件快取在 Docker 管理的空間，重複建構時不用重新下載，且不會寫入 image layer
-> - `CMD ["node", ".output/server/index.mjs"]`：直接用 `node` 執行而非 `npm start`，確保 `docker stop` 發出的 SIGTERM 能正確傳給 Node.js process 做 graceful shutdown（npm 不會轉發 signal）
-> - 最終映像不含原始碼與開發套件，大幅縮小映像大小
-
-#### `.output` 產物驗證（避免部署時缺 runtime 依賴）
-
-多數情境下 Nuxt build 產物 `.output` 可以直接用 `node .output/server/index.mjs` 啟動，但仍建議你在自己的專案做一次驗證：
-
-- 容器啟動是否成功
-- 若啟動錯誤提到找不到模組（`Cannot find module ...`），代表 build 產物非完全自包含，需要調整 Nitro preset 設定
 
 ### compose.prod.yml
 
@@ -200,16 +100,19 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      target: prod
     ports:
       - '3000:3000'
+    restart: unless-stopped
     environment:
       - NODE_ENV=production
 ```
 
-## .dockerignore
+`build.target: prod` 建構完整的多階段流程，最終映像只含 `.output`，不包含原始碼與開發套件。
 
-原則是**只排除真正必要的項目**，避免過度設定。
+> 若啟動錯誤提到找不到模組（`Cannot find module ...`），代表 build 產物非完全自包含，需要在 `nuxt.config.ts` 確認 `nitro.preset` 設為 `node-server`（預設值），或檢查是否誤用了其他 preset。
+
+## .dockerignore
 
 ```text
 node_modules/
@@ -220,13 +123,13 @@ node_modules/
 .npmrc
 ```
 
-| 項目 | 原因 |
-| --- | --- |
-| `node_modules/` | 容器內會重新安裝，排除可大幅縮小 build context |
-| `.nuxt/` `.output/` | build 產物，容器內會重新建構 |
-| `.git/` | 不需要版本控制歷史，減少 build context 大小 |
-| `.env*` | 避免環境變數（含敏感資訊）被複製進 image |
-| `.npmrc` | 可能含有私有 registry token，避免洩漏至 image |
+| 項目                | 原因                                           |
+| ------------------- | ---------------------------------------------- |
+| `node_modules/`     | 容器內會重新安裝，排除可大幅縮小 build context |
+| `.nuxt/` `.output/` | build 產物，容器內會重新建構                   |
+| `.git/`             | 不需要版本控制歷史，減少 build context 大小    |
+| `.env*`             | 避免環境變數（含敏感資訊）被複製進 image       |
+| `.npmrc`            | 可能含有私有 registry token，避免洩漏至 image  |
 
 ## 常用指令
 
@@ -248,8 +151,5 @@ docker compose -f compose.prod.yml logs -f app
 
 ## 參考資料
 
-- [Docker 官方 Vue.js 容器化指南](https://docs.docker.com/guides/vuejs/)
-- [BretFisher/node-docker-good-defaults](https://github.com/BretFisher/node-docker-good-defaults)
-- [Nuxt 官方部署文件](https://nuxt.com/docs/4.x/getting-started/deployment)
-- [Nuxt Runtime Config](https://nuxt.com/docs/4.x/guide/going-further/runtime-config)
-- [10 best practices to containerize Node.js with Docker - Snyk](https://snyk.io/blog/10-best-practices-to-containerize-nodejs-web-applications-with-docker/)
+- [Docker 官方 Node.js 容器化指南](https://docs.docker.com/guides/nodejs/)
+- [Nitro 部署文件](https://nitro.build/deploy/node)
