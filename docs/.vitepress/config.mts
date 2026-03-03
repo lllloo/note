@@ -205,6 +205,10 @@ export default defineConfig({
               text: 'Line 無法跳轉 Blob URL',
               link: '/issues/line-browser-blob-url',
             },
+            {
+              text: 'Safari Canvas Size 上限',
+              link: '/issues/canvas-size',
+            },
           ],
         },
       ],

@@ -37,3 +37,11 @@
 在 Line 應用程式的內建瀏覽器中,無法正常開啟或跳轉使用 Blob URL 的連結。
 
 - [Line 無法跳轉 Blob URL](./line-browser-blob-url) - Line 內建瀏覽器的 Blob URL 限制
+
+## Canvas 相關
+
+### Safari Canvas Size 上限
+
+使用 html2canvas 將頁面轉成圖片時，若內容尺寸超過 Safari 的 canvas 面積上限，會出現空白截圖。
+
+- [Safari Canvas Size 上限](./canvas-size) - html2canvas 在 Safari 截圖空白的原因與解法
