@@ -161,7 +161,7 @@ export default defineConfig({
                 { text: 'Docker Compose', link: '/notes/docker/compose' },
                 { text: '網路隔離：只暴露 Nginx', link: '/notes/docker/network' },
                 { text: 'Nuxt + Docker', link: '/notes/docker/nuxt-docker' },
-                { text: 'Docker 不需要 PM2 ?', link: '/notes/docker/pm2' },
+                { text: 'Docker 與 PM2：用或不用的取捨', link: '/notes/docker/pm2' },
                 { text: 'Laradock 常用指令', link: '/notes/docker/laradock' },
               ],
             },
