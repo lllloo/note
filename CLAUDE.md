@@ -67,7 +67,7 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 ### Markdown 規範
 
 - 使用 `markdownlint-cli2` 檢查,設定位於 `package.json` 的 `markdownlint-cli2` 欄位
-- 已關閉規則: MD013(行長度限制)
+- 已關閉規則: MD013(行長度限制)、MD060(table-column-style，為支援 CJK 內容)
 - `no-duplicate-heading` 設定為 `siblings_only: true`
 
 ### Commit 訊息
