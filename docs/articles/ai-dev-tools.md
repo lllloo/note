@@ -166,13 +166,27 @@ Context 的組成：
 
 理解各部分的佔比，有助於在遇到 context 不足時，針對性地進行清理或壓縮。
 
-管理方式：
+### 常見問題
+
+**Context Rot（上下文腐化）**：隨著 context 中的 token 數量增加，模型性能會變得不穩定且不可靠。Chroma Research 針對 18 個主流模型（包含 GPT-4.1、Claude 4、Gemini 2.5）的研究發現：模型不會均勻使用上下文——單個干擾項就會降低性能，多個干擾項會複合衰退；此外，模型在打亂的文字上表現反而優於邏輯連貫的文字，顯示注意力機制對輸入結構高度敏感。這也是為什麼長對話後 AI 表現會變差、回答開始偏離需求。（參考：[Context Rot — Chroma Research](https://research.trychroma.com/context-rot)）
+
+### 管理方式
 
 - 切換任務：執行 `/new` 開啟全新對話，確保 context 乾淨
 - 拆分任務：將大任務拆成多個小任務分開執行
 - 使用 subagent：讓子代理處理子任務，各自有獨立的 context
 - 手動壓縮：部分工具提供壓縮指令（如 Claude Code 的 `/compact`）提前釋放空間
 - 查看用量：部分工具提供查看各類別 token 佔用的介面
+
+### Context Engineering
+
+目標不是填滿 context，而是「在對的時機提供對的資訊、以對的格式呈現」。Anthropic 提出幾個實際做法：
+
+- **Just-in-Time 載入**：維護輕量的檔案路徑或查詢，在執行時才透過工具動態載入需要的資料，而非預先把所有內容塞進 context
+- **壓縮（Compaction）**：對話接近上限時，將歷史摘要後重新起一個乾淨的 context，保留架構決策等關鍵資訊，丟棄冗餘的工具輸出
+- **子代理架構**：由多個專注子代理各自處理子任務，每個子代理回傳簡短摘要（1,000–2,000 token），主代理再進行整合，避免單一 context 過載
+
+（參考：[Effective context engineering for AI agents — Anthropic](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)）
 
 以下截圖展示了某工具的 Context Window 用量介面，可看到各類別（系統提示、工具、訊息等）佔用的 token 比例：
 
