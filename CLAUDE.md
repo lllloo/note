@@ -24,6 +24,7 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
   - `notes/` — 技術筆記(frontend, js, typescript, css, docker, git, auth, library, npm 等分類)
   - `ai/` — AI 應用相關使用指南
     - `guides/` — AI 工具使用指南
+  - `articles/` — 技術文章與深度分享
   - `issues/` — 常見問題與解決方案
 
 ### VitePress 設定重點
@@ -45,6 +46,15 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 5. 在對應群組的 `index.md` 新增文章連結（例如 `docs/notes/index.md`）
 6. 各群組的首頁由 `index.md` 提供（例如 `docs/notes/index.md` 對應 `/notes/`）
 7. 執行 `npm run docs:dev` 驗證連結正常運作
+
+### Notion 綁定
+
+某些文章在 frontmatter 中使用 `notion_id` 欄位記錄對應的 Notion 頁面 ID。這些文章要分享到 Notion 時才需要同步過去。**只有手動同步，不自動保持同步** — 僅當明確要求時才更新內容。
+
+同步時，`title` 欄位會作為 Notion 頁面的標題進行同步。
+
+當前綁定：
+- `docs/articles/ai-dev-tools.md` ↔ Notion ID: `31f88d8b-63ed-81ef-a075-fd4af500ede3`
 
 ### llms.txt 自動生成
 

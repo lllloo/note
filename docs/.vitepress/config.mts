@@ -67,6 +67,7 @@ export default defineConfig({
       { text: 'AI 應用', link: '/ai/' },
       { text: '筆記', link: '/notes/' },
       { text: '疑難雜症', link: '/issues/' },
+      { text: '文章', link: '/articles/' },
     ],
 
     outline: [2, 3],
@@ -212,6 +213,15 @@ export default defineConfig({
           ],
         },
       ],
+      '/articles/': [
+        {
+          text: '文章',
+          link: '/articles/',
+          items: [
+            { text: 'AI 開發工具功能說明', link: '/articles/ai-dev-tools' },
+          ],
+        },
+      ],
       '/ai/': [
         {
           text: 'AI 應用',
@@ -224,6 +234,7 @@ export default defineConfig({
                 { text: 'AGENTS.md 統一指令標準', link: '/ai/guides/agents-md' },
                 { text: 'Skills 安裝指南', link: '/ai/guides/install-skills' },
                 { text: 'QA 系統的聊天回覆', link: '/ai/guides/rag-chat' },
+                { text: 'AI 開發工具功能說明', link: '/ai/guides/ai-dev-tools' },
               ],
             },
             { text: 'Awesome Copilot', link: '/ai/awesome-copilot' },
