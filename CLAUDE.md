@@ -54,7 +54,7 @@ npm run lint:md:fix       # 自動修正 Markdown 問題
 同步時，`title` 欄位會作為 Notion 頁面的標題進行同步。
 
 當前綁定：
-- `docs/articles/ai-dev-tools.md` ↔ Notion ID: `31f88d8b-63ed-81ef-a075-fd4af500ede3`
+- `docs/articles/ai-context.md` ↔ Notion ID: `31f88d8b-63ed-81ef-a075-fd4af500ede3`
 
 ### llms.txt 自動生成
 
