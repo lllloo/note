@@ -218,7 +218,7 @@ export default defineConfig({
           text: '文章',
           link: '/articles/',
           items: [
-            { text: '掌握 AI 上下文', link: '/articles/ai-context' },
+            { text: '從模型到上下文', link: '/articles/ai-context' },
           ],
         },
       ],
@@ -234,7 +234,7 @@ export default defineConfig({
                 { text: 'AGENTS.md 統一指令標準', link: '/ai/guides/agents-md' },
                 { text: 'Skills 安裝指南', link: '/ai/guides/install-skills' },
                 { text: 'QA 系統的聊天回覆', link: '/ai/guides/rag-chat' },
-                { text: '掌握 AI 上下文', link: '/ai/guides/ai-context' },
+                { text: '從模型到上下文', link: '/ai/guides/ai-context' },
               ],
             },
             { text: 'Awesome Copilot', link: '/ai/awesome-copilot' },
