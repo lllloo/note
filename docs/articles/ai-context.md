@@ -78,7 +78,7 @@ Skills 是封裝了指引、方法與資源的可重用執行模組，讓 AI 能
 
 Skills 教導 AI 如何以可重複的方式完成特定任務，例如依照統一規範建立文件、使用特定工作流程分析資料，或自動化重複性任務。
 
-觸發方式分兩種：AI 執行任務時自動判斷呼叫，或使用者以 `/` 指令主動觸發。
+觸發方式分兩種：AI 執行任務時自動判斷呼叫（判斷 Skill 的 description），或使用者以 `/` 指令主動觸發。
 
 常見範例：
 
@@ -107,9 +107,10 @@ Skills 教導 AI 如何以可重複的方式完成特定任務，例如依照統
 注意事項：
 
 - 非官方的第三方 Server 需確認來源可信、程式碼公開可審查
-- 只開放必要的存取權限，避免 AI 誤操作關鍵系統
 - 敏感資料應確認 MCP Server 的讀寫權限設定是否符合預期
 - MCP 呼叫會帶來額外的上下文與成本開銷，計費方式依工具實作而異
+
+MCP 並不是唯一可以連接外部系統的方法，有些 APP 有提供 cli 功能可以使用，cli 很適合 ai 使用也是很好的選擇，例如 **GitHub CLI**
 
 ---
 
@@ -169,8 +170,6 @@ Context 的組成：
 - **子代理架構**：由多個專注子代理各自處理子任務，每個子代理回傳簡短摘要（1,000–2,000 token），主代理再進行整合，避免單一 context 過載
 
 除此之外，**Plan 先行**也是常見的實踐：執行前先進入規劃模式（Plan Mode），讓 AI 在不消耗執行 context 的情況下分析任務、確認方向，待規劃確認後再開始執行，避免因方向錯誤浪費大量 context。
-
-（參考：[Effective context engineering for AI agents — Anthropic](https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents)）
 
 以下截圖展示了某工具的 Context Window 用量介面，可看到各類別（系統提示、工具、訊息等）佔用的 token 比例：
 
