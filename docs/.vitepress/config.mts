@@ -210,6 +210,10 @@ export default defineConfig({
               text: 'Safari Canvas Size 上限',
               link: '/issues/canvas-size',
             },
+            {
+              text: 'Tailwind sr-only 造成多餘 scrollbar',
+              link: '/issues/sr-only-scrollbar',
+            },
           ],
         },
       ],

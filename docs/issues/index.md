@@ -45,3 +45,11 @@
 使用 html2canvas 將頁面轉成圖片時，若內容尺寸超過 Safari 的 canvas 面積上限，會出現空白截圖。
 
 - [Safari Canvas Size 上限](./canvas-size) - html2canvas 在 Safari 截圖空白的原因與解法
+
+## CSS 與版面相關
+
+### Tailwind sr-only 造成多餘 scrollbar
+
+Tailwind 的 `sr-only` 因 `position: absolute` + `margin: -1px` 設計，當祖先沒有 positioned 元素時，會造成頁面出現非預期 scrollbar。
+
+- [Tailwind sr-only 造成多餘 scrollbar](./sr-only-scrollbar) - containing block 退回 html 的副作用與解法
