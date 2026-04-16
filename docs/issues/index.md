@@ -48,6 +48,12 @@
 
 ## CSS 與版面相關
 
+### Sticky Table Header 的邊框穿透問題
+
+對 `<th>` 加上 `position: sticky` 後，捲動時表頭底部邊框消失的成因與解法。
+
+- [Sticky Table Header 的邊框穿透問題](./sticky-table-header) - `border-collapse: collapse` 與 `position: sticky` 的衝突，`box-shadow` 與 `border-separate` 兩種解法比較
+
 ### Tailwind sr-only 造成多餘 scrollbar
 
 Tailwind 的 `sr-only` 因 `position: absolute` + `margin: -1px` 設計，當祖先沒有 positioned 元素時，會造成頁面出現非預期 scrollbar。

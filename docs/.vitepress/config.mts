@@ -214,6 +214,10 @@ export default defineConfig({
               text: 'Tailwind sr-only 造成多餘 scrollbar',
               link: '/issues/sr-only-scrollbar',
             },
+            {
+              text: 'Sticky Table Header 的邊框穿透問題',
+              link: '/issues/sticky-table-header',
+            },
           ],
         },
       ],
