@@ -105,28 +105,45 @@ tbody td {
 <head>
   <meta charset="UTF-8">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
 <body class="p-8">
-  <div class="overflow-y-auto max-h-48 border border-gray-200">
-    <table class="w-full">
-      <thead>
-        <tr>
-          <th class="sticky top-0 z-10 bg-white text-left px-4 py-2 [box-shadow:inset_0_-1px_0_#9ca3af]">名稱</th>
-          <th class="sticky top-0 z-10 bg-white text-left px-4 py-2 [box-shadow:inset_0_-1px_0_#9ca3af]">狀態</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 A</td><td class="border-b border-gray-200 px-4 py-2">啟用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 B</td><td class="border-b border-gray-200 px-4 py-2">停用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 C</td><td class="border-b border-gray-200 px-4 py-2">啟用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 D</td><td class="border-b border-gray-200 px-4 py-2">啟用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 E</td><td class="border-b border-gray-200 px-4 py-2">停用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 F</td><td class="border-b border-gray-200 px-4 py-2">啟用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 G</td><td class="border-b border-gray-200 px-4 py-2">啟用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 H</td><td class="border-b border-gray-200 px-4 py-2">停用</td></tr>
-      </tbody>
-    </table>
+  <div id="app">
+    <div class="overflow-y-auto max-h-48 border border-gray-200">
+      <table class="w-full">
+        <thead>
+          <tr>
+            <th class="sticky top-0 z-10 bg-white text-left px-4 py-2 [box-shadow:inset_0_-1px_0_#9ca3af]">名稱</th>
+            <th class="sticky top-0 z-10 bg-white text-left px-4 py-2 [box-shadow:inset_0_-1px_0_#9ca3af]">狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="row in rows" :key="row.name">
+            <td class="border-b border-gray-200 px-4 py-2">{{ row.name }}</td>
+            <td class="border-b border-gray-200 px-4 py-2">{{ row.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          rows: [
+            { name: '項目 A', status: '啟用' },
+            { name: '項目 B', status: '停用' },
+            { name: '項目 C', status: '啟用' },
+            { name: '項目 D', status: '啟用' },
+            { name: '項目 E', status: '停用' },
+            { name: '項目 F', status: '啟用' },
+            { name: '項目 G', status: '啟用' },
+            { name: '項目 H', status: '停用' },
+          ]
+        }
+      }
+    }).mount('#app')
+  </script>
 </body>
 </html>
 ```
@@ -139,28 +156,45 @@ tbody td {
 <head>
   <meta charset="UTF-8">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 </head>
 <body class="p-8">
-  <div class="overflow-y-auto max-h-48 border border-gray-200">
-    <table class="w-full border-separate border-spacing-0">
-      <thead>
-        <tr>
-          <th class="sticky top-0 z-10 bg-white text-left px-4 py-2 border-b border-gray-400">名稱</th>
-          <th class="sticky top-0 z-10 bg-white text-left px-4 py-2 border-b border-gray-400">狀態</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 A</td><td class="border-b border-gray-200 px-4 py-2">啟用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 B</td><td class="border-b border-gray-200 px-4 py-2">停用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 C</td><td class="border-b border-gray-200 px-4 py-2">啟用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 D</td><td class="border-b border-gray-200 px-4 py-2">啟用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 E</td><td class="border-b border-gray-200 px-4 py-2">停用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 F</td><td class="border-b border-gray-200 px-4 py-2">啟用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 G</td><td class="border-b border-gray-200 px-4 py-2">啟用</td></tr>
-        <tr><td class="border-b border-gray-200 px-4 py-2">項目 H</td><td class="border-b border-gray-200 px-4 py-2">停用</td></tr>
-      </tbody>
-    </table>
+  <div id="app">
+    <div class="overflow-y-auto max-h-48 border border-gray-200">
+      <table class="w-full border-separate border-spacing-0">
+        <thead>
+          <tr>
+            <th class="sticky top-0 z-10 bg-white text-left px-4 py-2 border-b border-gray-400">名稱</th>
+            <th class="sticky top-0 z-10 bg-white text-left px-4 py-2 border-b border-gray-400">狀態</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="row in rows" :key="row.name">
+            <td class="border-b border-gray-200 px-4 py-2">{{ row.name }}</td>
+            <td class="border-b border-gray-200 px-4 py-2">{{ row.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+  <script>
+    Vue.createApp({
+      data() {
+        return {
+          rows: [
+            { name: '項目 A', status: '啟用' },
+            { name: '項目 B', status: '停用' },
+            { name: '項目 C', status: '啟用' },
+            { name: '項目 D', status: '啟用' },
+            { name: '項目 E', status: '停用' },
+            { name: '項目 F', status: '啟用' },
+            { name: '項目 G', status: '啟用' },
+            { name: '項目 H', status: '停用' },
+          ]
+        }
+      }
+    }).mount('#app')
+  </script>
 </body>
 </html>
 ```
