@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "markdownlint-cli2": "^0.20.0",
+    "markdownlint-cli2": "^0.22.1",
     "vitepress": "^1.6.4",
     "vitepress-plugin-llms": "^1.11.0"
   },
@@ -10,14 +10,5 @@
     "docs:preview": "vitepress preview docs",
     "lint:md": "markdownlint-cli2 \"**/*.md\" \"!node_modules\"",
     "lint:md:fix": "markdownlint-cli2 --fix \"**/*.md\" \"!node_modules\""
-  },
-  "markdownlint-cli2": {
-    "config": {
-      "MD013": false,
-      "MD060": false,
-      "no-duplicate-heading": {
-        "siblings_only": true
-      }
-    }
   }
 }
