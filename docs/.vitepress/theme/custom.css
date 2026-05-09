@@ -39,3 +39,41 @@ html {
   background-clip: text;
   -webkit-text-fill-color: var(--vp-home-hero-name-color);
 }
+
+.article-cover {
+  position: relative;
+  margin: 0 0 32px;
+  overflow: hidden;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  aspect-ratio: 16 / 7;
+  background: var(--vp-c-bg-soft);
+}
+
+.article-cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.article-cover figcaption {
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
+  max-width: calc(100% - 24px);
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: color-mix(in srgb, var(--vp-c-bg) 82%, transparent);
+  color: var(--vp-c-text-2);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+@media (max-width: 767px) {
+  .article-cover {
+    margin-bottom: 24px;
+    aspect-ratio: 16 / 9;
+  }
+}

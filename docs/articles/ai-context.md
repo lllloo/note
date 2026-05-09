@@ -1,5 +1,7 @@
 ---
 title: 從模型到上下文
+cover: /articles/ai-context/cover.png
+coverAlt: AI context window、token stream 與 agent network 概念圖
 notion_id: 31f88d8b-63ed-81ef-a075-fd4af500ede3
 ---
 
