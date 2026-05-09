@@ -8,6 +8,9 @@ hero:
   name: "Barney's Notes"
   text: '開發心得與 AI 分享'
   tagline: 記錄隨筆
+  image:
+    src: /home/hero.jpg
+    alt: 數位筆記、程式碼面板與 AI 工具網路概念圖
   actions:
     - theme: brand
       text: AI 應用
